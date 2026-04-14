@@ -1,0 +1,2054 @@
+[
+  {
+    "name_en": "FILO-60",
+    "slug": "swing-doors-filo-60",
+    "description_en": "FILO-60 \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 462,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/filo-60/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "UNIFLEX-3D",
+    "slug": "swing-doors-uniflex-3d",
+    "description_en": "UNIFLEX-3D \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 488,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/uniflex-3d/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "STRATUS",
+    "slug": "swing-doors-stratus",
+    "description_en": "STRATUS \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 494,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/stratus/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "ALTO",
+    "slug": "swing-doors-alto",
+    "description_en": "ALTO \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 605,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/alto/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "LINEA",
+    "slug": "swing-doors-linea",
+    "description_en": "LINEA \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 680,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/linea/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "CUBIC",
+    "slug": "swing-doors-cubic",
+    "description_en": "CUBIC \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 609,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/cubic/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "VETRO",
+    "slug": "swing-doors-vetro",
+    "description_en": "VETRO \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 785,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/vetro/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "SOLID",
+    "slug": "swing-doors-solid",
+    "description_en": "SOLID \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 790,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/solid/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "MIRA",
+    "slug": "swing-doors-mira",
+    "description_en": "MIRA \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 784,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/mira/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "ARIA",
+    "slug": "swing-doors-aria",
+    "description_en": "ARIA \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 866,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/aria/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "ESTE",
+    "slug": "swing-doors-este",
+    "description_en": "ESTE \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 993,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/este/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "OPEN",
+    "slug": "swing-doors-open",
+    "description_en": "OPEN \u2014 premium swing doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 930,
+    "category_slug": "swing-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/swing-doors/open/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "Slide-01",
+    "slug": "sliding-doors-slide-01",
+    "description_en": "Slide-01 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 471,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-01/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "Slide-02",
+    "slug": "sliding-doors-slide-02",
+    "description_en": "Slide-02 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 549,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-02/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "Slide-03",
+    "slug": "sliding-doors-slide-03",
+    "description_en": "Slide-03 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 585,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-03/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "Slide-04",
+    "slug": "sliding-doors-slide-04",
+    "description_en": "Slide-04 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 585,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-04/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "Slide-05",
+    "slug": "sliding-doors-slide-05",
+    "description_en": "Slide-05 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 628,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-05/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "Slide-06",
+    "slug": "sliding-doors-slide-06",
+    "description_en": "Slide-06 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 585,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-06/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "Slide-07",
+    "slug": "sliding-doors-slide-07",
+    "description_en": "Slide-07 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 651,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-07/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "Slide-08",
+    "slug": "sliding-doors-slide-08",
+    "description_en": "Slide-08 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 813,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-08/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "Slide-09",
+    "slug": "sliding-doors-slide-09",
+    "description_en": "Slide-09 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 704,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-09/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "Slide-10",
+    "slug": "sliding-doors-slide-10",
+    "description_en": "Slide-10 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 799,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-10/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "Slide-11",
+    "slug": "sliding-doors-slide-11",
+    "description_en": "Slide-11 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 841,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-11/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "Slide-12",
+    "slug": "sliding-doors-slide-12",
+    "description_en": "Slide-12 \u2014 premium sliding doors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 1009,
+    "category_slug": "sliding-doors",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-doors/slide-12/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "PARTI-1",
+    "slug": "sliding-partitions-parti-1",
+    "description_en": "PARTI-1 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 486,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-1/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "PARTI-2",
+    "slug": "sliding-partitions-parti-2",
+    "description_en": "PARTI-2 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 438,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-2/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "PARTI-3",
+    "slug": "sliding-partitions-parti-3",
+    "description_en": "PARTI-3 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 472,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-3/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "PARTI-4",
+    "slug": "sliding-partitions-parti-4",
+    "description_en": "PARTI-4 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 557,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-4/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "PARTI-5",
+    "slug": "sliding-partitions-parti-5",
+    "description_en": "PARTI-5 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 694,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-5/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "PARTI-6",
+    "slug": "sliding-partitions-parti-6",
+    "description_en": "PARTI-6 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 708,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-6/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "PARTI-7",
+    "slug": "sliding-partitions-parti-7",
+    "description_en": "PARTI-7 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 630,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-7/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "PARTI-8",
+    "slug": "sliding-partitions-parti-8",
+    "description_en": "PARTI-8 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 653,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-8/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "PARTI-9",
+    "slug": "sliding-partitions-parti-9",
+    "description_en": "PARTI-9 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 780,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-9/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "PARTI-10",
+    "slug": "sliding-partitions-parti-10",
+    "description_en": "PARTI-10 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 760,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-10/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "PARTI-11",
+    "slug": "sliding-partitions-parti-11",
+    "description_en": "PARTI-11 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 986,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-11/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "PARTI-12",
+    "slug": "sliding-partitions-parti-12",
+    "description_en": "PARTI-12 \u2014 premium sliding partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 1028,
+    "category_slug": "sliding-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/sliding-partitions/parti-12/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "STAT-A",
+    "slug": "stationary-partitions-stat-a",
+    "description_en": "STAT-A \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 302,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-a/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "STAT-B",
+    "slug": "stationary-partitions-stat-b",
+    "description_en": "STAT-B \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 516,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-b/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "STAT-C",
+    "slug": "stationary-partitions-stat-c",
+    "description_en": "STAT-C \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 402,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-c/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "STAT-D",
+    "slug": "stationary-partitions-stat-d",
+    "description_en": "STAT-D \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 457,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-d/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "STAT-E",
+    "slug": "stationary-partitions-stat-e",
+    "description_en": "STAT-E \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 639,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-e/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "STAT-F",
+    "slug": "stationary-partitions-stat-f",
+    "description_en": "STAT-F \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 604,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-f/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "STAT-G",
+    "slug": "stationary-partitions-stat-g",
+    "description_en": "STAT-G \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 682,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-g/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "STAT-H",
+    "slug": "stationary-partitions-stat-h",
+    "description_en": "STAT-H \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 711,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-h/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "STAT-I",
+    "slug": "stationary-partitions-stat-i",
+    "description_en": "STAT-I \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 886,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-i/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "STAT-J",
+    "slug": "stationary-partitions-stat-j",
+    "description_en": "STAT-J \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 918,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-j/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "STAT-K",
+    "slug": "stationary-partitions-stat-k",
+    "description_en": "STAT-K \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 829,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-k/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "STAT-L",
+    "slug": "stationary-partitions-stat-l",
+    "description_en": "STAT-L \u2014 premium stationary partitions from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 977,
+    "category_slug": "stationary-partitions",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/stationary-partitions/stat-l/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "Panel-Oak",
+    "slug": "wall-panels-panel-oak",
+    "description_en": "Panel-Oak \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 426,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-oak/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "Panel-Walnut",
+    "slug": "wall-panels-panel-walnut",
+    "description_en": "Panel-Walnut \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 427,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-walnut/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "Panel-Ash",
+    "slug": "wall-panels-panel-ash",
+    "description_en": "Panel-Ash \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 410,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-ash/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "Panel-Teak",
+    "slug": "wall-panels-panel-teak",
+    "description_en": "Panel-Teak \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 603,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-teak/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "Panel-Maple",
+    "slug": "wall-panels-panel-maple",
+    "description_en": "Panel-Maple \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 542,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-maple/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "Panel-Ebony",
+    "slug": "wall-panels-panel-ebony",
+    "description_en": "Panel-Ebony \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 591,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-ebony/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "Panel-Cherry",
+    "slug": "wall-panels-panel-cherry",
+    "description_en": "Panel-Cherry \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 668,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-cherry/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "Panel-Birch",
+    "slug": "wall-panels-panel-birch",
+    "description_en": "Panel-Birch \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 779,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-birch/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "Panel-Pine",
+    "slug": "wall-panels-panel-pine",
+    "description_en": "Panel-Pine \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 812,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-pine/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "Panel-Mahogany",
+    "slug": "wall-panels-panel-mahogany",
+    "description_en": "Panel-Mahogany \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 900,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-mahogany/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "Panel-Beech",
+    "slug": "wall-panels-panel-beech",
+    "description_en": "Panel-Beech \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 843,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-beech/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "Panel-Zebrano",
+    "slug": "wall-panels-panel-zebrano",
+    "description_en": "Panel-Zebrano \u2014 premium wall panels from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 946,
+    "category_slug": "wall-panels",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wall-panels/panel-zebrano/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "Ward-One",
+    "slug": "wardrobes-ward-one",
+    "description_en": "Ward-One \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 454,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-one/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "Ward-Two",
+    "slug": "wardrobes-ward-two",
+    "description_en": "Ward-Two \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 521,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-two/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "Ward-Three",
+    "slug": "wardrobes-ward-three",
+    "description_en": "Ward-Three \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 453,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-three/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "Ward-Four",
+    "slug": "wardrobes-ward-four",
+    "description_en": "Ward-Four \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 616,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-four/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "Ward-Five",
+    "slug": "wardrobes-ward-five",
+    "description_en": "Ward-Five \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 588,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-five/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "Ward-Six",
+    "slug": "wardrobes-ward-six",
+    "description_en": "Ward-Six \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 706,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-six/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "Ward-Seven",
+    "slug": "wardrobes-ward-seven",
+    "description_en": "Ward-Seven \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 707,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-seven/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "Ward-Eight",
+    "slug": "wardrobes-ward-eight",
+    "description_en": "Ward-Eight \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 800,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-eight/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "Ward-Nine",
+    "slug": "wardrobes-ward-nine",
+    "description_en": "Ward-Nine \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 879,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-nine/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "Ward-Ten",
+    "slug": "wardrobes-ward-ten",
+    "description_en": "Ward-Ten \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 915,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-ten/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "Ward-Eleven",
+    "slug": "wardrobes-ward-eleven",
+    "description_en": "Ward-Eleven \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 876,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-eleven/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "Ward-Twelve",
+    "slug": "wardrobes-ward-twelve",
+    "description_en": "Ward-Twelve \u2014 premium wardrobes from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 1004,
+    "category_slug": "wardrobes",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/wardrobes/ward-twelve/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "Table-Lux",
+    "slug": "tables-table-lux",
+    "description_en": "Table-Lux \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 352,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-lux/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "Table-Pro",
+    "slug": "tables-table-pro",
+    "description_en": "Table-Pro \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 358,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-pro/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "Table-Mini",
+    "slug": "tables-table-mini",
+    "description_en": "Table-Mini \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 477,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-mini/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "Table-Max",
+    "slug": "tables-table-max",
+    "description_en": "Table-Max \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 494,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-max/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "Table-Flex",
+    "slug": "tables-table-flex",
+    "description_en": "Table-Flex \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 632,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-flex/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "Table-Oak",
+    "slug": "tables-table-oak",
+    "description_en": "Table-Oak \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 629,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-oak/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "Table-Glass",
+    "slug": "tables-table-glass",
+    "description_en": "Table-Glass \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 615,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-glass/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "Table-Round",
+    "slug": "tables-table-round",
+    "description_en": "Table-Round \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 727,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-round/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "Table-Square",
+    "slug": "tables-table-square",
+    "description_en": "Table-Square \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 788,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-square/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "Table-Rect",
+    "slug": "tables-table-rect",
+    "description_en": "Table-Rect \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 782,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-rect/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "Table-Oval",
+    "slug": "tables-table-oval",
+    "description_en": "Table-Oval \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 815,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-oval/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "Table-Wide",
+    "slug": "tables-table-wide",
+    "description_en": "Table-Wide \u2014 premium tables from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 950,
+    "category_slug": "tables",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/tables/table-wide/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "Mirror-Arc",
+    "slug": "mirrors-mirror-arc",
+    "description_en": "Mirror-Arc \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 402,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-arc/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "Mirror-Sun",
+    "slug": "mirrors-mirror-sun",
+    "description_en": "Mirror-Sun \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 441,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-sun/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "Mirror-Moon",
+    "slug": "mirrors-mirror-moon",
+    "description_en": "Mirror-Moon \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 588,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-moon/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "Mirror-Square",
+    "slug": "mirrors-mirror-square",
+    "description_en": "Mirror-Square \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 584,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-square/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "Mirror-Round",
+    "slug": "mirrors-mirror-round",
+    "description_en": "Mirror-Round \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 634,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-round/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "Mirror-Oval",
+    "slug": "mirrors-mirror-oval",
+    "description_en": "Mirror-Oval \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 564,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-oval/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "Mirror-Rect",
+    "slug": "mirrors-mirror-rect",
+    "description_en": "Mirror-Rect \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 718,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-rect/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "Mirror-LED",
+    "slug": "mirrors-mirror-led",
+    "description_en": "Mirror-LED \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 728,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-led/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "Mirror-Frame",
+    "slug": "mirrors-mirror-frame",
+    "description_en": "Mirror-Frame \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 790,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-frame/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "Mirror-Gold",
+    "slug": "mirrors-mirror-gold",
+    "description_en": "Mirror-Gold \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 836,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-gold/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "Mirror-Silver",
+    "slug": "mirrors-mirror-silver",
+    "description_en": "Mirror-Silver \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 807,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-silver/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "Mirror-Matte",
+    "slug": "mirrors-mirror-matte",
+    "description_en": "Mirror-Matte \u2014 premium mirrors from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 977,
+    "category_slug": "mirrors",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/mirrors/mirror-matte/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  },
+  {
+    "name_en": "Handle-Brass",
+    "slug": "handles-handle-brass",
+    "description_en": "Handle-Brass \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 325,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-brass/",
+    "is_new": true,
+    "is_featured": true,
+    "stock_quantity": 10
+  },
+  {
+    "name_en": "Handle-Chrome",
+    "slug": "handles-handle-chrome",
+    "description_en": "Handle-Chrome \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 476,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-chrome/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 11
+  },
+  {
+    "name_en": "Handle-Matte",
+    "slug": "handles-handle-matte",
+    "description_en": "Handle-Matte \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 453,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-matte/",
+    "is_new": true,
+    "is_featured": false,
+    "stock_quantity": 12
+  },
+  {
+    "name_en": "Handle-Gold",
+    "slug": "handles-handle-gold",
+    "description_en": "Handle-Gold \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 488,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-gold/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 13
+  },
+  {
+    "name_en": "Handle-Silver",
+    "slug": "handles-handle-silver",
+    "description_en": "Handle-Silver \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 509,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-silver/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 14
+  },
+  {
+    "name_en": "Handle-Black",
+    "slug": "handles-handle-black",
+    "description_en": "Handle-Black \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 585,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-black/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 15
+  },
+  {
+    "name_en": "Handle-Copper",
+    "slug": "handles-handle-copper",
+    "description_en": "Handle-Copper \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 793,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-copper/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 16
+  },
+  {
+    "name_en": "Handle-Nickel",
+    "slug": "handles-handle-nickel",
+    "description_en": "Handle-Nickel \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 697,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-nickel/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 17
+  },
+  {
+    "name_en": "Handle-Steel",
+    "slug": "handles-handle-steel",
+    "description_en": "Handle-Steel \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 811,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-steel/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 18
+  },
+  {
+    "name_en": "Handle-Bronze",
+    "slug": "handles-handle-bronze",
+    "description_en": "Handle-Bronze \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 767,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-bronze/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 19
+  },
+  {
+    "name_en": "Handle-Classic",
+    "slug": "handles-handle-classic",
+    "description_en": "Handle-Classic \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 977,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-classic/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 20
+  },
+  {
+    "name_en": "Handle-Modern",
+    "slug": "handles-handle-modern",
+    "description_en": "Handle-Modern \u2014 premium handles from the UNION collection. Italian craftsmanship, curated finishes, custom sizing available.",
+    "price": 976,
+    "category_slug": "handles",
+    "images": [
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1000&q=80"
+    ],
+    "specifications": {
+      "material": "Solid wood",
+      "finish": "Matte",
+      "made_in": "Italy"
+    },
+    "source_url": "https://en.union.ru/catalog/handles/handle-modern/",
+    "is_new": false,
+    "is_featured": false,
+    "stock_quantity": 21
+  }
+]

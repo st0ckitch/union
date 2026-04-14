@@ -1,0 +1,47 @@
+[
+  {
+    "slug": "swing-doors",
+    "name_en": "Interior Doors",
+    "path": "/mezhkomnatnye-dveri"
+  },
+  {
+    "slug": "sliding-doors",
+    "name_en": "Sliding Doors",
+    "path": "/razdvizhnye-dveri"
+  },
+  {
+    "slug": "entrance-doors",
+    "name_en": "Entrance Doors",
+    "path": "/vhodnye-dveri"
+  },
+  {
+    "slug": "sliding-partitions",
+    "name_en": "Partitions",
+    "path": "/peregorodki"
+  },
+  {
+    "slug": "wardrobes",
+    "name_en": "Wardrobes & Cabinets",
+    "path": "/garderobnye-shkafy"
+  },
+  {
+    "slug": "furniture",
+    "name_en": "Furniture",
+    "path": "/mebel-846"
+  },
+  {
+    "slug": "handles",
+    "name_en": "Handles & Hardware",
+    "path": "/furnitura-1401"
+  },
+  {
+    "slug": "vitrines",
+    "name_en": "Vitrines & Commodes",
+    "path": "/furniture/vitriny-komody"
+  },
+  {
+    "slug": "hidden-doors",
+    "name_en": "Hidden Doors (Invisible)",
+    "path": "/skrytye-dveri-invisible"
+  }
+]

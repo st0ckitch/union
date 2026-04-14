@@ -1,0 +1,437 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mersad — Georgian typeface (local .otf files in /public/fonts) */
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-Thin.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-ExtraLight.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-Light.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-Medium.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-SemiBold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-Bold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-ExtraBold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Mersad';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Mersad-Black.otf') format('opentype');
+}
+
+/* HMspace + UNION Design System */
+
+@layer base {
+  :root {
+    /* Main background - clean white */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+
+    /* Cards and surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Primary - Dark teal for buttons/links */
+    --primary: 165 40% 22%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Light gray */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 10%;
+
+    /* Muted - Subtle gray */
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent - Gold/Yellow for highlights */
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 10%;
+
+    /* Sale/Promo - Yellow for SALE text */
+    --sale: 45 100% 50%;
+    --sale-foreground: 0 0% 10%;
+
+    /* NEW badge - Orange */
+    --new-badge: 20 100% 60%;
+    --new-badge-foreground: 0 0% 100%;
+
+    /* Success - Green */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    /* Destructive - Red */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and inputs */
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 165 40% 22%;
+
+    --radius: 0.375rem;
+
+    /* Header - Pure black */
+    --header-bg: 0 0% 8%;
+    --header-foreground: 0 0% 100%;
+
+    /* Header top bar - Black */
+    --header-top: 0 0% 6%;
+    --header-top-foreground: 0 0% 100%;
+
+    /* Mega menu - Dark background */
+    --mega-menu-bg: 0 0% 100%;
+    --mega-menu-foreground: 0 0% 10%;
+    --mega-menu-sidebar: 0 0% 96%;
+
+    /* Sidebar - Dark theme for admin */
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 45 100% 50%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 45 100% 50%;
+
+    /* Custom tokens */
+    --header-height: 80px;
+  }
+
+  .dark {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 165 50% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 45 100% 55%;
+    --accent-foreground: 0 0% 10%;
+
+    --sale: 45 100% 55%;
+    --sale-foreground: 0 0% 10%;
+
+    --success: 142 76% 42%;
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 165 50% 40%;
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 45 100% 55%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 45 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+
+  /* Montserrat everywhere — full weight range pulled from Google Fonts in index.html */
+  html,
+  body {
+    font-family: 'Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', system-ui, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphic utilities — villa-haven style */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+  }
+
+  .glass-panel-dark {
+    background: rgba(17, 17, 17, 0.55);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.08), 0 2px 8px 0 rgba(0, 0, 0, 0.04);
+  }
+
+  .glass-card-3d {
+    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow:
+      0 20px 50px -12px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s;
+  }
+
+  .glass-card-3d:hover {
+    transform: translateY(-6px) rotateX(2deg);
+    box-shadow:
+      0 30px 60px -12px rgba(0, 0, 0, 0.22),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  }
+
+  /* Mesh / aurora background */
+  .aurora-bg {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(52, 211, 153, 0.25), transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(229, 177, 0, 0.18), transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.18), transparent 50%),
+      linear-gradient(180deg, #fafaf9 0%, #f5f5f4 100%);
+  }
+
+  /* Floating orbs */
+  @keyframes float-orb {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    33% { transform: translateY(-20px) translateX(10px); }
+    66% { transform: translateY(10px) translateX(-15px); }
+  }
+
+  .animate-float-orb {
+    animation: float-orb 12s ease-in-out infinite;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
+
+@layer components {
+  /* Header styles */
+  .union-header {
+    background: hsl(var(--header-bg));
+    color: hsl(var(--header-foreground));
+  }
+
+  .union-header-top {
+    background: hsl(var(--header-top));
+    color: hsl(var(--header-top-foreground));
+  }
+
+  /* NEW badge - orange */
+  .badge-new {
+    @apply text-xs font-bold px-2 py-0.5 uppercase tracking-wider rounded;
+    background: hsl(var(--new-badge));
+    color: hsl(var(--new-badge-foreground));
+  }
+
+  /* Sale badge - yellow/gold */
+  .badge-sale {
+    @apply text-xs font-bold px-2 py-0.5 uppercase tracking-wider rounded;
+    background: hsl(var(--sale));
+    color: hsl(var(--sale-foreground));
+  }
+
+  /* Sale text - yellow */
+  .text-sale {
+    color: hsl(var(--sale));
+  }
+
+  /* Accent text - gold */
+  .text-accent-gold {
+    color: hsl(var(--accent));
+  }
+
+  /* Mega menu styles */
+  .mega-menu {
+    background: hsl(var(--mega-menu-bg));
+    color: hsl(var(--mega-menu-foreground));
+    @apply shadow-2xl border border-border;
+  }
+
+  .mega-menu-sidebar {
+    background: hsl(var(--mega-menu-sidebar));
+  }
+
+  /* Product card hover effect */
+  .product-card {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Category card with overlay */
+  .category-card {
+    @apply relative overflow-hidden;
+  }
+
+  .category-card::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 transition-opacity;
+  }
+
+  .category-card:hover::after {
+    @apply opacity-90;
+  }
+
+  /* WhatsApp floating button */
+  .whatsapp-float {
+    @apply fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform;
+  }
+
+  /* Section title with line */
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold text-foreground relative inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-12 h-0.5 bg-primary;
+  }
+
+  /* HMspace specific styles */
+  .hmspace-hero {
+    @apply min-h-screen flex items-center justify-center relative;
+    background: linear-gradient(135deg, hsl(0 0% 5%) 0%, hsl(0 0% 12%) 100%);
+  }
+
+  .hmspace-card {
+    @apply bg-card border border-border rounded-lg p-8 transition-all duration-300;
+    @apply hover:shadow-xl hover:border-accent hover:-translate-y-2;
+  }
+
+  /* Union hero promo banner */
+  .union-promo-banner {
+    background: linear-gradient(135deg, hsl(0 0% 8%) 0%, hsl(0 0% 15%) 100%);
+    @apply text-white;
+  }
+}
+
+@layer utilities {
+  /* Georgian text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
