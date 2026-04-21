@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // When deploying to GitHub Pages under /union/, set BASE=/union/ at build time.
+  // Netlify / Vercel / local dev leave BASE unset → base is "/".
+  base: process.env.BASE ?? "/",
   server: {
     host: "::",
     port: 8080,

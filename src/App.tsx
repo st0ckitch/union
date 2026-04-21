@@ -56,7 +56,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
             <Routes>
               {/* HMspace main landing */}
               <Route path="/" element={<HMspaceLanding />} />
