@@ -5,62 +5,97 @@ export function HMAbout() {
   const { t } = useLanguage();
 
   return (
-    <section id="about" className="relative py-24 md:py-32 overflow-hidden aurora-bg">
-      {/* Floating decorative orbs */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-20 right-[8%] w-72 h-72 rounded-full bg-neutral-900/5 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-10 left-[10%] w-64 h-64 rounded-full bg-neutral-900/5 blur-3xl animate-float-orb" style={{ animationDelay: '3s' }} />
-      </div>
+    <section id="about" className="relative py-28 md:py-40 overflow-hidden bg-white grain">
+      {/* Thin horizontal rule that animates in */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-neutral-200" />
 
-      <div className="relative max-w-[1280px] mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left — image inside a glass 3D card */}
+      <div className="relative max-w-[1320px] mx-auto px-6">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-6 items-start">
+          {/* Left column — sticky label + large serif heading */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
-            className="perspective-1000"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 lg:sticky lg:top-32"
           >
-            <div className="glass-card-3d rounded-3xl p-3">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-neutral-900" />
+              <p className="text-[11px] tracking-[0.35em] uppercase text-neutral-500 font-medium">
+                {t('brandEyebrow')}
+              </p>
+            </div>
+
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-neutral-900 leading-[1.1] tracking-tight mb-8">
+              {t('brandTitle')}
+            </h2>
+
+            <p className="text-[15px] text-neutral-500 leading-relaxed max-w-md">
+              {t('brandBody')}
+            </p>
+
+            {/* Decorative numbers */}
+            <div className="mt-12 flex items-end gap-12">
+              <div>
+                <p className="text-5xl md:text-6xl font-extralight text-neutral-900 leading-none tracking-tighter">
+                  35<span className="text-neutral-300">+</span>
+                </p>
+                <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-400 mt-2">
+                  {t('stat1Label')}
+                </p>
+              </div>
+              <div>
+                <p className="text-5xl md:text-6xl font-extralight text-neutral-900 leading-none tracking-tighter">
+                  18
+                </p>
+                <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-400 mt-2">
+                  {t('stat3Label')}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right column — stacked images with offset */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 relative"
+          >
+            {/* Main image */}
+            <div className="relative">
+              <div className="aspect-[3/4] md:aspect-[4/5] overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=85"
                   alt="HMspace interior"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between glass-panel rounded-2xl px-5 py-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-neutral-900">HMspace</p>
-                    <p className="font-serif text-xl text-neutral-900">Est. 2014</p>
-                  </div>
-                  <div className="w-px h-8 bg-neutral-300" />
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-neutral-900">Tbilisi</p>
-                    <p className="font-serif text-xl text-neutral-900">Georgia</p>
-                  </div>
-                </div>
+              </div>
+
+              {/* Floating info card */}
+              <div className="absolute -bottom-6 -left-4 md:-left-12 bg-neutral-900 text-white px-8 py-6 max-w-[260px]">
+                <p className="text-[10px] tracking-[0.3em] uppercase text-white/50 mb-1">HMspace</p>
+                <p className="text-2xl font-light tracking-tight">Est. 2014</p>
+                <div className="w-6 h-px bg-white/30 my-3" />
+                <p className="text-[10px] tracking-[0.2em] uppercase text-white/50">Tbilisi, Georgia</p>
               </div>
             </div>
-          </motion.div>
 
-          {/* Right — text */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            <p className="text-xs tracking-[0.3em] uppercase text-neutral-900 mb-4 font-semibold">
-              {t('brandEyebrow')}
-            </p>
-            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-neutral-900 leading-[1.1] mb-5 tracking-tight">
-              {t('brandTitle')}
-            </h2>
-            <div className="w-12 h-px bg-neutral-900 mb-5" />
-            <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
-              {t('brandBody')}
-            </p>
+            {/* Small secondary image — offset */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="hidden md:block absolute -top-8 -right-6 w-48 lg:w-56 aspect-square overflow-hidden shadow-2xl"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80"
+                alt="Interior detail"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
           </motion.div>
         </div>
       </div>

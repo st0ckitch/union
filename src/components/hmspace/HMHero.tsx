@@ -15,55 +15,62 @@ export function HMHero() {
           alt="Premium interior"
           className="w-full h-full object-cover"
         />
-        {/* Strong dark overlay so the headline reads clearly over any photo */}
-        <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/70" />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
       </div>
 
-      {/* Monochrome floating orbs — subtle depth */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-[20%] left-[6%] w-40 h-40 rounded-full bg-white/10 blur-3xl animate-float-orb" />
-        <div className="absolute top-[50%] right-[10%] w-56 h-56 rounded-full bg-white/5 blur-3xl animate-float-orb" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-[15%] left-[30%] w-48 h-48 rounded-full bg-white/10 blur-3xl animate-float-orb" style={{ animationDelay: '4s' }} />
-      </div>
-
-      {/* Content */}
+      {/* Content — bottom-aligned editorial layout */}
       <div className="relative z-10 min-h-screen flex items-end">
-        <div className="max-w-[1280px] mx-auto w-full px-6 pb-24 md:pb-32">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <p className="inline-flex items-center gap-2 text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/85 mb-5 px-4 py-2 rounded-full glass-panel-dark">
-              <span className="w-1.5 h-1.5 rounded-full bg-white" />
-              {t('heroEyebrow')}
-            </p>
-            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.05] mb-6 tracking-tight">
-              {t('heroTagline')}
-            </h1>
-            <p className="text-sm md:text-base text-white/80 max-w-xl leading-relaxed mb-8">
-              {t('heroSub')}
-            </p>
+        <div className="max-w-[1320px] mx-auto w-full px-6 pb-20 md:pb-28">
+          <div className="grid lg:grid-cols-12 gap-8 items-end">
+            {/* Main headline — takes most of the width */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-8"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-px bg-white/40" />
+                <p className="text-[11px] tracking-[0.35em] uppercase text-white/60 font-medium">
+                  {t('heroEyebrow')}
+                </p>
+              </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <Link
-                to="/union"
-                className="group inline-flex items-center gap-3 h-12 px-6 rounded-full bg-white text-neutral-900 hover:bg-neutral-200 transition-colors text-xs md:text-sm tracking-wide font-semibold"
-              >
-                {t('heroCtaUnion')}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <a
-                href="#brand"
-                className="group inline-flex items-center gap-3 h-12 px-6 rounded-full border border-white/40 text-white hover:bg-white/10 transition-colors text-xs md:text-sm tracking-wide font-medium"
-              >
-                {t('heroCtaExplore')}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-            </div>
-          </motion.div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.05] tracking-tight mb-8">
+                {t('heroTagline')}
+              </h1>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  to="/union"
+                  className="group inline-flex items-center gap-3 h-13 px-7 bg-white text-neutral-900 hover:bg-neutral-100 transition-colors text-sm tracking-wide font-medium"
+                >
+                  {t('heroCtaUnion')}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <a
+                  href="#brand"
+                  className="group inline-flex items-center gap-3 h-13 px-7 border border-white/30 text-white hover:bg-white/10 transition-colors text-sm tracking-wide font-medium"
+                >
+                  {t('heroCtaExplore')}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Right side — small descriptor text */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="lg:col-span-4 hidden lg:block"
+            >
+              <p className="text-sm text-white/40 leading-relaxed border-l border-white/15 pl-6">
+                {t('heroSub')}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

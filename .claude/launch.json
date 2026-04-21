@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 8080
+    },
+    {
+      "name": "olympiad-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/user/Downloads/olympiad-frontend-main && npm run dev"],
+      "port": 3000
     }
   ]
 }

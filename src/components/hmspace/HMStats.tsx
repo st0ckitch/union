@@ -12,39 +12,72 @@ export function HMStats() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative py-20 md:py-28 aurora-bg overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 left-1/3 w-[32rem] h-[32rem] rounded-full bg-neutral-900/5 blur-3xl animate-float-orb" />
-      </div>
+    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
+      {/* Top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-neutral-200" />
 
-      <div className="relative max-w-[1280px] mx-auto px-6">
-        <div className="text-center mb-12">
-          <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-neutral-500 mb-3">{t('statsTitle')}</p>
-          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-neutral-900 tracking-tight">
-            {t('missionTitle')}
-          </h2>
-        </div>
+      <div className="max-w-[1320px] mx-auto px-6">
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-3 mb-16"
+        >
+          <div className="w-8 h-px bg-neutral-900" />
+          <p className="text-[11px] tracking-[0.35em] uppercase text-neutral-500 font-medium">
+            {t('statsTitle')}
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 perspective-1000">
+        {/* Stats — full-width horizontal with large typography */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
           {stats.map((s, i) => (
             <motion.div
               key={s.key}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="glass-card-3d rounded-3xl p-7 text-center"
+              transition={{ delay: i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="relative py-8 lg:py-0"
             >
-              <p className="font-serif text-3xl md:text-4xl lg:text-5xl text-neutral-900 leading-none mb-2">
-                {s.value}
-              </p>
-              <p className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-neutral-500">
-                {t(s.key)}
-              </p>
+              {/* Vertical separator (except first) */}
+              {i > 0 && (
+                <div className="hidden lg:block absolute top-0 bottom-0 left-0 w-px bg-neutral-200" />
+              )}
+
+              <div className="lg:px-8">
+                <p className="text-5xl md:text-6xl lg:text-7xl font-extralight text-neutral-900 leading-none tracking-tighter mb-3">
+                  {s.value}
+                </p>
+                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-neutral-400 font-medium">
+                  {t(s.key)}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Infinite marquee ticker — subtle brand reinforcement */}
+      <div className="mt-20 overflow-hidden border-t border-b border-neutral-100 py-4">
+        <div className="animate-marquee flex items-center whitespace-nowrap">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <span key={i} className="mx-10 text-[11px] tracking-[0.4em] uppercase text-neutral-300 font-medium select-none">
+              HMspace
+              <span className="mx-8 text-neutral-200">/</span>
+              Premium Interiors
+              <span className="mx-8 text-neutral-200">/</span>
+              Italian Design
+              <span className="mx-8 text-neutral-200">/</span>
+              Since 2014
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom border */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-neutral-200" />
     </section>
   );
 }
