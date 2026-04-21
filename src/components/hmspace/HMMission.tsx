@@ -1,20 +1,21 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useHMSection, useLocalized } from '@/hooks/useHMSection';
 
 export function HMMission() {
   const { t } = useLanguage();
+  const { data: section } = useHMSection('mission');
+  const L = useLocalized();
+
+  const title = section ? L(section, 'title') : t('missionTitle');
+  const body = section ? L(section, 'body') : t('missionBody');
+  const image = section?.image_url || 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=2000&q=85';
 
   return (
     <section id="mission" className="relative min-h-[70vh] overflow-hidden">
-      {/* Full-bleed background */}
       <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=2000&q=85"
-          alt=""
-          className="w-full h-full object-cover"
-        />
+        <img src={image} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/75" />
-        {/* Noise texture over image */}
         <div
           className="absolute inset-0 opacity-[0.06]"
           style={{
@@ -26,7 +27,6 @@ export function HMMission() {
 
       <div className="relative max-w-[1320px] mx-auto px-6 py-28 md:py-40">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left — oversized quote */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -41,11 +41,10 @@ export function HMMission() {
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-[1.1] tracking-tight">
-              {t('missionTitle')}
+              {title}
             </h2>
           </motion.div>
 
-          {/* Right — body text + decorative line */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -54,10 +53,9 @@ export function HMMission() {
             className="lg:border-l lg:border-white/10 lg:pl-12"
           >
             <p className="text-base md:text-lg text-white/60 leading-relaxed mb-8 max-w-md">
-              {t('missionBody')}
+              {body}
             </p>
 
-            {/* Signature-style mark */}
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
                 <span className="text-xs font-medium text-white/60 tracking-wider">HM</span>

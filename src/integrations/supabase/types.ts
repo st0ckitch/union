@@ -23,6 +23,7 @@ export type Database = {
           image_url: string
           is_active: boolean | null
           link_url: string | null
+          section: string | null
           sort_order: number | null
           subtitle_en: string | null
           subtitle_ka: string | null
@@ -38,6 +39,7 @@ export type Database = {
           image_url: string
           is_active?: boolean | null
           link_url?: string | null
+          section?: string | null
           sort_order?: number | null
           subtitle_en?: string | null
           subtitle_ka?: string | null
@@ -53,6 +55,7 @@ export type Database = {
           image_url?: string
           is_active?: boolean | null
           link_url?: string | null
+          section?: string | null
           sort_order?: number | null
           subtitle_en?: string | null
           subtitle_ka?: string | null
@@ -126,6 +129,9 @@ export type Database = {
           slug: string
           sort_order: number | null
           updated_at: string
+          home_visible: boolean | null
+          home_sort_order: number | null
+          home_image_url: string | null
         }
         Insert: {
           created_at?: string
@@ -139,6 +145,9 @@ export type Database = {
           slug: string
           sort_order?: number | null
           updated_at?: string
+          home_visible?: boolean | null
+          home_sort_order?: number | null
+          home_image_url?: string | null
         }
         Update: {
           created_at?: string
@@ -152,6 +161,9 @@ export type Database = {
           slug?: string
           sort_order?: number | null
           updated_at?: string
+          home_visible?: boolean | null
+          home_sort_order?: number | null
+          home_image_url?: string | null
         }
         Relationships: [
           {
@@ -474,6 +486,249 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           rating?: number | null
+        }
+        Relationships: []
+      }
+      site_features: {
+        Row: {
+          id: string
+          icon: string
+          title_ka: string
+          title_ru: string | null
+          title_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          icon: string
+          title_ka: string
+          title_ru?: string | null
+          title_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          icon?: string
+          title_ka?: string
+          title_ru?: string | null
+          title_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hmspace_sections: {
+        Row: {
+          id: string
+          section_key: string
+          eyebrow_ka: string | null
+          eyebrow_ru: string | null
+          eyebrow_en: string | null
+          title_ka: string | null
+          title_ru: string | null
+          title_en: string | null
+          subtitle_ka: string | null
+          subtitle_ru: string | null
+          subtitle_en: string | null
+          body_ka: string | null
+          body_ru: string | null
+          body_en: string | null
+          image_url: string | null
+          secondary_image_url: string | null
+          cta_label_ka: string | null
+          cta_label_ru: string | null
+          cta_label_en: string | null
+          cta_url: string | null
+          cta_secondary_label_ka: string | null
+          cta_secondary_label_ru: string | null
+          cta_secondary_label_en: string | null
+          cta_secondary_url: string | null
+          items: Json | null
+          is_active: boolean | null
+          sort_order: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          section_key: string
+          eyebrow_ka?: string | null
+          eyebrow_ru?: string | null
+          eyebrow_en?: string | null
+          title_ka?: string | null
+          title_ru?: string | null
+          title_en?: string | null
+          subtitle_ka?: string | null
+          subtitle_ru?: string | null
+          subtitle_en?: string | null
+          body_ka?: string | null
+          body_ru?: string | null
+          body_en?: string | null
+          image_url?: string | null
+          secondary_image_url?: string | null
+          cta_label_ka?: string | null
+          cta_label_ru?: string | null
+          cta_label_en?: string | null
+          cta_url?: string | null
+          cta_secondary_label_ka?: string | null
+          cta_secondary_label_ru?: string | null
+          cta_secondary_label_en?: string | null
+          cta_secondary_url?: string | null
+          items?: Json | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          section_key?: string
+          eyebrow_ka?: string | null
+          eyebrow_ru?: string | null
+          eyebrow_en?: string | null
+          title_ka?: string | null
+          title_ru?: string | null
+          title_en?: string | null
+          subtitle_ka?: string | null
+          subtitle_ru?: string | null
+          subtitle_en?: string | null
+          body_ka?: string | null
+          body_ru?: string | null
+          body_en?: string | null
+          image_url?: string | null
+          secondary_image_url?: string | null
+          cta_label_ka?: string | null
+          cta_label_ru?: string | null
+          cta_label_en?: string | null
+          cta_url?: string | null
+          cta_secondary_label_ka?: string | null
+          cta_secondary_label_ru?: string | null
+          cta_secondary_label_en?: string | null
+          cta_secondary_url?: string | null
+          items?: Json | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hmspace_projects: {
+        Row: {
+          id: string
+          title_ka: string
+          title_ru: string | null
+          title_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          image_url: string
+          link_url: string | null
+          location: string | null
+          year: string | null
+          sort_order: number | null
+          is_active: boolean | null
+          is_featured: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title_ka: string
+          title_ru?: string | null
+          title_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url: string
+          link_url?: string | null
+          location?: string | null
+          year?: string | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title_ka?: string
+          title_ru?: string | null
+          title_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string
+          link_url?: string | null
+          location?: string | null
+          year?: string | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      legal_pages: {
+        Row: {
+          id: string
+          slug: string
+          title_ka: string
+          title_ru: string | null
+          title_en: string | null
+          body_ka: string | null
+          body_ru: string | null
+          body_en: string | null
+          is_active: boolean | null
+          sort_order: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title_ka: string
+          title_ru?: string | null
+          title_en?: string | null
+          body_ka?: string | null
+          body_ru?: string | null
+          body_en?: string | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title_ka?: string
+          title_ru?: string | null
+          title_en?: string | null
+          body_ka?: string | null
+          body_ru?: string | null
+          body_en?: string | null
+          is_active?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }

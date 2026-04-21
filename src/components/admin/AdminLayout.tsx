@@ -4,22 +4,27 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { 
-  LayoutDashboard, 
-  Package, 
-  FolderTree, 
-  ShoppingCart, 
-  Image, 
-  FileText, 
-  MessageSquare, 
-  Store, 
+import {
+  LayoutDashboard,
+  Package,
+  FolderTree,
+  ShoppingCart,
+  Image,
+  FileText,
+  MessageSquare,
+  Store,
   Star,
   Settings as SettingsIcon,
   Upload,
   LogOut,
   Loader2,
   ChevronLeft,
-  Menu
+  Menu,
+  Sparkles,
+  Home,
+  Landmark,
+  ScrollText,
+  Camera
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -30,16 +35,26 @@ interface AdminLayoutProps {
 
 const navItems = [
   { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  // Catalog
   { href: '/admin/products', icon: Package, label: 'Products' },
   { href: '/admin/products/import', icon: Upload, label: 'Bulk Import' },
   { href: '/admin/categories', icon: FolderTree, label: 'Categories' },
+  { href: '/admin/home-categories', icon: Home, label: 'Home Grid' },
   { href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
+  // Navigation / banners
   { href: '/admin/menu-items', icon: Menu, label: 'Menu Items' },
   { href: '/admin/banners', icon: Image, label: 'Banners' },
+  { href: '/admin/site-features', icon: Sparkles, label: 'Features Bar' },
+  // HMspace
+  { href: '/admin/hmspace-sections', icon: Landmark, label: 'HMspace Sections' },
+  { href: '/admin/hmspace-projects', icon: Camera, label: 'HMspace Projects' },
+  // Content
   { href: '/admin/blog', icon: FileText, label: 'Blog Posts' },
+  { href: '/admin/testimonials', icon: Star, label: 'Testimonials' },
+  { href: '/admin/legal-pages', icon: ScrollText, label: 'Legal Pages' },
+  // Operations
   { href: '/admin/consultations', icon: MessageSquare, label: 'Consultations' },
   { href: '/admin/showrooms', icon: Store, label: 'Showrooms' },
-  { href: '/admin/testimonials', icon: Star, label: 'Testimonials' },
   { href: '/admin/settings', icon: SettingsIcon, label: 'Settings' },
 ];
 

@@ -35,6 +35,11 @@ import AdminTestimonials from "./pages/admin/Testimonials";
 import AdminSettings from "./pages/admin/Settings";
 import AdminProductsImport from "./pages/admin/ProductsImport";
 import AdminMenuItems from "./pages/admin/MenuItems";
+import AdminSiteFeatures from "./pages/admin/SiteFeatures";
+import AdminHMSections from "./pages/admin/HMSections";
+import AdminHMProjects from "./pages/admin/HMProjects";
+import AdminLegalPages from "./pages/admin/LegalPages";
+import AdminHomeCategories from "./pages/admin/HomeCategories";
 
 // Shared pages (will use Union layout)
 import Checkout from "./pages/Checkout";
@@ -75,6 +80,11 @@ const App = () => (
               <Route path="/admin/consultations" element={<AdminConsultations />} />
               <Route path="/admin/showrooms" element={<AdminShowrooms />} />
               <Route path="/admin/testimonials" element={<AdminTestimonials />} />
+              <Route path="/admin/site-features" element={<AdminSiteFeatures />} />
+              <Route path="/admin/home-categories" element={<AdminHomeCategories />} />
+              <Route path="/admin/hmspace-sections" element={<AdminHMSections />} />
+              <Route path="/admin/hmspace-projects" element={<AdminHMProjects />} />
+              <Route path="/admin/legal-pages" element={<AdminLegalPages />} />
               
               {/* UNION platform */}
               <Route path="/union" element={<UnionIndex />} />
