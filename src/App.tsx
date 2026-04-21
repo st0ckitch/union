@@ -8,7 +8,6 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 
 // HMspace Pages
 import HMspaceLanding from "./pages/HMspaceLanding";
-import StrategyMicrosite from "./pages/StrategyMicrosite";
 
 // Union Pages
 import UnionIndex from "./pages/union/Index";
@@ -66,9 +65,6 @@ const App = () => (
             <Routes>
               {/* HMspace main landing */}
               <Route path="/" element={<HMspaceLanding />} />
-
-              {/* Strategy Microsite */}
-              <Route path="/strategy" element={<StrategyMicrosite />} />
               
               {/* Admin Panel */}
               <Route path="/admin/login" element={<AdminLogin />} />
