@@ -16,26 +16,21 @@ export default function AdminLogin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Public access mode — go straight to admin
-    navigate('/admin');
-    return;
-
-    // Original auth check (disabled while public access is on):
-    // const checkExistingSession = async () => {
-    //   const { data: { session } } = await supabase.auth.getSession();
-    //   if (session?.user) {
-    //     const { data: hasRole } = await supabase.rpc('has_role', {
-    //       _user_id: session.user.id,
-    //       _role: 'admin'
-    //     });
-    //     if (hasRole) {
-    //       navigate('/admin');
-    //       return;
-    //     }
-    //   }
-    //   setCheckingSession(false);
-    // };
-    // checkExistingSession();
+    const checkExistingSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const { data: hasRole } = await supabase.rpc('has_role', {
+          _user_id: session.user.id,
+          _role: 'admin',
+        });
+        if (hasRole) {
+          navigate('/admin');
+          return;
+        }
+      }
+      setCheckingSession(false);
+    };
+    checkExistingSession();
   }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {

@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Globe, FolderTree, Box } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { BlockEditor, BLOCK_TYPE_LABELS } from '@/components/admin/blocks/BlockEditor';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Block = Tables<'product_content_blocks'>;
 type Category = Tables<'categories'>;
@@ -57,7 +58,7 @@ export default function AdminProductBlocks() {
   });
 
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('product_content_blocks').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('product_content_blocks', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-product-blocks'] }); toast.success('Block deleted'); },
     onError: (e: any) => toast.error(e.message),
   });

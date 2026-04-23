@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, ChevronDown, ChevronRight } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Group = Tables<'door_otdelka_groups'>;
 type Option = Tables<'door_otdelka_options'>;
@@ -59,7 +60,7 @@ export default function AdminDoorOtdelka() {
     onError: (e: any) => toast.error(e.message),
   });
   const delGroup = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('door_otdelka_groups').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('door_otdelka_groups', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-otdelka-groups'] }); qc.invalidateQueries({ queryKey: ['admin-otdelka-options'] }); toast.success('Group deleted'); },
     onError: (e: any) => toast.error(e.message),
   });
@@ -78,7 +79,7 @@ export default function AdminDoorOtdelka() {
     onError: (e: any) => toast.error(e.message),
   });
   const delOption = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('door_otdelka_options').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('door_otdelka_options', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-otdelka-options'] }); toast.success('Option deleted'); },
     onError: (e: any) => toast.error(e.message),
   });

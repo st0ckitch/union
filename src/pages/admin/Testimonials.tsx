@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Star } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Testimonial = Tables<'testimonials'>;
 
@@ -70,10 +71,7 @@ export default function AdminTestimonials() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('testimonials').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: (id: string) => deleteRow('testimonials', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
       toast.success('Testimonial deleted');

@@ -9,6 +9,7 @@ import { Plus, Pencil, Trash2, Loader2, Copy, ExternalLink, Box } from 'lucide-r
 import { Link } from 'react-router-dom';
 import { Tables } from '@/integrations/supabase/types';
 import { BlockEditor, BLOCK_TYPE_LABELS } from './blocks/BlockEditor';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Block = Tables<'product_content_blocks'>;
 
@@ -86,7 +87,7 @@ export function ProductBlocksEditor({ productId, categoryId }: Props) {
   });
 
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('product_content_blocks').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('product_content_blocks', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['pb-product', productId] }); toast.success('Block deleted'); },
     onError: (e: any) => toast.error(e.message),
   });

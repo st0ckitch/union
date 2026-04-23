@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Table = 'door_korobka_options' | 'door_model_options';
 
@@ -54,7 +55,7 @@ export function FlatOptionList({ table, queryKey, singularNoun, pluralNoun, code
     onError: (e: any) => toast.error(e.message),
   });
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from(table).delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow(table, id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: [queryKey] }); toast.success(`${singularNoun} deleted`); },
     onError: (e: any) => toast.error(e.message),
   });

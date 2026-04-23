@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Project = Tables<'hmspace_projects'>;
 
@@ -47,7 +48,7 @@ export default function AdminHMProjects() {
     onError: (e: any) => toast.error(e.message),
   });
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('hmspace_projects').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('hmspace_projects', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-hm-projects'] }); toast.success('Project deleted'); },
     onError: (e: any) => toast.error(e.message),
   });

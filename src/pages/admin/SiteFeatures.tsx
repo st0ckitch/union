@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Truck, Shield, CreditCard, Headphones, Star, Award, Package, Users, Sparkles, Heart, Clock, MapPin } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Feature = Tables<'site_features'>;
 
@@ -55,7 +56,7 @@ export default function AdminSiteFeatures() {
     onError: (e: any) => toast.error(e.message),
   });
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('site_features').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('site_features', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success('Feature deleted'); },
     onError: (e: any) => toast.error(e.message),
   });

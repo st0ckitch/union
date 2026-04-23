@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { Eye, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { format } from 'date-fns';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Consultation = Tables<'consultations'>;
 
@@ -49,10 +50,7 @@ export default function AdminConsultations() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('consultations').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: (id: string) => deleteRow('consultations', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-consultations'] });
       toast.success('Consultation deleted');

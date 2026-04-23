@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Category = Tables<'categories'>;
 
@@ -73,10 +74,7 @@ export default function AdminCategories() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('categories').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: (id: string) => deleteRow('categories', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-categories-list'] });
       toast.success('Category deleted');

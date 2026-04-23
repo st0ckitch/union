@@ -16,6 +16,7 @@ import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { ProductConfiguratorTab } from '@/components/admin/ProductConfiguratorTab';
 import { ProductBlocksEditor } from '@/components/admin/ProductBlocksEditor';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Product = Tables<'products'>;
 type Category = Tables<'categories'>;
@@ -94,10 +95,7 @@ export default function AdminProducts() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: (id: string) => deleteRow('products', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
       toast.success('Product deleted');

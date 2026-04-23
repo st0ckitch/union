@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Showroom = Tables<'showrooms'>;
 
@@ -73,10 +74,7 @@ export default function AdminShowrooms() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('showrooms').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: (id: string) => deleteRow('showrooms', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-showrooms'] });
       toast.success('Showroom deleted');

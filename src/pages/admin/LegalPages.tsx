@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type LegalPage = Tables<'legal_pages'>;
 
@@ -47,7 +48,7 @@ export default function AdminLegalPages() {
     onError: (e: any) => toast.error(e.message),
   });
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('legal_pages').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('legal_pages', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success('Page deleted'); },
     onError: (e: any) => toast.error(e.message),
   });

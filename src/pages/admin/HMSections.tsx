@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { toast } from 'sonner';
 import { Pencil, Loader2, Plus, Trash2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { deleteRow } from '@/lib/adminMutations';
 
 type Section = Tables<'hmspace_sections'>;
 
@@ -71,7 +72,7 @@ export default function AdminHMSections() {
   });
 
   const del = useMutation({
-    mutationFn: async (id: string) => { const { error } = await supabase.from('hmspace_sections').delete().eq('id', id); if (error) throw error; },
+    mutationFn: (id: string) => deleteRow('hmspace_sections', id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-hm-sections'] }); toast.success('Section deleted'); },
     onError: (e: any) => toast.error(e.message),
   });
