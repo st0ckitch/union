@@ -2,10 +2,10 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-// Fallback values — the anon key is safe to expose (RLS protects the data).
+// Fallback values — the publishable key is safe to expose (RLS protects the data).
 // These let the static build work on GitHub Pages even without env secrets.
-const FALLBACK_URL = 'https://nsmtxxsvutmryhwszccm.supabase.co';
-const FALLBACK_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zbXR4eHN2dXRtcnlod3N6Y2NtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MjI5NDAsImV4cCI6MjA4NDQ5ODk0MH0.nWoPdddG6ctx-c1pP2mkpu5a6rJJAEmx6G88yv8GFRY';
+const FALLBACK_URL = 'https://cadespdflpfmxzvvmxjl.supabase.co';
+const FALLBACK_KEY = 'sb_publishable_3-6m8jutWH8QhS7MPgK4Bw_fu0qW1Vk';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || FALLBACK_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || FALLBACK_KEY;
