@@ -123,7 +123,6 @@ INSERT INTO public.hmspace_sections (section_key, sort_order, eyebrow_ka, eyebro
     ('spotlight', 4,
      'ჩვენი ბრენდი',  'Наш бренд',    'Our brand',
      'UNION',          'UNION',         'UNION',
-     NULL, NULL, NULL,
      'ავეჯისა და კარების პრემიუმ კატალოგი — საცხოვრებელი და კომერციული პროექტებისთვის.',
      'Премиум каталог мебели и дверей — для жилых и коммерческих проектов.',
      'Premium catalog of furniture and doors — for residential and commercial projects.',
