@@ -320,6 +320,9 @@ export type Database = {
           specifications: Json | null
           stock_quantity: number | null
           updated_at: string
+          has_otdelka_variants: boolean | null
+          has_korobka_variants: boolean | null
+          has_model_variants: boolean | null
         }
         Insert: {
           category_id?: string | null
@@ -339,6 +342,9 @@ export type Database = {
           specifications?: Json | null
           stock_quantity?: number | null
           updated_at?: string
+          has_otdelka_variants?: boolean | null
+          has_korobka_variants?: boolean | null
+          has_model_variants?: boolean | null
         }
         Update: {
           category_id?: string | null
@@ -358,6 +364,9 @@ export type Database = {
           specifications?: Json | null
           stock_quantity?: number | null
           updated_at?: string
+          has_otdelka_variants?: boolean | null
+          has_korobka_variants?: boolean | null
+          has_model_variants?: boolean | null
         }
         Relationships: [
           {
@@ -729,6 +738,296 @@ export type Database = {
           sort_order?: number | null
           created_at?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      door_otdelka_groups: {
+        Row: {
+          id: string
+          code: string | null
+          name_ka: string
+          name_ru: string | null
+          name_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code?: string | null
+          name_ka: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string | null
+          name_ka?: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      door_otdelka_options: {
+        Row: {
+          id: string
+          group_id: string
+          code: string | null
+          label_ka: string
+          label_ru: string | null
+          label_en: string | null
+          swatch_image_url: string | null
+          preview_image_url: string | null
+          price_modifier: number | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          group_id: string
+          code?: string | null
+          label_ka: string
+          label_ru?: string | null
+          label_en?: string | null
+          swatch_image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          group_id?: string
+          code?: string | null
+          label_ka?: string
+          label_ru?: string | null
+          label_en?: string | null
+          swatch_image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "door_otdelka_options_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "door_otdelka_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      door_korobka_options: {
+        Row: {
+          id: string
+          code: string | null
+          name_ka: string
+          name_ru: string | null
+          name_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          image_url: string | null
+          preview_image_url: string | null
+          price_modifier: number | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code?: string | null
+          name_ka: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string | null
+          name_ka?: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      door_model_options: {
+        Row: {
+          id: string
+          code: string | null
+          name_ka: string
+          name_ru: string | null
+          name_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          image_url: string | null
+          preview_image_url: string | null
+          price_modifier: number | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code?: string | null
+          name_ka: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string | null
+          name_ka?: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      product_otdelka_options: {
+        Row: {
+          id: string
+          product_id: string
+          otdelka_option_id: string
+          is_default: boolean | null
+          sort_order: number | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          product_id: string
+          otdelka_option_id: string
+          is_default?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          product_id?: string
+          otdelka_option_id?: string
+          is_default?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      product_korobka_options: {
+        Row: {
+          id: string
+          product_id: string
+          korobka_option_id: string
+          is_default: boolean | null
+          sort_order: number | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          product_id: string
+          korobka_option_id: string
+          is_default?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          product_id?: string
+          korobka_option_id?: string
+          is_default?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      product_model_options: {
+        Row: {
+          id: string
+          product_id: string
+          model_option_id: string
+          is_default: boolean | null
+          sort_order: number | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          product_id: string
+          model_option_id: string
+          is_default?: boolean | null
+          sort_order?: number | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          product_id?: string
+          model_option_id?: string
+          is_default?: boolean | null
+          sort_order?: number | null
+          created_at?: string
         }
         Relationships: []
       }

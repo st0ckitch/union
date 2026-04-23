@@ -7,6 +7,7 @@ import { OrderModal } from '@/components/union/OrderModal';
 import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { ProductGallery } from '@/components/products/ProductGallery';
 import { ProductGrid } from '@/components/products/ProductGrid';
+import { DoorConfigurator, ConfiguratorSelection } from '@/components/products/DoorConfigurator';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -22,6 +23,7 @@ const UnionProductDetail = () => {
   const { addItem } = useCart();
   const { language, t } = useLanguage();
   const [orderOpen, setOrderOpen] = useState(false);
+  const [configSelection, setConfigSelection] = useState<ConfiguratorSelection | null>(null);
 
   // Fetch product
   const { data: product, isLoading } = useQuery({
@@ -99,16 +101,24 @@ const UnionProductDetail = () => {
   const categorySlug = product.categories?.slug ?? null;
   const resolvedImages = resolveProductImages(product.images, categorySlug, product.slug);
   const hasDiscount = product.sale_price && product.sale_price < product.price;
-  const displayPrice = hasDiscount ? product.sale_price : product.price;
+  const basePrice = hasDiscount ? product.sale_price! : product.price;
+  const displayPrice = basePrice + (configSelection?.priceModifier || 0);
   const discountPercent = hasDiscount
     ? Math.round(((product.price - product.sale_price!) / product.price) * 100)
     : 0;
 
+  const hasAnyVariants =
+    (product.has_otdelka_variants ?? false) ||
+    (product.has_korobka_variants ?? false) ||
+    (product.has_model_variants ?? false);
+  const variantSummary = configSelection?.summary || '';
+  const displayName = variantSummary ? `${name} — ${variantSummary}` : name;
+
   const handleAddToCart = () => {
     addItem({
       id: product.id,
-      name: name,
-      price: displayPrice!,
+      name: displayName,
+      price: displayPrice,
       image: resolvedImages[0] || '/placeholder.svg',
     });
   };
@@ -154,13 +164,18 @@ const UnionProductDetail = () => {
             <h1 className="text-3xl font-bold">{name}</h1>
 
             {/* Price */}
-            <div className="flex items-baseline gap-3">
+            <div className="flex items-baseline gap-3 flex-wrap">
               <span className="text-3xl font-bold text-primary">
-                {displayPrice?.toLocaleString()} ₾
+                {displayPrice.toLocaleString()} ₾
               </span>
               {hasDiscount && (
                 <span className="text-xl text-muted-foreground line-through">
                   {product.price.toLocaleString()} ₾
+                </span>
+              )}
+              {configSelection && configSelection.priceModifier !== 0 && (
+                <span className="text-xs text-muted-foreground">
+                  ({language === 'ru' ? 'с опциями' : language === 'en' ? 'with options' : 'ოფციებით'})
                 </span>
               )}
             </div>
@@ -187,6 +202,20 @@ const UnionProductDetail = () => {
               <p className="text-muted-foreground leading-relaxed">
                 {description}
               </p>
+            )}
+
+            {/* Door configurator (only if product has variants enabled) */}
+            {hasAnyVariants && (
+              <DoorConfigurator
+                productId={product.id}
+                basePrice={basePrice}
+                flags={{
+                  hasOtdelka: product.has_otdelka_variants ?? false,
+                  hasKorobka: product.has_korobka_variants ?? false,
+                  hasModel:   product.has_model_variants ?? false,
+                }}
+                onSelectionChange={setConfigSelection}
+              />
             )}
 
             {/* Actions */}
@@ -219,8 +248,8 @@ const UnionProductDetail = () => {
               onOpenChange={setOrderOpen}
               singleProduct={{
                 id: product.id,
-                name: name,
-                price: displayPrice ?? product.price,
+                name: displayName,
+                price: displayPrice,
                 image: resolvedImages[0],
               }}
             />

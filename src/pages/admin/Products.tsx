@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
+import { ProductConfiguratorTab } from '@/components/admin/ProductConfiguratorTab';
 
 type Product = Tables<'products'>;
 type Category = Tables<'categories'>;
@@ -35,7 +36,13 @@ export default function AdminProducts() {
     is_new: false,
     stock_quantity: '0',
     images: [] as string[],
+    has_otdelka_variants: false,
+    has_korobka_variants: false,
+    has_model_variants: false,
   });
+  const [selectedOtdelka, setSelectedOtdelka] = useState<string[]>([]);
+  const [selectedKorobka, setSelectedKorobka] = useState<string[]>([]);
+  const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const queryClient = useQueryClient();
 
   const { data: products, isLoading } = useQuery({
@@ -112,12 +119,18 @@ export default function AdminProducts() {
       is_new: false,
       stock_quantity: '0',
       images: [],
+      has_otdelka_variants: false,
+      has_korobka_variants: false,
+      has_model_variants: false,
     });
+    setSelectedOtdelka([]);
+    setSelectedKorobka([]);
+    setSelectedModels([]);
     setEditingProduct(null);
     setIsDialogOpen(false);
   };
 
-  const handleEdit = (product: Product) => {
+  const handleEdit = async (product: Product) => {
     setEditingProduct(product);
     setFormData({
       name_ka: product.name_ka || '',
@@ -133,11 +146,40 @@ export default function AdminProducts() {
       is_new: product.is_new ?? false,
       stock_quantity: product.stock_quantity?.toString() || '0',
       images: product.images || [],
+      has_otdelka_variants: product.has_otdelka_variants ?? false,
+      has_korobka_variants: product.has_korobka_variants ?? false,
+      has_model_variants: product.has_model_variants ?? false,
     });
+
+    // Load existing configurator selections
+    const [o, k, m] = await Promise.all([
+      supabase.from('product_otdelka_options').select('otdelka_option_id').eq('product_id', product.id),
+      supabase.from('product_korobka_options').select('korobka_option_id').eq('product_id', product.id),
+      supabase.from('product_model_options').select('model_option_id').eq('product_id', product.id),
+    ]);
+    setSelectedOtdelka((o.data || []).map(r => r.otdelka_option_id));
+    setSelectedKorobka((k.data || []).map(r => r.korobka_option_id));
+    setSelectedModels((m.data || []).map(r => r.model_option_id));
+
     setIsDialogOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /** Replaces pivot rows for a product with exactly the given option IDs. */
+  const syncPivot = async (
+    table: 'product_otdelka_options' | 'product_korobka_options' | 'product_model_options',
+    fk: 'otdelka_option_id' | 'korobka_option_id' | 'model_option_id',
+    productId: string,
+    optionIds: string[],
+  ) => {
+    await supabase.from(table).delete().eq('product_id', productId);
+    if (optionIds.length > 0) {
+      const rows = optionIds.map((id, idx) => ({ product_id: productId, [fk]: id, sort_order: idx } as any));
+      const { error } = await supabase.from(table).insert(rows);
+      if (error) throw error;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = {
       name_ka: formData.name_ka,
@@ -153,12 +195,34 @@ export default function AdminProducts() {
       is_new: formData.is_new,
       stock_quantity: parseInt(formData.stock_quantity) || 0,
       images: formData.images,
+      has_otdelka_variants: formData.has_otdelka_variants,
+      has_korobka_variants: formData.has_korobka_variants,
+      has_model_variants: formData.has_model_variants,
     };
 
-    if (editingProduct) {
-      updateMutation.mutate({ id: editingProduct.id, data });
-    } else {
-      createMutation.mutate(data);
+    try {
+      let productId: string | null = null;
+      if (editingProduct) {
+        const { error } = await supabase.from('products').update(data).eq('id', editingProduct.id);
+        if (error) throw error;
+        productId = editingProduct.id;
+      } else {
+        const { data: inserted, error } = await supabase.from('products').insert([data]).select('id').single();
+        if (error) throw error;
+        productId = inserted.id;
+      }
+
+      if (productId) {
+        await syncPivot('product_otdelka_options', 'otdelka_option_id', productId, formData.has_otdelka_variants ? selectedOtdelka : []);
+        await syncPivot('product_korobka_options', 'korobka_option_id', productId, formData.has_korobka_variants ? selectedKorobka : []);
+        await syncPivot('product_model_options',   'model_option_id',   productId, formData.has_model_variants   ? selectedModels  : []);
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+      toast.success(editingProduct ? 'Product updated' : 'Product created');
+      resetForm();
+    } catch (err: any) {
+      toast.error(err.message || 'Save failed');
     }
   };
 
@@ -177,7 +241,7 @@ export default function AdminProducts() {
                 Add Product
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>{editingProduct ? 'Edit Product' : 'Add Product'}</DialogTitle>
               </DialogHeader>
@@ -281,7 +345,23 @@ export default function AdminProducts() {
                     <Label>New</Label>
                   </div>
                 </div>
-                <div className="flex justify-end gap-2">
+
+                <ProductConfiguratorTab
+                  hasOtdelka={formData.has_otdelka_variants}
+                  setHasOtdelka={(v) => setFormData({ ...formData, has_otdelka_variants: v })}
+                  hasKorobka={formData.has_korobka_variants}
+                  setHasKorobka={(v) => setFormData({ ...formData, has_korobka_variants: v })}
+                  hasModel={formData.has_model_variants}
+                  setHasModel={(v) => setFormData({ ...formData, has_model_variants: v })}
+                  selectedOtdelka={selectedOtdelka}
+                  setSelectedOtdelka={setSelectedOtdelka}
+                  selectedKorobka={selectedKorobka}
+                  setSelectedKorobka={setSelectedKorobka}
+                  selectedModels={selectedModels}
+                  setSelectedModels={setSelectedModels}
+                />
+
+                <div className="flex justify-end gap-2 border-t pt-4">
                   <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}

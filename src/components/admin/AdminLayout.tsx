@@ -24,7 +24,10 @@ import {
   Home,
   Landmark,
   ScrollText,
-  Camera
+  Camera,
+  Palette,
+  Box,
+  DoorOpen
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -40,6 +43,9 @@ const navItems = [
   { href: '/admin/products/import', icon: Upload, label: 'Bulk Import' },
   { href: '/admin/categories', icon: FolderTree, label: 'Categories' },
   { href: '/admin/home-categories', icon: Home, label: 'Home Grid' },
+  { href: '/admin/door-otdelka', icon: Palette, label: 'Door Finishes' },
+  { href: '/admin/door-korobka', icon: Box, label: 'Door Frames' },
+  { href: '/admin/door-models', icon: DoorOpen, label: 'Door Models' },
   { href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
   // Navigation / banners
   { href: '/admin/menu-items', icon: Menu, label: 'Menu Items' },
