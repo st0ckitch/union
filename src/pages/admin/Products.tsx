@@ -319,11 +319,15 @@ export default function AdminProducts() {
                 </div>
                 <div className="space-y-2">
                   <Label>Category</Label>
-                  <Select value={formData.category_id} onValueChange={(value) => setFormData({ ...formData, category_id: value })}>
+                  <Select
+                    value={formData.category_id || '__none__'}
+                    onValueChange={(value) => setFormData({ ...formData, category_id: value === '__none__' ? '' : value })}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="__none__">— No category —</SelectItem>
                       {categories?.map((cat) => (
                         <SelectItem key={cat.id} value={cat.id}>{cat.name_ka}</SelectItem>
                       ))}

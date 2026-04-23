@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { AdminErrorBoundary } from './AdminErrorBoundary';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -152,7 +153,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       {/* Main content */}
       <main className="flex-1 overflow-auto">
         <div className="p-6">
-          {children}
+          <AdminErrorBoundary>
+            {children}
+          </AdminErrorBoundary>
         </div>
       </main>
     </div>

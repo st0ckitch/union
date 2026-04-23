@@ -202,12 +202,15 @@ export default function AdminCategories() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Parent Category</Label>
-                    <Select value={formData.parent_id} onValueChange={(value) => setFormData({ ...formData, parent_id: value })}>
+                    <Select
+                      value={formData.parent_id || '__none__'}
+                      onValueChange={(value) => setFormData({ ...formData, parent_id: value === '__none__' ? '' : value })}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="None (Top level)" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">None (Top level)</SelectItem>
+                        <SelectItem value="__none__">None (Top level)</SelectItem>
                         {parentCategories?.filter(c => c.id !== editingCategory?.id).map((cat) => (
                           <SelectItem key={cat.id} value={cat.id}>{cat.name_ka}</SelectItem>
                         ))}

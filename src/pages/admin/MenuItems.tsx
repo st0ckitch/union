@@ -386,10 +386,13 @@ export default function MenuItemsPage() {
             {!form.parent_id && (
               <div>
                 <Label>Icon</Label>
-                <Select value={form.icon} onValueChange={(v) => setField('icon', v)}>
+                <Select
+                  value={form.icon || '__none__'}
+                  onValueChange={(v) => setField('icon', v === '__none__' ? '' : v)}
+                >
                   <SelectTrigger><SelectValue placeholder="Select icon..." /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="__none__">None</SelectItem>
                     {ICON_OPTIONS.map((ic) => (
                       <SelectItem key={ic} value={ic}>{ic}</SelectItem>
                     ))}
