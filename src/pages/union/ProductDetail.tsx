@@ -8,6 +8,7 @@ import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { ProductGallery } from '@/components/products/ProductGallery';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { DoorConfigurator, ConfiguratorSelection } from '@/components/products/DoorConfigurator';
+import { ProductContentBlocks } from '@/components/products/ProductContentBlocks';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -279,6 +280,9 @@ const UnionProductDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* CMS content blocks (specs, gallery, diagram, CTAs, FAQ, contact, etc.) */}
+        <ProductContentBlocks productId={product.id} categoryId={product.category_id} />
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (

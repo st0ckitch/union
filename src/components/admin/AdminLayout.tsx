@@ -27,7 +27,8 @@ import {
   Camera,
   Palette,
   Box,
-  DoorOpen
+  DoorOpen,
+  Layers
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -46,6 +47,7 @@ const navItems = [
   { href: '/admin/door-otdelka', icon: Palette, label: 'Door Finishes' },
   { href: '/admin/door-korobka', icon: Box, label: 'Door Frames' },
   { href: '/admin/door-models', icon: DoorOpen, label: 'Door Models' },
+  { href: '/admin/product-blocks', icon: Layers, label: 'Product Blocks' },
   { href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
   // Navigation / banners
   { href: '/admin/menu-items', icon: Menu, label: 'Menu Items' },

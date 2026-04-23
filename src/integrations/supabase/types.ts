@@ -1031,6 +1031,78 @@ export type Database = {
         }
         Relationships: []
       }
+      product_content_blocks: {
+        Row: {
+          id: string
+          scope: 'global' | 'category' | 'product'
+          product_id: string | null
+          category_id: string | null
+          block_type: 'specs_list' | 'image_gallery' | 'technical_diagram' | 'cta_tiles' | 'variants_carousel' | 'text_with_image' | 'contact_cta' | 'faq_list' | 'rich_text'
+          sort_order: number | null
+          is_active: boolean | null
+          title_ka: string | null
+          title_ru: string | null
+          title_en: string | null
+          subtitle_ka: string | null
+          subtitle_ru: string | null
+          subtitle_en: string | null
+          body_ka: string | null
+          body_ru: string | null
+          body_en: string | null
+          image_url: string | null
+          secondary_image_url: string | null
+          data: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          scope: 'global' | 'category' | 'product'
+          product_id?: string | null
+          category_id?: string | null
+          block_type: 'specs_list' | 'image_gallery' | 'technical_diagram' | 'cta_tiles' | 'variants_carousel' | 'text_with_image' | 'contact_cta' | 'faq_list' | 'rich_text'
+          sort_order?: number | null
+          is_active?: boolean | null
+          title_ka?: string | null
+          title_ru?: string | null
+          title_en?: string | null
+          subtitle_ka?: string | null
+          subtitle_ru?: string | null
+          subtitle_en?: string | null
+          body_ka?: string | null
+          body_ru?: string | null
+          body_en?: string | null
+          image_url?: string | null
+          secondary_image_url?: string | null
+          data?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          scope?: 'global' | 'category' | 'product'
+          product_id?: string | null
+          category_id?: string | null
+          block_type?: 'specs_list' | 'image_gallery' | 'technical_diagram' | 'cta_tiles' | 'variants_carousel' | 'text_with_image' | 'contact_cta' | 'faq_list' | 'rich_text'
+          sort_order?: number | null
+          is_active?: boolean | null
+          title_ka?: string | null
+          title_ru?: string | null
+          title_en?: string | null
+          subtitle_ka?: string | null
+          subtitle_ru?: string | null
+          subtitle_en?: string | null
+          body_ka?: string | null
+          body_ru?: string | null
+          body_en?: string | null
+          image_url?: string | null
+          secondary_image_url?: string | null
+          data?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

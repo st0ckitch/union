@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { ProductConfiguratorTab } from '@/components/admin/ProductConfiguratorTab';
+import { ProductBlocksEditor } from '@/components/admin/ProductBlocksEditor';
 
 type Product = Tables<'products'>;
 type Category = Tables<'categories'>;
@@ -360,6 +361,13 @@ export default function AdminProducts() {
                   selectedModels={selectedModels}
                   setSelectedModels={setSelectedModels}
                 />
+
+                {editingProduct && (
+                  <ProductBlocksEditor
+                    productId={editingProduct.id}
+                    categoryId={editingProduct.category_id}
+                  />
+                )}
 
                 <div className="flex justify-end gap-2 border-t pt-4">
                   <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
