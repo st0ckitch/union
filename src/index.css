@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PsGlaho — primary Georgian typeface (local .otf files in /public/fonts) */
+@font-face {
+  font-family: 'PsGlaho';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/PsGlaho-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'PsGlaho';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/PsGlaho-Bold.otf') format('opentype');
+}
+
 /* Mersad — Georgian typeface (local .otf files in /public/fonts) */
 @font-face {
   font-family: 'Mersad';
@@ -204,13 +220,13 @@
     font-feature-settings: "liga" 1, "calt" 1;
   }
 
-  /* Montserrat everywhere — full weight range pulled from Google Fonts in index.html */
+  /* PsGlaho primary, Montserrat fallback — PsGlaho covers Georgian glyphs */
   html,
   body {
-    font-family: 'Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', system-ui, sans-serif;
+    font-family: 'PsGlaho', 'Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', system-ui, sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'PsGlaho', 'Montserrat', sans-serif;
     letter-spacing: -0.01em;
   }
 }

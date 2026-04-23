@@ -71,10 +71,11 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', 'system-ui', 'sans-serif'],
+        sans: ['PsGlaho', 'Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', 'system-ui', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
-        georgian: ['Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', 'sans-serif'],
-        serif: ['Montserrat', 'Georgia', 'serif'],
+        psglaho: ['PsGlaho', 'Montserrat', 'sans-serif'],
+        georgian: ['PsGlaho', 'Montserrat', 'BPG Nino Mtavruli', 'DejaVu Sans', 'sans-serif'],
+        serif: ['PsGlaho', 'Montserrat', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
