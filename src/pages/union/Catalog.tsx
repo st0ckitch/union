@@ -197,7 +197,7 @@ const UnionCatalog = () => {
             </Link>
           </div>
         ) : showSubcategoryGrid ? (
-          <SubcategoryGrid parent={parentCategory!} children={children} t={catLabel} />
+          <SubcategorySectionedFeed parent={parentCategory!} children={children} t={catLabel} language={language} />
         ) : (
           <div className="flex gap-8">
             <aside className="hidden lg:block w-64 flex-shrink-0">
@@ -216,11 +216,86 @@ const UnionCatalog = () => {
 };
 
 /**
- * Renders a tile-grid of subcategories, each linking to its own URL.
- * Mirrors union.ru's main category page where you click a tile to drill in.
+ * Sectioned feed for a parent category page — mirrors union.ru's layout
+ * where each subcategory is a horizontal section: heading + ≤6 product cards
+ * + a "See all (N) →" link that drills into the dedicated subcategory page.
  *
- * If a subcategory has no image set, we look up a product in that subcategory
- * and use its first image as the tile background. Caches via react-query.
+ * One Postgres query loads every product across all sub-IDs; we bucket them
+ * client-side to avoid N+1.
+ */
+function SubcategorySectionedFeed({
+  parent, children, t, language,
+}: { parent: any; children: any[]; t: (c: any) => string; language: string }) {
+  const subIds = children.map((c) => c.id);
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ['parent-feed', parent.id, subIds],
+    enabled: subIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .in('category_id', subIds)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    },
+    staleTime: 60_000,
+  });
+
+  // Bucket: subId → product[]
+  const byCat = new Map<string, any[]>();
+  for (const p of products) {
+    if (!p.category_id) continue;
+    if (!byCat.has(p.category_id)) byCat.set(p.category_id, []);
+    byCat.get(p.category_id)!.push(p);
+  }
+
+  // If nothing found yet, show the old tile grid as a fallback (so the page
+  // isn't empty for parents with no products yet)
+  const totalProducts = products.length;
+  if (!isLoading && totalProducts === 0) {
+    return <SubcategoryGrid parent={parent} children={children} t={t} />;
+  }
+
+  const seeAllLabel = language === 'ru' ? 'Смотреть все' : language === 'en' ? 'See all' : 'ყველას ნახვა';
+
+  return (
+    <div className="space-y-12 py-2">
+      {children.map((sub) => {
+        const subProducts = byCat.get(sub.id) || [];
+        if (subProducts.length === 0) return null;
+        return (
+          <section key={sub.id}>
+            <div className="flex items-end justify-between mb-5 gap-4">
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold leading-tight">{t(sub)}</h2>
+                {sub.description_ka && (
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{sub.description_ka}</p>
+                )}
+              </div>
+              <Link
+                to={`/union/catalog/${parent.slug}/${sub.slug}`}
+                className="text-sm text-muted-foreground hover:text-foreground whitespace-nowrap shrink-0"
+              >
+                {seeAllLabel} ({subProducts.length}) →
+              </Link>
+            </div>
+            <ProductGrid
+              products={subProducts.slice(0, 6)}
+              basePath="/union/product"
+            />
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Renders a tile-grid of subcategories, each linking to its own URL.
+ * Used as fallback when a parent has no products yet (so admins still see
+ * something while they build the catalog).
  */
 function SubcategoryGrid({ parent, children, t }: { parent: any; children: any[]; t: (c: any) => string }) {
   // Pull the first image of any product in each subcategory, in one query
