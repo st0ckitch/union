@@ -109,11 +109,15 @@ const UnionProductDetail = () => {
     );
   }
 
+  const pickLocalizedCat = (cat: any) => {
+    if (!cat) return '';
+    if (language === 'ru') return cat.name_ru || cat.name_ka || cat.name_en || '';
+    if (language === 'en') return cat.name_en || cat.name_ka || cat.name_ru || '';
+    return cat.name_ka || cat.name_ru || cat.name_en || '';
+  };
   const name = language === 'ka' ? product.name_ka : (product.name_en || product.name_ka);
   const description = language === 'ka' ? product.description_ka : (product.description_en || product.description_ka);
-  const categoryName = product.categories
-    ? (language === 'ka' ? product.categories.name_ka : (product.categories.name_en || product.categories.name_ka))
-    : '';
+  const categoryName = pickLocalizedCat(product.categories);
   const categorySlug = product.categories?.slug ?? null;
   const resolvedImages = resolveProductImages(product.images, categorySlug, product.slug);
   const hasDiscount = product.sale_price && product.sale_price < product.price;
@@ -139,14 +143,12 @@ const UnionProductDetail = () => {
     });
   };
 
-  const parentCatLabel = parentCategory
-    ? (language === 'ka' ? parentCategory.name_ka : (parentCategory.name_en || parentCategory.name_ka))
-    : null;
+  const parentCatLabel = pickLocalizedCat(parentCategory);
 
   const breadcrumbItems = [
     { label: language === 'ka' ? 'კატალოგი' : 'Catalog', path: '/union/catalog' },
-    ...(parentCategory ? [{
-      label: parentCatLabel!,
+    ...(parentCategory && parentCatLabel ? [{
+      label: parentCatLabel,
       path: `/union/catalog/${parentCategory.slug}`,
     }] : []),
     ...(product.categories ? [{

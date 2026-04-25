@@ -112,7 +112,12 @@ const UnionCatalog = () => {
     );
   };
 
-  const catLabel = (c: any) => language === 'ka' ? c.name_ka : (c.name_en || c.name_ka);
+  const catLabel = (c: any) => {
+    if (!c) return '';
+    if (language === 'ru') return c.name_ru || c.name_ka || c.name_en || '';
+    if (language === 'en') return c.name_en || c.name_ka || c.name_ru || '';
+    return c.name_ka || c.name_ru || c.name_en || '';
+  };
 
   // Hierarchical breadcrumb: Catalog → Parent → Subcategory
   const breadcrumbItems = [
@@ -213,35 +218,69 @@ const UnionCatalog = () => {
 /**
  * Renders a tile-grid of subcategories, each linking to its own URL.
  * Mirrors union.ru's main category page where you click a tile to drill in.
+ *
+ * If a subcategory has no image set, we look up a product in that subcategory
+ * and use its first image as the tile background. Caches via react-query.
  */
 function SubcategoryGrid({ parent, children, t }: { parent: any; children: any[]; t: (c: any) => string }) {
+  // Pull the first image of any product in each subcategory, in one query
+  const subIds = children.map(c => c.id);
+  const { data: fallbackImages = {} } = useQuery({
+    queryKey: ['subcategory-fallback-images', subIds],
+    enabled: subIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('category_id, images')
+        .in('category_id', subIds)
+        .eq('is_active', true)
+        .not('images', 'is', null)
+        .limit(200);
+      if (error) throw error;
+      const byCat: Record<string, string> = {};
+      for (const row of data || []) {
+        if (row.category_id && !byCat[row.category_id] && Array.isArray(row.images) && row.images[0]) {
+          byCat[row.category_id] = row.images[0];
+        }
+      }
+      return byCat;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   return (
     <section className="py-2 md:py-4">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {children.map((c) => (
-          <Link
-            key={c.id}
-            to={`/union/catalog/${parent.slug}/${c.slug}`}
-            className="group relative overflow-hidden rounded-lg bg-secondary aspect-[4/5] flex flex-col"
-          >
-            {(c.image_url || c.home_image_url) ? (
-              <img
-                src={c.home_image_url || c.image_url}
-                alt={t(c)}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary to-muted" />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-            <div className="relative mt-auto p-4 md:p-5">
-              <h3 className="text-white text-base md:text-xl font-semibold leading-tight">{t(c)}</h3>
-              {c.description_ka && (
-                <p className="text-xs md:text-sm text-white/70 mt-1 line-clamp-2">{c.description_ka}</p>
+        {children.map((c) => {
+          const explicit = c.home_image_url || c.image_url;
+          const fallback = fallbackImages[c.id];
+          const bg = explicit || fallback;
+          return (
+            <Link
+              key={c.id}
+              to={`/union/catalog/${parent.slug}/${c.slug}`}
+              className="group relative overflow-hidden rounded-lg bg-secondary aspect-[4/5] flex flex-col"
+            >
+              {bg ? (
+                <img
+                  src={bg}
+                  alt={t(c)}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-secondary to-muted" />
               )}
-            </div>
-          </Link>
-        ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="relative mt-auto p-4 md:p-5">
+                <h3 className="text-white text-base md:text-xl font-semibold leading-tight">{t(c)}</h3>
+                {c.description_ka && (
+                  <p className="text-xs md:text-sm text-white/70 mt-1 line-clamp-2">{c.description_ka}</p>
+                )}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

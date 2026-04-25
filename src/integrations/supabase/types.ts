@@ -125,6 +125,7 @@ export type Database = {
           is_active: boolean | null
           name_en: string | null
           name_ka: string
+          name_ru: string | null
           parent_id: string | null
           slug: string
           sort_order: number | null
@@ -141,6 +142,7 @@ export type Database = {
           is_active?: boolean | null
           name_en?: string | null
           name_ka: string
+          name_ru?: string | null
           parent_id?: string | null
           slug: string
           sort_order?: number | null
@@ -157,6 +159,7 @@ export type Database = {
           is_active?: boolean | null
           name_en?: string | null
           name_ka?: string
+          name_ru?: string | null
           parent_id?: string | null
           slug?: string
           sort_order?: number | null
