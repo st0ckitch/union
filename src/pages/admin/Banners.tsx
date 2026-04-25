@@ -14,10 +14,12 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Banner = Tables<'banners'>;
 
 export default function AdminBanners() {
+  const t = useAdminT();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
   const [formData, setFormData] = useState({
@@ -146,19 +148,19 @@ export default function AdminBanners() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Banners</h1>
-            <p className="text-gray-500 mt-1">Manage hero slider banners</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Banners')}</h1>
+            <p className="text-gray-500 mt-1">{t('Manage hero slider banners')}</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => resetForm()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Banner
+                {t('Add Banner')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
               <DialogHeader>
-                <DialogTitle>{editingBanner ? 'Edit Banner' : 'Add Banner'}</DialogTitle>
+                <DialogTitle>{editingBanner ? t('Edit Banner') : t('Add Banner')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -257,10 +259,10 @@ export default function AdminBanners() {
                   <Label>Active</Label>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editingBanner ? 'Update' : 'Create'}
+                    {editingBanner ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -278,11 +280,11 @@ export default function AdminBanners() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Preview</TableHead>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Order</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Preview')}</TableHead>
+                    <TableHead>{t('Title')}</TableHead>
+                    <TableHead>{t('Order')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -299,7 +301,7 @@ export default function AdminBanners() {
                       <TableCell>{banner.sort_order}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs ${banner.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                          {banner.is_active ? 'Active' : 'Inactive'}
+                          {banner.is_active ? t('Active') : t('Inactive')}
                         </span>
                       </TableCell>
                       <TableCell>
@@ -326,7 +328,7 @@ export default function AdminBanners() {
                   {banners?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                        No banners yet
+                        {t('No banners yet')}
                       </TableCell>
                     </TableRow>
                   )}

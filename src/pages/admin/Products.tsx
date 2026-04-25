@@ -17,11 +17,13 @@ import { Tables } from '@/integrations/supabase/types';
 import { ProductConfiguratorTab } from '@/components/admin/ProductConfiguratorTab';
 import { ProductBlocksEditor } from '@/components/admin/ProductBlocksEditor';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Product = Tables<'products'>;
 type Category = Tables<'categories'>;
 
 export default function AdminProducts() {
+  const t = useAdminT();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [formData, setFormData] = useState({
@@ -230,19 +232,19 @@ export default function AdminProducts() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Products</h1>
-            <p className="text-gray-500 mt-1">Manage your product catalog</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Products')}</h1>
+            <p className="text-gray-500 mt-1">{t('Manage your product catalog')}</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => resetForm()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Product
+                {t('Add Product')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>{editingProduct ? 'Edit Product' : 'Add Product'}</DialogTitle>
+                <DialogTitle>{editingProduct ? t('Edit Product') : t('Add Product')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -372,10 +374,10 @@ export default function AdminProducts() {
                 )}
 
                 <div className="flex justify-end gap-2 border-t pt-4">
-                  <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editingProduct ? 'Update' : 'Create'}
+                    {editingProduct ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -393,12 +395,12 @@ export default function AdminProducts() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Stock</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Name')}</TableHead>
+                    <TableHead>{t('Category')}</TableHead>
+                    <TableHead>{t('Price')}</TableHead>
+                    <TableHead>{t('Stock')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -419,7 +421,7 @@ export default function AdminProducts() {
                       <TableCell>{product.stock_quantity}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs ${product.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                          {product.is_active ? 'Active' : 'Inactive'}
+                          {product.is_active ? t('Active') : t('Inactive')}
                         </span>
                       </TableCell>
                       <TableCell>
@@ -442,7 +444,7 @@ export default function AdminProducts() {
                   {products?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                        No products yet
+                        {t('No products yet')}
                       </TableCell>
                     </TableRow>
                   )}

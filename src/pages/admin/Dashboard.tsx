@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Package, FolderTree, ShoppingCart, MessageSquare, FileText, Image, Store, Star } from 'lucide-react';
+import { useAdminT } from '@/lib/adminI18n';
 
 export default function AdminDashboard() {
+  const t = useAdminT();
   const { data: stats } = useQuery({
     queryKey: ['admin-stats'],
     queryFn: async () => {
@@ -57,22 +59,22 @@ export default function AdminDashboard() {
   });
 
   const statCards = [
-    { title: 'Products', value: stats?.products || 0, icon: Package, color: 'text-blue-600 bg-blue-100' },
-    { title: 'Categories', value: stats?.categories || 0, icon: FolderTree, color: 'text-green-600 bg-green-100' },
-    { title: 'Orders', value: stats?.orders || 0, icon: ShoppingCart, color: 'text-purple-600 bg-purple-100' },
-    { title: 'Consultations', value: stats?.consultations || 0, icon: MessageSquare, color: 'text-orange-600 bg-orange-100' },
-    { title: 'Blog Posts', value: stats?.posts || 0, icon: FileText, color: 'text-pink-600 bg-pink-100' },
-    { title: 'Banners', value: stats?.banners || 0, icon: Image, color: 'text-cyan-600 bg-cyan-100' },
-    { title: 'Showrooms', value: stats?.showrooms || 0, icon: Store, color: 'text-amber-600 bg-amber-100' },
-    { title: 'Testimonials', value: stats?.testimonials || 0, icon: Star, color: 'text-yellow-600 bg-yellow-100' },
+    { title: t('Products'), value: stats?.products || 0, icon: Package, color: 'text-blue-600 bg-blue-100' },
+    { title: t('Categories'), value: stats?.categories || 0, icon: FolderTree, color: 'text-green-600 bg-green-100' },
+    { title: t('Orders'), value: stats?.orders || 0, icon: ShoppingCart, color: 'text-purple-600 bg-purple-100' },
+    { title: t('Consultations'), value: stats?.consultations || 0, icon: MessageSquare, color: 'text-orange-600 bg-orange-100' },
+    { title: t('Blog Posts'), value: stats?.posts || 0, icon: FileText, color: 'text-pink-600 bg-pink-100' },
+    { title: t('Banners'), value: stats?.banners || 0, icon: Image, color: 'text-cyan-600 bg-cyan-100' },
+    { title: t('Showrooms'), value: stats?.showrooms || 0, icon: Store, color: 'text-amber-600 bg-amber-100' },
+    { title: t('Testimonials'), value: stats?.testimonials || 0, icon: Star, color: 'text-yellow-600 bg-yellow-100' },
   ];
 
   return (
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 mt-1">Welcome to UNION Admin Panel</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('Dashboard')}</h1>
+          <p className="text-gray-500 mt-1">{t('Welcome to UNION Admin Panel')}</p>
         </div>
 
         {/* Stats Grid */}
@@ -98,11 +100,11 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Recent Orders</CardTitle>
+              <CardTitle className="text-lg">{t('Recent Orders')}</CardTitle>
             </CardHeader>
             <CardContent>
               {recentOrders?.length === 0 ? (
-                <p className="text-gray-500 text-sm">No orders yet</p>
+                <p className="text-gray-500 text-sm">{t('No orders yet')}</p>
               ) : (
                 <div className="space-y-3">
                   {recentOrders?.map((order) => (
@@ -132,11 +134,11 @@ export default function AdminDashboard() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Recent Consultations</CardTitle>
+              <CardTitle className="text-lg">{t('Recent Consultations')}</CardTitle>
             </CardHeader>
             <CardContent>
               {recentConsultations?.length === 0 ? (
-                <p className="text-gray-500 text-sm">No consultations yet</p>
+                <p className="text-gray-500 text-sm">{t('No consultations yet')}</p>
               ) : (
                 <div className="space-y-3">
                   {recentConsultations?.map((consultation) => (

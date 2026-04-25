@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Plus, Pencil, Trash2, ChevronDown, ChevronRight, GripVertical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAdminT } from '@/lib/adminI18n';
 
 const ICON_OPTIONS = [
   'DoorOpen', 'DoorClosed', 'PanelTop', 'LayoutPanelTop', 'Sofa', 'Shirt',
@@ -49,6 +50,7 @@ const emptyForm: FormData = {
 };
 
 export default function MenuItemsPage() {
+  const t = useAdminT();
   const { data: items = [], isLoading } = useAllMenuItems();
   const { create, update, remove } = useMenuItemMutations();
   const { toast } = useToast();
@@ -165,8 +167,8 @@ export default function MenuItemsPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Menu Items</h1>
-            <p className="text-muted-foreground">Manage the catalog mega menu categories and sub-items</p>
+            <h1 className="text-2xl font-bold">{t('Menu Items')}</h1>
+            <p className="text-muted-foreground">{t('Manage the catalog mega menu categories and sub-items')}</p>
           </div>
         </div>
 
@@ -176,9 +178,9 @@ export default function MenuItemsPage() {
             <Card key={colIdx}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">Column {colIdx + 1}</CardTitle>
+                  <CardTitle className="text-base">{t('Column')} {colIdx + 1}</CardTitle>
                   <Button size="sm" variant="outline" onClick={() => openCreate(null, 'mega_menu', colIdx + 1)}>
-                    <Plus className="h-4 w-4 mr-1" /> Add Group
+                    <Plus className="h-4 w-4 mr-1" /> {t('Add Group')}
                   </Button>
                 </div>
               </CardHeader>
@@ -256,7 +258,7 @@ export default function MenuItemsPage() {
                   );
                 })}
                 {colItems.length === 0 && (
-                  <p className="text-sm text-muted-foreground text-center py-4">No groups yet</p>
+                  <p className="text-sm text-muted-foreground text-center py-4">{t('No groups yet')}</p>
                 )}
               </CardContent>
             </Card>
@@ -267,9 +269,9 @@ export default function MenuItemsPage() {
         <Card>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base">Sidebar Links</CardTitle>
+              <CardTitle className="text-base">{t('Sidebar Links')}</CardTitle>
               <Button size="sm" variant="outline" onClick={() => openCreate(null, 'sidebar')}>
-                <Plus className="h-4 w-4 mr-1" /> Add Link
+                <Plus className="h-4 w-4 mr-1" /> {t('Add Link')}
               </Button>
             </div>
           </CardHeader>
@@ -299,7 +301,7 @@ export default function MenuItemsPage() {
                 </div>
               ))}
               {sidebarItems.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-4">No sidebar links yet</p>
+                <p className="text-sm text-muted-foreground text-center py-4">{t('No sidebar links yet')}</p>
               )}
             </div>
           </CardContent>
@@ -310,15 +312,15 @@ export default function MenuItemsPage() {
       <Dialog open={!!deleteConfirm} onOpenChange={() => setDeleteConfirm(null)}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>Delete menu item?</DialogTitle>
+            <DialogTitle>{t('Delete menu item?')}</DialogTitle>
           </DialogHeader>
           <p className="text-sm text-muted-foreground">
-            This will also delete all sub-items under this group. This action cannot be undone.
+            {t('This will also delete all sub-items under this group. This action cannot be undone.')}
           </p>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteConfirm(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setDeleteConfirm(null)}>{t('Cancel')}</Button>
             <Button variant="destructive" onClick={() => deleteConfirm && handleDelete(deleteConfirm)}>
-              Delete
+              {t('Delete')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -328,7 +330,7 @@ export default function MenuItemsPage() {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editingId ? 'Edit Menu Item' : 'Add Menu Item'}</DialogTitle>
+            <DialogTitle>{editingId ? t('Edit Menu Item') : t('Add Menu Item')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             {/* Names */}
@@ -430,10 +432,10 @@ export default function MenuItemsPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setDialogOpen(false)}>{t('Cancel')}</Button>
             <Button onClick={handleSave} disabled={!form.name_ka || create.isPending || update.isPending}>
               {(create.isPending || update.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-              {editingId ? 'Save Changes' : 'Create'}
+              {editingId ? t('Save Changes') : t('Create')}
             </Button>
           </DialogFooter>
         </DialogContent>

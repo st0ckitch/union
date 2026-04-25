@@ -15,10 +15,12 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Category = Tables<'categories'>;
 
 export default function AdminCategories() {
+  const t = useAdminT();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formData, setFormData] = useState({
@@ -143,19 +145,19 @@ export default function AdminCategories() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Categories</h1>
-            <p className="text-gray-500 mt-1">Manage product categories</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Categories')}</h1>
+            <p className="text-gray-500 mt-1">{t('Manage product categories')}</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => resetForm()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Category
+                {t('Add Category')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
               <DialogHeader>
-                <DialogTitle>{editingCategory ? 'Edit Category' : 'Add Category'}</DialogTitle>
+                <DialogTitle>{editingCategory ? t('Edit') : t('Add Category')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -231,10 +233,10 @@ export default function AdminCategories() {
                   <Label>Active</Label>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editingCategory ? 'Update' : 'Create'}
+                    {editingCategory ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -252,12 +254,12 @@ export default function AdminCategories() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Slug</TableHead>
-                    <TableHead>Parent</TableHead>
-                    <TableHead>Order</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Name')}</TableHead>
+                    <TableHead>{t('Slug')}</TableHead>
+                    <TableHead>{t('Parent')}</TableHead>
+                    <TableHead>{t('Order')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -269,7 +271,7 @@ export default function AdminCategories() {
                       <TableCell>{category.sort_order}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs ${category.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                          {category.is_active ? 'Active' : 'Inactive'}
+                          {category.is_active ? t('Active') : t('Inactive')}
                         </span>
                       </TableCell>
                       <TableCell>
@@ -296,7 +298,7 @@ export default function AdminCategories() {
                   {categories?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                        No categories yet
+                        {t('No categories yet')}
                       </TableCell>
                     </TableRow>
                   )}
