@@ -39,9 +39,18 @@ const UnionCatalog = () => {
     },
   });
 
-  // Resolve URL → which category we're on
-  const parentCategory = categorySlug ? categories.find(c => c.slug === categorySlug) || null : null;
-  const subCategory = subcategorySlug ? categories.find(c => c.slug === subcategorySlug) || null : null;
+  // Resolve URL → which category we're on. We do this AFTER categories load,
+  // so an empty array on first render is fine.
+  const parentCategory = categorySlug && categories.length > 0
+    ? categories.find(c => c.slug === categorySlug) || null
+    : null;
+  const subCategory = subcategorySlug && categories.length > 0
+    ? categories.find(c => c.slug === subcategorySlug) || null
+    : null;
+
+  // Detect mis-routed URLs (slug in path but no matching category) so the
+  // user sees a clear "not found" instead of an unfiltered product dump.
+  const slugUnknown = !!categorySlug && categories.length > 0 && !parentCategory;
 
   // The "active" category is the most specific one in the URL
   const activeCategory = subCategory || parentCategory;
@@ -171,8 +180,18 @@ const UnionCatalog = () => {
           )}
         </div>
 
-        {/* Subcategory grid (when on a parent-only URL) */}
-        {showSubcategoryGrid ? (
+        {/* Unknown slug → friendly fallback */}
+        {slugUnknown ? (
+          <div className="py-16 text-center">
+            <p className="text-lg font-semibold mb-2">
+              {language === 'ka' ? 'კატეგორია ვერ მოიძებნა' : language === 'ru' ? 'Категория не найдена' : 'Category not found'}
+            </p>
+            <p className="text-muted-foreground text-sm mb-6">"{categorySlug}"</p>
+            <Link to="/union/catalog" className="underline text-primary">
+              {language === 'ka' ? 'მთლიანი კატალოგი' : language === 'ru' ? 'Открыть весь каталог' : 'Browse the full catalog'}
+            </Link>
+          </div>
+        ) : showSubcategoryGrid ? (
           <SubcategoryGrid parent={parentCategory!} children={children} t={catLabel} />
         ) : (
           <div className="flex gap-8">
