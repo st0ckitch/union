@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link, useParams } from 'react-router-dom';
 import { UnionLayout } from '@/components/union/UnionLayout';
 import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { CategorySidebar } from '@/components/catalog/CategorySidebar';
@@ -11,21 +12,20 @@ import { Button } from '@/components/ui/button';
 import { SlidersHorizontal } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useParams } from 'react-router-dom';
 
 type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'name';
 
 const UnionCatalog = () => {
-  const { category: categorySlug } = useParams();
+  const { category: categorySlug, subcategory: subcategorySlug } = useParams();
   const { language } = useLanguage();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [showNewOnly, setShowNewOnly] = useState(false);
   const [showSaleOnly, setShowSaleOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
-  // Fetch categories
+  // Fetch all categories so we can resolve parents/children client-side
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
@@ -39,39 +39,41 @@ const UnionCatalog = () => {
     },
   });
 
-  // Get current category
-  const currentCategory = categorySlug 
-    ? categories.find(c => c.slug === categorySlug) 
-    : null;
+  // Resolve URL → which category we're on
+  const parentCategory = categorySlug ? categories.find(c => c.slug === categorySlug) || null : null;
+  const subCategory = subcategorySlug ? categories.find(c => c.slug === subcategorySlug) || null : null;
 
-  // Fetch products
+  // The "active" category is the most specific one in the URL
+  const activeCategory = subCategory || parentCategory;
+
+  // Children of the parent (used for the subcategory grid)
+  const children = useMemo(() => {
+    if (!parentCategory) return [];
+    return categories.filter(c => c.parent_id === parentCategory.id).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+  }, [categories, parentCategory]);
+
+  // Decide what to render:
+  //   - If we're on a parent category that has children AND no subcategory selected → show subcategory grid
+  //   - Otherwise → show products
+  const showSubcategoryGrid = !!parentCategory && !subCategory && children.length > 0;
+
+  // Fetch products (skipped when we're showing a subcategory grid)
   const { data: products = [], isLoading } = useQuery({
-    queryKey: ['products', categorySlug, selectedCategories, priceRange, showNewOnly, showSaleOnly],
+    queryKey: ['products', activeCategory?.id, selectedCategories, priceRange, showNewOnly, showSaleOnly, showSubcategoryGrid],
+    enabled: !showSubcategoryGrid,
     queryFn: async () => {
-      let query = supabase
-        .from('products')
-        .select('*')
-        .eq('is_active', true);
+      let query = supabase.from('products').select('*').eq('is_active', true);
 
-      // Filter by category from URL
-      if (currentCategory) {
-        query = query.eq('category_id', currentCategory.id);
+      if (activeCategory) {
+        // Use child if we drilled in, parent otherwise
+        query = query.eq('category_id', activeCategory.id);
       } else if (selectedCategories.length > 0) {
         query = query.in('category_id', selectedCategories);
       }
 
-      // Price filter
       query = query.gte('price', priceRange[0]).lte('price', priceRange[1]);
-
-      // New only filter
-      if (showNewOnly) {
-        query = query.eq('is_new', true);
-      }
-
-      // Sale only filter
-      if (showSaleOnly) {
-        query = query.not('sale_price', 'is', null);
-      }
+      if (showNewOnly) query = query.eq('is_new', true);
+      if (showSaleOnly) query = query.not('sale_price', 'is', null);
 
       const { data, error } = await query;
       if (error) throw error;
@@ -79,42 +81,43 @@ const UnionCatalog = () => {
     },
   });
 
-  // Get max price for slider
   const maxPrice = useMemo(() => {
-    if (products.length === 0) return 10000;
+    if (products.length === 0) return 100000;
     return Math.max(...products.map(p => p.price));
   }, [products]);
 
-  // Sort products
   const sortedProducts = useMemo(() => {
     const sorted = [...products];
     switch (sortBy) {
-      case 'price-asc':
-        return sorted.sort((a, b) => (a.sale_price || a.price) - (b.sale_price || b.price));
-      case 'price-desc':
-        return sorted.sort((a, b) => (b.sale_price || b.price) - (a.sale_price || a.price));
-      case 'name':
-        return sorted.sort((a, b) => a.name_ka.localeCompare(b.name_ka, 'ka'));
+      case 'price-asc':  return sorted.sort((a, b) => (a.sale_price || a.price) - (b.sale_price || b.price));
+      case 'price-desc': return sorted.sort((a, b) => (b.sale_price || b.price) - (a.sale_price || a.price));
+      case 'name':       return sorted.sort((a, b) => a.name_ka.localeCompare(b.name_ka, 'ka'));
       case 'newest':
-      default:
-        return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      default:           return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     }
   }, [products, sortBy]);
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategories(prev =>
-      prev.includes(categoryId)
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
+      prev.includes(categoryId) ? prev.filter(id => id !== categoryId) : [...prev, categoryId]
     );
   };
 
+  const catLabel = (c: any) => language === 'ka' ? c.name_ka : (c.name_en || c.name_ka);
+
+  // Hierarchical breadcrumb: Catalog → Parent → Subcategory
   const breadcrumbItems = [
     { label: language === 'ka' ? 'კატალოგი' : 'Catalog', path: '/union/catalog' },
-    ...(currentCategory ? [{ 
-      label: language === 'ka' ? currentCategory.name_ka : (currentCategory.name_en || currentCategory.name_ka) 
-    }] : []),
+    ...(parentCategory
+      ? [{
+          label: catLabel(parentCategory),
+          path: subCategory ? `/union/catalog/${parentCategory.slug}` : undefined,
+        }]
+      : []),
+    ...(subCategory ? [{ label: catLabel(subCategory) }] : []),
   ];
+
+  const pageTitle = activeCategory ? catLabel(activeCategory) : (language === 'ka' ? 'კატალოგი' : 'Catalog');
 
   const FiltersContent = () => (
     <ProductFilters
@@ -136,70 +139,93 @@ const UnionCatalog = () => {
       <div className="container py-4">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold">
-            {currentCategory 
-              ? (language === 'ka' ? currentCategory.name_ka : (currentCategory.name_en || currentCategory.name_ka))
-              : (language === 'ka' ? 'კატალოგი' : 'Catalog')
-            }
-          </h1>
+        <div className="flex items-center justify-between mb-6 mt-4">
+          <h1 className="text-2xl md:text-3xl font-bold">{pageTitle}</h1>
 
-          <div className="flex items-center gap-4">
-            {/* Mobile filter button */}
-            <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" className="lg:hidden">
-                  <SlidersHorizontal className="h-4 w-4 mr-2" />
-                  {language === 'ka' ? 'ფილტრი' : 'Filters'}
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-80">
-                <div className="mt-6">
-                  <FiltersContent />
-                </div>
-              </SheetContent>
-            </Sheet>
+          {!showSubcategoryGrid && (
+            <div className="flex items-center gap-4">
+              <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="lg:hidden">
+                    <SlidersHorizontal className="h-4 w-4 mr-2" />
+                    {language === 'ka' ? 'ფილტრი' : 'Filters'}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-80">
+                  <div className="mt-6"><FiltersContent /></div>
+                </SheetContent>
+              </Sheet>
 
-            {/* Sort dropdown */}
-            <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={language === 'ka' ? 'დალაგება' : 'Sort by'} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">
-                  {language === 'ka' ? 'უახლესი' : 'Newest'}
-                </SelectItem>
-                <SelectItem value="price-asc">
-                  {language === 'ka' ? 'ფასი: დაბალი' : 'Price: Low to High'}
-                </SelectItem>
-                <SelectItem value="price-desc">
-                  {language === 'ka' ? 'ფასი: მაღალი' : 'Price: High to Low'}
-                </SelectItem>
-                <SelectItem value="name">
-                  {language === 'ka' ? 'სახელით' : 'By Name'}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="flex gap-8">
-          {/* Desktop sidebar */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            <CategorySidebar categories={categories} basePath="/union/catalog" />
-            <div className="mt-8">
-              <FiltersContent />
+              <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder={language === 'ka' ? 'დალაგება' : 'Sort by'} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="newest">{language === 'ka' ? 'უახლესი' : 'Newest'}</SelectItem>
+                  <SelectItem value="price-asc">{language === 'ka' ? 'ფასი: დაბალი' : 'Price: Low to High'}</SelectItem>
+                  <SelectItem value="price-desc">{language === 'ka' ? 'ფასი: მაღალი' : 'Price: High to Low'}</SelectItem>
+                  <SelectItem value="name">{language === 'ka' ? 'სახელით' : 'By Name'}</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </aside>
-
-          {/* Products grid */}
-          <main className="flex-1">
-            <ProductGrid products={sortedProducts} isLoading={isLoading} basePath="/union/product" />
-          </main>
+          )}
         </div>
+
+        {/* Subcategory grid (when on a parent-only URL) */}
+        {showSubcategoryGrid ? (
+          <SubcategoryGrid parent={parentCategory!} children={children} t={catLabel} />
+        ) : (
+          <div className="flex gap-8">
+            <aside className="hidden lg:block w-64 flex-shrink-0">
+              <CategorySidebar categories={categories} basePath="/union/catalog" />
+              <div className="mt-8"><FiltersContent /></div>
+            </aside>
+
+            <main className="flex-1">
+              <ProductGrid products={sortedProducts} isLoading={isLoading} basePath="/union/product" />
+            </main>
+          </div>
+        )}
       </div>
     </UnionLayout>
   );
 };
+
+/**
+ * Renders a tile-grid of subcategories, each linking to its own URL.
+ * Mirrors union.ru's main category page where you click a tile to drill in.
+ */
+function SubcategoryGrid({ parent, children, t }: { parent: any; children: any[]; t: (c: any) => string }) {
+  return (
+    <section className="py-2 md:py-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {children.map((c) => (
+          <Link
+            key={c.id}
+            to={`/union/catalog/${parent.slug}/${c.slug}`}
+            className="group relative overflow-hidden rounded-lg bg-secondary aspect-[4/5] flex flex-col"
+          >
+            {(c.image_url || c.home_image_url) ? (
+              <img
+                src={c.home_image_url || c.image_url}
+                alt={t(c)}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary to-muted" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            <div className="relative mt-auto p-4 md:p-5">
+              <h3 className="text-white text-base md:text-xl font-semibold leading-tight">{t(c)}</h3>
+              {c.description_ka && (
+                <p className="text-xs md:text-sm text-white/70 mt-1 line-clamp-2">{c.description_ka}</p>
+              )}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export default UnionCatalog;

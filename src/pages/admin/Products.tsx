@@ -16,6 +16,7 @@ import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { ProductConfiguratorTab } from '@/components/admin/ProductConfiguratorTab';
 import { ProductBlocksEditor } from '@/components/admin/ProductBlocksEditor';
+import { SpecificationsEditor, SpecsObject } from '@/components/admin/SpecificationsEditor';
 import { deleteRow } from '@/lib/adminMutations';
 import { useAdminT } from '@/lib/adminI18n';
 
@@ -43,6 +44,7 @@ export default function AdminProducts() {
     has_otdelka_variants: false,
     has_korobka_variants: false,
     has_model_variants: false,
+    specifications: {} as SpecsObject,
   });
   const [selectedOtdelka, setSelectedOtdelka] = useState<string[]>([]);
   const [selectedKorobka, setSelectedKorobka] = useState<string[]>([]);
@@ -123,6 +125,7 @@ export default function AdminProducts() {
       has_otdelka_variants: false,
       has_korobka_variants: false,
       has_model_variants: false,
+      specifications: {},
     });
     setSelectedOtdelka([]);
     setSelectedKorobka([]);
@@ -150,6 +153,9 @@ export default function AdminProducts() {
       has_otdelka_variants: product.has_otdelka_variants ?? false,
       has_korobka_variants: product.has_korobka_variants ?? false,
       has_model_variants: product.has_model_variants ?? false,
+      specifications: (product.specifications && typeof product.specifications === 'object' && !Array.isArray(product.specifications))
+        ? Object.fromEntries(Object.entries(product.specifications as object).map(([k, v]) => [k, String(v ?? '')]))
+        : {},
     });
 
     // Load existing configurator selections
@@ -199,6 +205,7 @@ export default function AdminProducts() {
       has_otdelka_variants: formData.has_otdelka_variants,
       has_korobka_variants: formData.has_korobka_variants,
       has_model_variants: formData.has_model_variants,
+      specifications: formData.specifications || {},
     };
 
     try {
@@ -350,6 +357,11 @@ export default function AdminProducts() {
                     <Label>New</Label>
                   </div>
                 </div>
+
+                <SpecificationsEditor
+                  value={formData.specifications}
+                  onChange={(next) => setFormData({ ...formData, specifications: next })}
+                />
 
                 <ProductConfiguratorTab
                   hasOtdelka={formData.has_otdelka_variants}

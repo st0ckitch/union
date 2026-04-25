@@ -26,7 +26,7 @@ const UnionProductDetail = () => {
   const [orderOpen, setOrderOpen] = useState(false);
   const [configSelection, setConfigSelection] = useState<ConfiguratorSelection | null>(null);
 
-  // Fetch product
+  // Fetch product (and its category — we'll resolve the parent category separately)
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', slug],
     queryFn: async () => {
@@ -35,6 +35,21 @@ const UnionProductDetail = () => {
         .select('*, categories(*)')
         .eq('slug', slug)
         .eq('is_active', true)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Resolve parent category for hierarchical breadcrumb
+  const { data: parentCategory } = useQuery({
+    queryKey: ['parent-category', product?.categories?.parent_id],
+    enabled: !!product?.categories?.parent_id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('id', product!.categories!.parent_id!)
         .maybeSingle();
       if (error) throw error;
       return data;
@@ -124,11 +139,21 @@ const UnionProductDetail = () => {
     });
   };
 
+  const parentCatLabel = parentCategory
+    ? (language === 'ka' ? parentCategory.name_ka : (parentCategory.name_en || parentCategory.name_ka))
+    : null;
+
   const breadcrumbItems = [
     { label: language === 'ka' ? 'კატალოგი' : 'Catalog', path: '/union/catalog' },
-    ...(product.categories ? [{ 
-      label: categoryName, 
-      path: `/union/catalog/${product.categories.slug}` 
+    ...(parentCategory ? [{
+      label: parentCatLabel!,
+      path: `/union/catalog/${parentCategory.slug}`,
+    }] : []),
+    ...(product.categories ? [{
+      label: categoryName,
+      path: parentCategory
+        ? `/union/catalog/${parentCategory.slug}/${product.categories.slug}`
+        : `/union/catalog/${product.categories.slug}`,
     }] : []),
     { label: name },
   ];
@@ -203,6 +228,23 @@ const UnionProductDetail = () => {
               <p className="text-muted-foreground leading-relaxed">
                 {description}
               </p>
+            )}
+
+            {/* Specifications */}
+            {product.specifications && Object.keys(product.specifications as object).length > 0 && (
+              <div className="border-t pt-5">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  {language === 'ka' ? 'მახასიათებლები' : language === 'ru' ? 'Характеристики' : 'Specifications'}
+                </h2>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                  {Object.entries(product.specifications as Record<string, any>).map(([key, value]) => (
+                    <div key={key} className="flex justify-between gap-4 py-1.5 border-b border-border/40 last:border-0">
+                      <dt className="text-muted-foreground capitalize">{key.replace(/_/g, ' ')}</dt>
+                      <dd className="font-medium text-right">{String(value)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             )}
 
             {/* Door configurator (only if product has variants enabled) */}
