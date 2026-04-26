@@ -2,28 +2,24 @@
 /**
  * Scrape en.union.ru → emit a Supabase migration that fully populates products.
  *
- * Discovery strategy (one fetch per parent — much cheaper than walking 2,300
- * sitemap entries):
- *   1. Fetch en.union.ru/<parent-slug>
- *   2. Parse <p class="title_sec">SubcategoryLabel</p> headings + the
- *      sibling <a class="link_sec" href="/product/...">cards
- *   3. Map (parent_slug, sub_label) → our subcategory slug via SUB_SLUG below
+ * Strategy:
+ *   1. Phase 1 — Discovery: fetch sitemap.xml, take every /product/* URL
+ *   2. Phase 2 — Classification + scrape: for each URL, fetch the detail page,
+ *      read breadcrumb MICRODATA (<ol id="breadcrumbs-list">) to get
+ *      parent + (optional) subcategory, then use JSON-LD for name/price/etc.
+ *   3. Phase 3 — Emit SQL: idempotent DELETE+INSERT migration
  *
- * Detail strategy (one fetch per unique product):
- *   - JSON-LD Product → name, price (RUB), image, mpn, description
- *   - <meta property="og:description"> / <h1> for English copy
- *   - All <img src> with /upload/iblock/ for gallery (capped at 8)
- *   - Regex on body text for thickness/hinges/lock/max_size/opening/gasket
- *   - Microdata <ol id="breadcrumbs-list"> as a sanity check on subcategory
- *
- * Output: supabase/migrations/<ts>_import_union_full.sql
- *   - Idempotent: starts with DELETE FROM products WHERE source_url LIKE '%union.ru%'
- *   - Then INSERTs each product, looking up category_id by slug subselect
+ * Why breadcrumb-based classification?
+ *   The earlier title_sec approach only worked on parent pages with the
+ *   3-column section layout. Many parents (Sliding doors, Stationary
+ *   partitions, Furniture, Vitrines, Sofas, Mirrors, Libraries) use other
+ *   layouts and were leaving 0 products. Breadcrumb microdata is present on
+ *   EVERY product page and is the authoritative classification per union.ru's
+ *   own taxonomy.
  *
  * Usage:
  *   node scripts/scraper/scrape.mjs                          # full crawl
  *   LIMIT=20 node scripts/scraper/scrape.mjs                 # quick test
- *   PARENTS=mezhkomnatnye-dveri node scripts/scraper/scrape.mjs   # specific parents
  *   FX_RATE=0.032 node scripts/scraper/scrape.mjs            # custom RUB→GEL
  */
 
@@ -35,163 +31,170 @@ import * as cheerio from 'cheerio';
 const ROOT = 'https://en.union.ru';
 const FX_RATE = parseFloat(process.env.FX_RATE || '0.030');
 const LIMIT = process.env.LIMIT ? parseInt(process.env.LIMIT) : null;
-const PARALLEL = 4;
-const POLITE_DELAY_MS = 200;
+const PARALLEL = 6;
+const POLITE_DELAY_MS = 150;
 
-// Parent-category URL slugs on en.union.ru. Used in two places:
-//   1. Discovery loop fetches en.union.ru/<slug>
-//   2. SUB_SLUG keys link parent_slug → label-to-our-slug map
-const PARENT_SLUGS = (process.env.PARENTS?.split(',') || [
-  'mezhkomnatnye-dveri',          // Swing doors → interior-doors
-  'razdvizhnye-dveri',            // Sliding doors → sliding-doors
-  'peregorodki',                  // Sliding partitions → sliding-partitions
-  'statsionarnye-peregorodki',    // Stationary partitions → stationary-partitions
-  'stenovye-paneli-dekorativnye', // Wall panels → wall-panels
-  'furniture-view/mebel',         // Furniture → furniture
-  'garderobnye-shkafy',           // Wardrobes → wardrobes
-  'furniture/vitriny-komody',     // Vitrines & Commodes → vitrines-commodes
-  'biblioteki-stellazhi',         // Libraries & Shelves → libraries
-  'polki',                        // Shelves → shelves
-  'stoly',                        // Tables → tables
-  'portofino-sofa',               // Sofas → sofas
-  'interernye-zerkala',           // Mirrors → mirrors
-  'vhodnye-dveri',                // Entrance doors → entrance-doors
-  'plintusy',                     // Baseboards → baseboards
-  'furnitura-dlya-dverei',        // Hardware → hardware
-]);
-
-// Map our parent slug from union URL slug
-const PARENT_TO_OURS = {
-  'mezhkomnatnye-dveri':          'interior-doors',
-  'razdvizhnye-dveri':            'sliding-doors',
-  'peregorodki':                  'sliding-partitions',
-  'statsionarnye-peregorodki':    'stationary-partitions',
-  'stenovye-paneli-dekorativnye': 'wall-panels',
-  'furniture-view/mebel':         'furniture',
-  'garderobnye-shkafy':           'wardrobes',
-  'furniture/vitriny-komody':     'vitrines-commodes',
-  'biblioteki-stellazhi':         'libraries',
-  'polki':                        'shelves',
-  'stoly':                        'tables',
-  'portofino-sofa':               'sofas',
-  'interernye-zerkala':           'mirrors',
-  'vhodnye-dveri':                'entrance-doors',
-  'plintusy':                     'baseboards',
-  'furnitura-dlya-dverei':        'hardware',
+// Breadcrumb's parent-position href → our parent_slug. union.ru sometimes uses
+// alternate URLs like /vhodnye-dveri-1296 alongside /vhodnye-dveri.
+const PARENT_HREF_TO_OURS = {
+  '/mezhkomnatnye-dveri':          'interior-doors',
+  '/mezhkomnatnye-dveri-356':      'interior-doors',
+  '/razdvizhnye-dveri':            'sliding-doors',
+  '/razdvizhnye-dveri-i-peregorodki-844': 'sliding-doors',
+  '/peregorodki':                  'sliding-partitions',
+  '/statsionarnye-peregorodki':    'stationary-partitions',
+  '/stenovye-paneli-dekorativnye': 'wall-panels',
+  '/furniture-view/mebel':         'furniture',
+  '/mebel-846':                    'furniture',
+  '/garderobnye-shkafy':           'wardrobes',
+  '/furniture/vitriny-komody':     'vitrines-commodes',
+  '/biblioteki-stellazhi':         'libraries',
+  '/polki':                        'shelves',
+  '/stoly':                        'tables',
+  '/portofino-sofa':               'sofas',
+  '/interernye-zerkala':           'mirrors',
+  '/vhodnye-dveri':                'entrance-doors',
+  '/vkhodnye-dveri-1296':          'entrance-doors',
+  '/plintusy':                     'baseboards',
+  '/furnitura-dlya-dverei':        'hardware',
+  '/furnitura-1401':               'hardware',
 };
 
-// (parent_slug, sub_label_text) → our subcategory slug.
-// Same label can repeat under different parents (e.g. "Folding", "Aluminum and glass"),
-// so the parent context disambiguates. Sub_label text comes verbatim from
-// the <p class="title_sec">…</p> on union.ru.
+// Parent label (text in breadcrumb position 2) → our parent slug. Used as
+// fallback if href doesn't match one of the known prefixes.
+const PARENT_LABEL_TO_OURS = {
+  'Swing doors':                  'interior-doors',
+  'Interior doors':               'interior-doors',
+  'Sliding doors':                'sliding-doors',
+  'Sliding partitions':           'sliding-partitions',
+  'Stationary partitions':        'stationary-partitions',
+  'Wall panels':                  'wall-panels',
+  'Furniture':                    'furniture',
+  'Walk-in closets, closets':     'wardrobes',
+  'Walk-in closets':              'wardrobes',
+  'Showcases, dressers':          'vitrines-commodes',
+  'Vitrines, commodes':           'vitrines-commodes',
+  'Libraries, shelving':          'libraries',
+  'Shelves':                      'shelves',
+  'Tables':                       'tables',
+  'Sofas':                        'sofas',
+  'Mirrors':                      'mirrors',
+  'Entrance doors':               'entrance-doors',
+  'Entrance steel doors':         'entrance-doors',
+  'Baseboards':                   'baseboards',
+  'Handles, accessories':         'hardware',
+  'Handles, Accessories':         'hardware',
+};
+
+// Per-parent (subcategory label) → our sub slug. Sub label comes from breadcrumb
+// position 3 if there are 4+ items. If position 3 doesn't map, the product
+// attaches to the parent only.
 const SUB_SLUG = {
-  'mezhkomnatnye-dveri': {
-    'Hidden under the painting':         'hidden-paintable',
-    'Enamel':                            'enamel',
-    'Gloss':                             'gloss',
-    'Natural veneer':                    'natural-veneer',
-    'Under the stone and marble':        'stone-marble',
-    'Affordable quality':                'affordable-quality',
-    'Aluminum and glass':                'aluminum-glass',
-    '3D surface':                        '3d-surface',
-    'Interior doors with 3D surface':    '3d-surface',
-    'Design':                            'designer-doors',
-    'Designer':                          'designer-doors',
-    'Classic in enamel':                 'classic-enamel',
-    'Classic doors in enamel':           'classic-enamel',
-    'Rotary':                            'pivot',
-    'Pivot':                             'pivot',
-    'PIVOT swing doors':                 'pivot',
-    'Folding':                           'folding-doors',
-    'Folding doors':                     'folding-doors',
-    'Doors with a shadow gap':           'shadow-gap',
-    'Soundproof':                        'soundproof',
-    'Soundproof doors':                  'soundproof',
+  'interior-doors': {
+    'Hidden under the painting':      'hidden-paintable',
+    'Hidden door for painting':       'hidden-paintable',
+    'Skrytaya dever pod pokrasky':    'hidden-paintable',
+    'Enamel':                         'enamel',
+    'Matt enamel':                    'enamel',
+    'Matte enamel':                   'enamel',
+    'Gloss':                          'gloss',
+    'Glossy enamel':                  'gloss',
+    'Natural veneer':                 'natural-veneer',
+    'Veneer':                         'natural-veneer',
+    'Under the stone and marble':     'stone-marble',
+    'Stone and marble':               'stone-marble',
+    'HPL':                            'stone-marble',
+    'Affordable quality':             'affordable-quality',
+    'Aluminum and glass':             'aluminum-glass',
+    '3D surface':                     '3d-surface',
+    'Interior doors with 3D surface': '3d-surface',
+    'Design':                         'designer-doors',
+    'Designer doors':                 'designer-doors',
+    'Classic in enamel':              'classic-enamel',
+    'Classic doors in enamel':        'classic-enamel',
+    'Rotary':                         'pivot',
+    'Pivot':                          'pivot',
+    'PIVOT swing doors':              'pivot',
+    'Folding':                        'folding-doors',
+    'Folding doors':                  'folding-doors',
+    'Doors with a shadow gap':        'shadow-gap',
+    'Shadow gap':                     'shadow-gap',
+    'Soundproof':                     'soundproof',
+    'Soundproof doors':               'soundproof',
   },
-  'razdvizhnye-dveri': {
+  'sliding-doors': {
     'Into the pencil case (into the wall)': 'pocket-doors',
-    'Pocket (into wall)':        'pocket-doors',
-    'Pocket doors':              'pocket-doors',
-    'Hidden mechanism':          'hidden-mechanism',
+    'Pocket (into wall)':                   'pocket-doors',
+    'Pocket doors':                         'pocket-doors',
+    'In the pencil case':                   'pocket-doors',
+    'Hidden mechanism':                     'hidden-mechanism',
   },
-  'peregorodki': {
-    'Wooden':                    'wooden-partitions',
-    'Aluminum and glass':        'aluminum-glass-partitions',
-    'Folding':                   'folding-partitions',
+  'sliding-partitions': {
+    'Wooden':                         'wooden-partitions',
+    'Aluminum and glass':             'aluminum-glass-partitions',
+    'Folding':                        'folding-partitions',
   },
-  'statsionarnye-peregorodki': {
-    'Aluminum - one glass':      'aluminum-single-glass',
-    'Aluminum — one glass':      'aluminum-single-glass',
-    'Aluminum - two glasses':    'aluminum-double-glass',
-    'Aluminum — two glasses':    'aluminum-double-glass',
+  'stationary-partitions': {
+    'Aluminum - one glass':           'aluminum-single-glass',
+    'Aluminum — one glass':           'aluminum-single-glass',
+    'Aluminum - two glasses':         'aluminum-double-glass',
+    'Aluminum — two glasses':         'aluminum-double-glass',
   },
-  'stenovye-paneli-dekorativnye': {
-    'Modern':                    'modern-panels',
-    '3D surface':                '3d-panels',
-    'Classic':                   'classic-panels',
+  'wall-panels': {
+    'Modern':                         'modern-panels',
+    '3D surface':                     '3d-panels',
+    'Classic':                        'classic-panels',
   },
-  'furniture-view/mebel': {
-    'Entrance halls':            'hallways',
-    'Hallways':                  'hallways',
-    'Living rooms':              'living-rooms',
-    'Canteens':                  'dining-rooms',
-    'Dining rooms':              'dining-rooms',
-    'Bedrooms':                  'bedrooms',
-    'Offices':                   'cabinets',
-    'Cabinets':                  'cabinets',
+  'furniture': {
+    'Entrance halls':                 'hallways',
+    'Hallways':                       'hallways',
+    'Living rooms':                   'living-rooms',
+    'Canteens':                       'dining-rooms',
+    'Dining rooms':                   'dining-rooms',
+    'Bedrooms':                       'bedrooms',
+    'Offices':                        'cabinets',
+    'Cabinets':                       'cabinets',
   },
-  'garderobnye-shkafy': {
-    'Walk-in closets':           'wardrobes-walkin',
-    'WALK-IN CLOSETS':           'wardrobes-walkin',
-    'Walk-in':                   'wardrobes-walkin',
-    'Wardrobes':                 'cabinets-storage',
-    'WARDROBES':                 'cabinets-storage',
-    'Cabinets':                  'cabinets-storage',
+  'wardrobes': {
+    'Walk-in closets':                'wardrobes-walkin',
+    'WALK-IN CLOSETS':                'wardrobes-walkin',
+    'Wardrobes':                      'cabinets-storage',
+    'WARDROBES':                      'cabinets-storage',
   },
-  'furniture/vitriny-komody': {
-    'Dressers':                          'commodes',
-    'Commodes':                          'commodes',
-    'Dressers - aluminum, glass':        'commodes-alu-glass',
-    'Dressers — aluminum, glass':        'commodes-alu-glass',
-    'Dressers - aluminum and glass':     'commodes-alu-glass',
-    'Dresser-island':                    'commode-island',
-    'Commode-island':                    'commode-island',
-    'Commode island':                    'commode-island',
-    'Wall-mounted showcases':            'vitrines-wall',
-    'Showcases — wall-mounted':          'vitrines-wall',
-    'Wall showcases':                    'vitrines-wall',
-    'Floor showcases':                   'vitrines-floor',
-    'Showcases — floor':                 'vitrines-floor',
-    'Shelving showcases':                'vitrines-shelving',
-    'Showcases — shelving':              'vitrines-shelving',
-    'Showcases-shelving':                'vitrines-shelving',
+  'vitrines-commodes': {
+    'Dressers':                       'commodes',
+    'Commodes':                       'commodes',
+    'Dressers - aluminum, glass':     'commodes-alu-glass',
+    'Dresser-island':                 'commode-island',
+    'Wall-mounted showcases':         'vitrines-wall',
+    'Floor showcases':                'vitrines-floor',
+    'Shelving showcases':             'vitrines-shelving',
   },
-  'stoly': {
-    'Dining, kitchen':           'dining-tables',
-    'Dining, kitchen tables':    'dining-tables',
-    'Dining and kitchen':        'dining-tables',
-    'Magazine':                  'coffee-tables',
-    'Coffee tables':             'coffee-tables',
-    'Coffee':                    'coffee-tables',
+  'tables': {
+    'Dining, kitchen':                'dining-tables',
+    'Dining, kitchen tables':         'dining-tables',
+    'Magazine':                       'coffee-tables',
+    'Coffee tables':                  'coffee-tables',
   },
-  'plintusy': {
-    'Shadow':                    'baseboard-shadow',
-    'Shadow skirting board':     'baseboard-shadow',
-    'Hidden':                    'baseboard-hidden',
-    'Hidden skirting board':     'baseboard-hidden',
-    'Traditional':               'baseboard-traditional',
+  'baseboards': {
+    'Shadow':                         'baseboard-shadow',
+    'Shadow skirting board':          'baseboard-shadow',
+    'Shadow baseboard':               'baseboard-shadow',
+    'Hidden':                         'baseboard-hidden',
+    'Invisible baseboard':            'baseboard-hidden',
+    'Hidden skirting board':          'baseboard-hidden',
+    'Traditional':                    'baseboard-traditional',
     'Traditional floor skirting board': 'baseboard-traditional',
   },
-  'furnitura-dlya-dverei': {
-    'Door handles':                  'door-handles',
-    'Handles':                       'door-handles',
-    'Handles for interior doors':    'door-handles',
-    'Limiters':                      'stoppers',
-    'Door limiters':                 'stoppers',
-    'Stoppers':                      'stoppers',
-    'Pencil cases':                  'pocket-cassettes',
-    'Cassettes':                     'pocket-cassettes',
-    'Hangers':                       'hangers',
+  'hardware': {
+    'Door handles':                   'door-handles',
+    'Handles for interior doors':     'door-handles',
+    'Limiters':                       'stoppers',
+    'Door limiters':                  'stoppers',
+    'Stoppers':                       'stoppers',
+    'Pencil cases':                   'pocket-cassettes',
+    'Cassettes':                      'pocket-cassettes',
+    'Hangers':                        'hangers',
   },
 };
 
@@ -214,7 +217,7 @@ function escSqlArray(arr) {
 async function fetchHtml(url, attempt = 1) {
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; HMSpace-Importer/2.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; HMSpace-Importer/3.0)' },
       redirect: 'follow',
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -238,63 +241,53 @@ function normalizeImage(src) {
   return abs;
 }
 
-// ─────────── phase 1: discover product URLs grouped by (parent, sub_slug) ───────────
+// ─────────── phase 1: discover product URLs from sitemap.xml ───────────
 
-/**
- * Walk a parent category page. Returns array of:
- *   { url, parent_slug, sub_label, sub_slug }
- * `sub_slug` may be null if SUB_SLUG has no entry for that label — those products
- * still get attached to the parent.
- */
-async function discoverParent(parentSlug) {
-  const url = `${ROOT}/${parentSlug}`;
-  console.error(`[discover] ${url}`);
-  const html = await fetchHtml(url);
-  const $ = cheerio.load(html);
-
-  const out = [];
-  const subMap = SUB_SLUG[parentSlug] || {};
-
-  // The page is a 3-4 column layout. Each column contains:
-  //   <p class="title_sec">SubcategoryLabel</p>
-  //   <a class="link_sec" href="/product/...">…
-  // We walk title_sec elements and gather all <a.link_sec> until the next title_sec.
-  $('.title_sec').each((_, titleEl) => {
-    const subLabel = $(titleEl).text().replace(/\s+/g, ' ').trim();
-    const subSlug = subMap[subLabel] || null;
-
-    // Find product cards that share the same parent column as this title_sec
-    // Strategy: grab the closest column container, then all .link_sec inside it
-    const column = $(titleEl).parent(); // typically the col-lg-4 wrapper
-    column.find('a.link_sec[href*="/product/"]').each((_, a) => {
-      let href = $(a).attr('href');
-      if (!href) return;
-      if (href.startsWith('/')) href = ROOT + href;
-      href = href.split('?')[0].split('#')[0];
-      out.push({ url: href, parent_slug: parentSlug, sub_label: subLabel, sub_slug: subSlug });
-    });
-  });
-
-  // Also catch any product cards that appear OUTSIDE a title_sec section
-  // (some pages have an "all" grid below the sections). Attach to parent only.
-  const seen = new Set(out.map(x => x.url));
-  $('a.link_sec[href*="/product/"]').each((_, a) => {
-    let href = $(a).attr('href');
-    if (!href) return;
-    if (href.startsWith('/')) href = ROOT + href;
-    href = href.split('?')[0].split('#')[0];
-    if (!seen.has(href)) {
-      out.push({ url: href, parent_slug: parentSlug, sub_label: null, sub_slug: null });
-      seen.add(href);
-    }
-  });
-
-  return out;
+async function discoverFromSitemap() {
+  console.error('[discover] fetching sitemap.xml');
+  const xml = await fetchHtml(`${ROOT}/sitemap.xml`);
+  const urls = new Set();
+  for (const match of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const url = match[1];
+    if (!url.includes('/product/')) continue;
+    // Skip orphan/empty slug variants
+    const slug = url.split('/').pop();
+    if (!slug || slug.startsWith('-') || slug.length < 3) continue;
+    // Normalise to en.union.ru host (sitemap uses www)
+    urls.add(url.replace('https://www.union.ru/', `${ROOT}/`));
+  }
+  console.error(`  ↳ ${urls.size} product URLs in sitemap`);
+  return [...urls];
 }
 
 // ─────────── phase 2: scrape one product ───────────
 
-function parseProduct(html, sourceUrl, parentSlug, subSlug) {
+function classifyByBreadcrumb($) {
+  // Breadcrumb microdata: <ol id="breadcrumbs-list"><li> Catalog | Parent | Sub | Product
+  const items = [];
+  $('ol#breadcrumbs-list li').each((_, li) => {
+    const name = $(li).find('[itemprop="name"]').text().replace(/\s+/g, ' ').trim();
+    const href = $(li).find('a').attr('href') || '';
+    if (name) items.push({ name, href });
+  });
+  if (items.length < 2) return { ourParent: null, ourSub: null, parentLabel: null, subLabel: null };
+
+  // Position 1 (index 1) is the parent — index 0 is "Catalog"
+  const parent = items[1];
+  const sub = items.length >= 4 ? items[2] : null; // 4+ items = has subcategory
+
+  let ourParent = PARENT_HREF_TO_OURS[parent.href.split('?')[0]] || null;
+  if (!ourParent) ourParent = PARENT_LABEL_TO_OURS[parent.name] || null;
+
+  let ourSub = null;
+  if (sub && ourParent && SUB_SLUG[ourParent]) {
+    ourSub = SUB_SLUG[ourParent][sub.name] || null;
+  }
+
+  return { ourParent, ourSub, parentLabel: parent.name, subLabel: sub?.name || null };
+}
+
+function parseProduct(html, sourceUrl) {
   const $ = cheerio.load(html);
 
   let ld = null;
@@ -306,36 +299,46 @@ function parseProduct(html, sourceUrl, parentSlug, subSlug) {
   });
   if (!ld) return null;
 
+  const cls = classifyByBreadcrumb($);
+  if (!cls.ourParent) return null; // skip products we can't classify
+
   const ogTitle = $('meta[property="og:title"]').attr('content') || ld.name;
   const ogDesc = $('meta[property="og:description"]').attr('content') || '';
   const h1 = $('h1').first().text().trim();
 
-  // Try to grab a richer English description from the page body
+  // Skip text blocks that contain Cyrillic — even on en.union.ru, some product
+  // descriptions haven't been translated. We want English only.
+  const isCyrillic = (s) => /[\u0400-\u04FF]/.test(s || '');
+
+  // Long English description
   let longDesc = '';
   $('[class*="description"], [class*="content"], .product-info, .product__description').each((_, el) => {
     const text = $(el).text().replace(/\s+/g, ' ').trim();
+    if (isCyrillic(text)) return; // English-only
     if (text.length > longDesc.length && text.length < 4000) longDesc = text;
   });
   if (!longDesc || longDesc.length < 80) {
     $('p').each((_, el) => {
       const t = $(el).text().replace(/\s+/g, ' ').trim();
+      if (isCyrillic(t)) return;
       if (t.length >= 80 && t.length < 1000 && !t.includes('cookie') && !t.includes('+7')) {
         if (t.length > longDesc.length) longDesc = t;
       }
     });
   }
   if (longDesc) longDesc = longDesc.slice(0, 800);
-  const description = (longDesc && longDesc.length > ogDesc.length) ? longDesc : ogDesc;
 
-  // Microdata breadcrumb sanity check — second <li> is parent, third is sub
-  let breadcrumbSubLabel = null;
-  let breadcrumbSubHref = null;
-  $('ol#breadcrumbs-list li').each((i, li) => {
-    if (i === 2) {
-      breadcrumbSubLabel = $(li).find('[itemprop="name"]').text().trim();
-      breadcrumbSubHref = $(li).find('a').attr('href') || null;
-    }
-  });
+  // Prefer the longest non-Cyrillic option. If everything is Cyrillic, fall
+  // back to a generic English template built from the product name.
+  const ogClean = isCyrillic(ogDesc) ? '' : ogDesc;
+  const h1Clean = isCyrillic(h1) ? '' : h1;
+  let description = '';
+  for (const candidate of [longDesc, ogClean, h1Clean]) {
+    if (candidate && candidate.length > description.length) description = candidate;
+  }
+  if (!description) {
+    description = `Premium ${ogTitle.trim()} from UNION. Italian craftsmanship, made-to-order finishes, custom sizing. Contact us for details.`;
+  }
 
   // Images
   const imageSet = new Set();
@@ -354,7 +357,7 @@ function parseProduct(html, sourceUrl, parentSlug, subSlug) {
   });
   const images = [...imageSet].filter(Boolean).slice(0, 8);
 
-  // Specifications via regex on whole body
+  // Specifications via regex
   const specs = {};
   const specPatterns = [
     ['thickness',     /(?:Толщина|thickness)[^\d]*([\d.,]+\s*(?:cm|см))/i],
@@ -376,6 +379,7 @@ function parseProduct(html, sourceUrl, parentSlug, subSlug) {
     }
   }
   if (ld.model) specs.model = ld.model;
+  if (cls.subLabel) specs.union_subcategory = cls.subLabel;
 
   const priceRub = parseFloat(ld.offers?.price || '0') || 0;
   const priceGel = priceRub > 0 ? Math.round(priceRub * FX_RATE / 10) * 10 : 0;
@@ -386,23 +390,22 @@ function parseProduct(html, sourceUrl, parentSlug, subSlug) {
     sku: ld.mpn || ld.sku || '',
     slug: urlSlug,
     name_en: (ogTitle || ld.name || '').trim(),
-    name_ka: (ogTitle || ld.name || '').trim(), // copy English; admin re-translates later
+    name_ka: (ogTitle || ld.name || '').trim(),
     description_en: (description || h1).trim(),
     description_ka: (description || h1).trim(),
     price: priceGel,
     images,
     specs,
-    parent_slug: parentSlug,
-    sub_slug: subSlug,
-    breadcrumb_sub_label: breadcrumbSubLabel,
-    breadcrumb_sub_href: breadcrumbSubHref,
+    parent_slug: cls.ourParent,
+    sub_slug: cls.ourSub,
+    parentLabel: cls.parentLabel,
+    subLabel: cls.subLabel,
   };
 }
 
-async function scrapeProduct(url, parentSlug, subSlug) {
-  console.error(`[scrape] ${url}`);
+async function scrapeProduct(url) {
   const html = await fetchHtml(url);
-  return parseProduct(html, url, parentSlug, subSlug);
+  return parseProduct(html, url);
 }
 
 // ─────────── phase 3: emit SQL ───────────
@@ -414,35 +417,29 @@ function buildSql(products) {
   lines.push(`-- Generated at ${new Date().toISOString()}`);
   lines.push(`-- ${products.length} products`);
   lines.push(`-- FX rate used: 1 RUB → ${FX_RATE} GEL`);
+  lines.push('-- Classification: breadcrumb microdata from each product page');
   lines.push('-- =============================================================================');
   lines.push('');
 
-  // Wipe existing union.ru products first — clean slate
-  lines.push("-- Wipe previous union.ru imports (so re-running this is idempotent)");
+  lines.push("-- Wipe previous union.ru imports (idempotent on re-run)");
   lines.push("DELETE FROM public.products WHERE source_url LIKE '%union.ru%';");
   lines.push('');
 
   lines.push('DO $$');
   lines.push('DECLARE');
   lines.push('  target_cat UUID;');
-  lines.push('  parent_cat UUID;');
   lines.push('BEGIN');
 
   let inserted = 0;
   for (const p of products) {
     if (!p.name_en || !p.slug || p.price <= 0) continue;
-
-    // Resolve target category by slug:
-    //   - sub_slug if known and exists in our DB
-    //   - otherwise fall back to the parent (from PARENT_TO_OURS)
-    const ourParent = PARENT_TO_OURS[p.parent_slug];
-    if (!ourParent) continue;
+    if (!p.parent_slug) continue;
 
     if (p.sub_slug) {
       lines.push(`  SELECT id INTO target_cat FROM public.categories WHERE slug = ${escSql(p.sub_slug)};`);
-      lines.push(`  IF target_cat IS NULL THEN SELECT id INTO target_cat FROM public.categories WHERE slug = ${escSql(ourParent)}; END IF;`);
+      lines.push(`  IF target_cat IS NULL THEN SELECT id INTO target_cat FROM public.categories WHERE slug = ${escSql(p.parent_slug)}; END IF;`);
     } else {
-      lines.push(`  SELECT id INTO target_cat FROM public.categories WHERE slug = ${escSql(ourParent)};`);
+      lines.push(`  SELECT id INTO target_cat FROM public.categories WHERE slug = ${escSql(p.parent_slug)};`);
     }
 
     lines.push(`  INSERT INTO public.products (`);
@@ -475,69 +472,70 @@ function buildSql(products) {
 // ─────────── main ───────────
 
 async function main() {
-  // Discovery: dedupe by URL — first parent-page that mentions a product wins
-  const allUrls = new Map();
-  for (const ps of PARENT_SLUGS) {
-    try {
-      const items = await discoverParent(ps);
-      let attached = 0;
-      for (const item of items) {
-        if (!allUrls.has(item.url)) {
-          allUrls.set(item.url, item);
-          attached++;
-        }
-      }
-      console.error(`  ↳ ${items.length} entries, ${attached} new (${allUrls.size} unique total)`);
-      await sleep(POLITE_DELAY_MS);
-    } catch (e) {
-      console.error(`  ✗ ${ps}: ${e.message}`);
-    }
-  }
-
-  console.error(`\n📦 ${allUrls.size} unique product URLs across ${PARENT_SLUGS.length} parent pages`);
-
-  // Distribution stats
-  const byParent = {};
-  for (const item of allUrls.values()) {
-    const key = `${item.parent_slug} / ${item.sub_label || '(parent only)'}`;
-    byParent[key] = (byParent[key] || 0) + 1;
-  }
-  console.error('\nDistribution:');
-  for (const [k, v] of Object.entries(byParent).sort((a, b) => b[1] - a[1])) {
-    console.error(`  ${String(v).padStart(4)}  ${k}`);
-  }
-
-  const queue = [...allUrls.values()];
+  const urls = await discoverFromSitemap();
+  const queue = [...urls];
   if (LIMIT) queue.splice(LIMIT);
 
   const products = [];
   let done = 0;
+  let skipped = 0;
+  let errored = 0;
 
   async function worker() {
     while (queue.length > 0) {
-      const item = queue.shift();
+      const url = queue.shift();
       try {
-        const p = await scrapeProduct(item.url, item.parent_slug, item.sub_slug);
+        const p = await scrapeProduct(url);
         if (p) products.push(p);
+        else skipped++;
       } catch (e) {
-        console.error(`  ✗ ${item.url}: ${e.message}`);
+        errored++;
       }
       done++;
-      if (done % 20 === 0) console.error(`  · ${done}/${allUrls.size} done, ${products.length} parsed`);
+      if (done % 50 === 0) {
+        console.error(`  · ${done}/${urls.length} done, ${products.length} parsed, ${skipped} skipped, ${errored} errored`);
+      }
       await sleep(POLITE_DELAY_MS);
     }
   }
 
+  console.error(`\nScraping ${queue.length} products with ${PARALLEL} parallel workers…\n`);
   await Promise.all(Array.from({ length: PARALLEL }, worker));
 
-  console.error(`\n✅ ${products.length} products scraped successfully`);
+  console.error(`\n✅ ${products.length} products scraped, ${skipped} skipped, ${errored} errored\n`);
+
+  // Distribution stats
+  const dist = {};
+  for (const p of products) {
+    const key = p.parent_slug + (p.sub_slug ? '/' + p.sub_slug : '/(parent)');
+    dist[key] = (dist[key] || 0) + 1;
+  }
+  console.error('Distribution by category:');
+  for (const [k, v] of Object.entries(dist).sort((a, b) => b[1] - a[1])) {
+    console.error(`  ${String(v).padStart(4)}  ${k}`);
+  }
+
+  // Unmapped breadcrumb labels (for diagnostics)
+  const unmappedSubs = {};
+  for (const p of products) {
+    if (p.subLabel && !p.sub_slug) {
+      const key = `${p.parent_slug}: "${p.subLabel}"`;
+      unmappedSubs[key] = (unmappedSubs[key] || 0) + 1;
+    }
+  }
+  if (Object.keys(unmappedSubs).length > 0) {
+    console.error('\nUnmapped sub labels (consider adding to SUB_SLUG):');
+    for (const [k, v] of Object.entries(unmappedSubs).sort((a, b) => b[1] - a[1]).slice(0, 30)) {
+      console.error(`  ${String(v).padStart(4)}  ${k}`);
+    }
+  }
 
   const sql = buildSql(products);
   const ts = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
   const outPath = join('supabase', 'migrations', `${ts}_import_union_full.sql`);
   mkdirSync('supabase/migrations', { recursive: true });
   writeFileSync(outPath, sql, 'utf8');
-  console.error(`💾 Wrote ${outPath} (${(sql.length / 1024).toFixed(1)} KB)`);
+  console.error(`\n💾 Wrote ${outPath} (${(sql.length / 1024).toFixed(1)} KB)`);
 }
 
 main().catch((e) => { console.error('Fatal:', e); process.exit(1); });

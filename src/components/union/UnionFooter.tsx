@@ -7,65 +7,65 @@ const footerSections = [
   {
     titleKey: 'catalogFooter',
     links: [
-      { name_ru: 'Ассортимент Union', name_ka: 'ასორტიმენტი Union', href: '/union/catalog' },
-      { name_ru: 'Двери из Италии', name_ka: 'იტალიური კარები', href: '/union/catalog/italian-doors' },
-      { name_ru: 'Sale', name_ka: 'Sale', href: '/union/sale' },
-      { name_ru: 'Контрактные двери', name_ka: 'საკონტრაქტო კარები', href: '/union/catalog/contract' },
-      { name_ru: 'Скачать каталог UNION', name_ka: 'ჩამოტვირთეთ კატალოგი', href: '#' },
+      { name_ru: 'Ассортимент Union',         name_ka: 'ასორტიმენტი Union',           name_en: 'Union assortment',          href: '/union/catalog' },
+      { name_ru: 'Двери из Италии',           name_ka: 'იტალიური კარები',             name_en: 'Doors from Italy',          href: '/union/catalog/italian-doors' },
+      { name_ru: 'Sale',                       name_ka: 'Sale',                        name_en: 'Sale',                       href: '/union/sale' },
+      { name_ru: 'Контрактные двери',         name_ka: 'საკონტრაქტო კარები',           name_en: 'Contract doors',             href: '/union/catalog/contract' },
+      { name_ru: 'Скачать каталог UNION',     name_ka: 'ჩამოტვირთეთ კატალოგი',         name_en: 'Download UNION catalog',     href: '#' },
     ],
   },
   {
     titleKey: 'cooperation',
     links: [
-      { name_ru: 'О компании', name_ka: 'კომპანიის შესახებ', href: '/union/about' },
-      { name_ru: 'Дилерам', name_ka: 'დილერებს', href: '/union/partnership' },
-      { name_ru: 'Архитекторам и дизайнерам', name_ka: 'არქიტექტორებს და დიზაინერებს', href: '/union/designers' },
-      { name_ru: 'Корпоративным клиентам', name_ka: 'კორპორატიულ კლიენტებს', href: '/union/partnership#corporate' },
-      { name_ru: 'Конфигуратор', name_ka: 'კონფიგურატორი', href: '/union/configurator' },
-      { name_ru: 'Поставщикам', name_ka: 'მომწოდებლებს', href: '/union/suppliers' },
-      { name_ru: 'Вакансии', name_ka: 'ვაკანსიები', href: '/union/careers' },
+      { name_ru: 'О компании',                 name_ka: 'კომპანიის შესახებ',           name_en: 'About the company',          href: '/union/about' },
+      { name_ru: 'Дилерам',                   name_ka: 'დილერებს',                    name_en: 'For dealers',                href: '/union/partnership' },
+      { name_ru: 'Архитекторам и дизайнерам', name_ka: 'არქიტექტორებს და დიზაინერებს', name_en: 'For architects & designers', href: '/union/designers' },
+      { name_ru: 'Корпоративным клиентам',     name_ka: 'კორპორატიულ კლიენტებს',       name_en: 'Corporate clients',          href: '/union/partnership#corporate' },
+      { name_ru: 'Конфигуратор',               name_ka: 'კონფიგურატორი',               name_en: 'Configurator',               href: '/union/configurator' },
+      { name_ru: 'Поставщикам',                name_ka: 'მომწოდებლებს',               name_en: 'For suppliers',              href: '/union/suppliers' },
+      { name_ru: 'Вакансии',                   name_ka: 'ვაკანსიები',                  name_en: 'Careers',                    href: '/union/careers' },
     ],
   },
   {
     titleKey: 'forBuyer',
     links: [
-      { name_ru: 'Оплата заказа', name_ka: 'შეკვეთის გადახდა', href: '/union/payment' },
-      { name_ru: 'Проверка заказа', name_ka: 'შეკვეთის შემოწმება', href: '/union/order-check' },
-      { name_ru: 'Оставить отзыв', name_ka: 'შეფასების დატოვება', href: '/union/review' },
-      { name_ru: 'Товары со скидкой', name_ka: 'ფასდაკლებული საქონელი', href: '/union/sale' },
-      { name_ru: 'Склад', name_ka: 'საწყობი', href: '/union/warehouse' },
-      { name_ru: 'Клиентская служба', name_ka: 'მომხმარებელთა სერვისი', href: '/union/support' },
-      { name_ru: 'Где купить', name_ka: 'სად ვიყიდოთ', href: '/union/showrooms' },
-      { name_ru: 'Политика конфиденциальности', name_ka: 'კონფიდენციალურობის პოლიტიკა', href: '/union/privacy' },
+      { name_ru: 'Оплата заказа',              name_ka: 'შეკვეთის გადახდა',           name_en: 'Order payment',              href: '/union/payment' },
+      { name_ru: 'Проверка заказа',            name_ka: 'შეკვეთის შემოწმება',         name_en: 'Order tracking',             href: '/union/order-check' },
+      { name_ru: 'Оставить отзыв',             name_ka: 'შეფასების დატოვება',         name_en: 'Leave a review',             href: '/union/review' },
+      { name_ru: 'Товары со скидкой',          name_ka: 'ფასდაკლებული საქონელი',      name_en: 'Sale items',                 href: '/union/sale' },
+      { name_ru: 'Склад',                      name_ka: 'საწყობი',                    name_en: 'Warehouse',                  href: '/union/warehouse' },
+      { name_ru: 'Клиентская служба',          name_ka: 'მომხმარებელთა სერვისი',      name_en: 'Customer service',           href: '/union/support' },
+      { name_ru: 'Где купить',                 name_ka: 'სად ვიყიდოთ',                 name_en: 'Where to buy',               href: '/union/showrooms' },
+      { name_ru: 'Политика конфиденциальности', name_ka: 'კონფიდენციალურობის პოლიტიკა', name_en: 'Privacy policy',           href: '/union/privacy' },
     ],
   },
   {
     titleKey: 'services',
     links: [
-      { name_ru: 'Обмер бесплатно', name_ka: 'უფასო გაზომვა', href: '/union/services/measurement' },
-      { name_ru: 'Доставка и монтаж', name_ka: 'მიწოდება და მონტაჟი', href: '/union/delivery' },
-      { name_ru: 'Вызов консультанта на дом', name_ka: 'კონსულტანტის გამოძახება', href: '/union/consultation' },
-      { name_ru: 'Реставрация дверей', name_ka: 'კარების რესტავრაცია', href: '/union/restoration' },
-      { name_ru: 'Гарантия', name_ka: 'გარანტია', href: '/union/warranty' },
+      { name_ru: 'Обмер бесплатно',            name_ka: 'უფასო გაზომვა',              name_en: 'Free measurement',           href: '/union/services/measurement' },
+      { name_ru: 'Доставка и монтаж',          name_ka: 'მიწოდება და მონტაჟი',         name_en: 'Delivery & installation',    href: '/union/delivery' },
+      { name_ru: 'Вызов консультанта на дом',  name_ka: 'კონსულტანტის გამოძახება',     name_en: 'On-site consultation',       href: '/union/consultation' },
+      { name_ru: 'Реставрация дверей',         name_ka: 'კარების რესტავრაცია',         name_en: 'Door restoration',           href: '/union/restoration' },
+      { name_ru: 'Гарантия',                   name_ka: 'გარანტია',                    name_en: 'Warranty',                   href: '/union/warranty' },
     ],
   },
   {
     titleKey: 'usefulFooter',
     links: [
-      { name_ru: 'Блог', name_ka: 'ბლოგი', href: '/union/blog' },
-      { name_ru: 'FAQ', name_ka: 'FAQ', href: '/union/faq' },
-      { name_ru: 'Патенты и сертификаты', name_ka: 'პატენტები და სერტიფიკატები', href: '/union/certificates' },
-      { name_ru: 'Как выбрать дверь?', name_ka: 'როგორ ავირჩიოთ კარი?', href: '/union/blog/how-to-choose' },
-      { name_ru: 'Особенности дверей', name_ka: 'კარების თავისებურებები', href: '/union/blog/features' },
-      { name_ru: 'Советы по эксплуатации и уходу', name_ka: 'მოვლის რჩევები', href: '/union/blog/care-tips' },
+      { name_ru: 'Блог',                       name_ka: 'ბლოგი',                       name_en: 'Blog',                       href: '/union/blog' },
+      { name_ru: 'FAQ',                        name_ka: 'FAQ',                         name_en: 'FAQ',                        href: '/union/faq' },
+      { name_ru: 'Патенты и сертификаты',      name_ka: 'პატენტები და სერტიფიკატები',  name_en: 'Patents & certificates',     href: '/union/certificates' },
+      { name_ru: 'Как выбрать дверь?',         name_ka: 'როგორ ავირჩიოთ კარი?',       name_en: 'How to choose a door?',      href: '/union/blog/how-to-choose' },
+      { name_ru: 'Особенности дверей',         name_ka: 'კარების თავისებურებები',     name_en: 'Door features',              href: '/union/blog/features' },
+      { name_ru: 'Советы по эксплуатации и уходу', name_ka: 'მოვლის რჩევები',         name_en: 'Care tips',                  href: '/union/blog/care-tips' },
     ],
   },
   {
     titleKey: 'pressCenter',
     links: [
-      { name_ru: 'Наши проекты', name_ka: 'ჩვენი პროექტები', href: '/union/projects' },
-      { name_ru: 'Новости компании', name_ka: 'კომპანიის სიახლეები', href: '/union/news' },
-      { name_ru: 'Видеоматериалы', name_ka: 'ვიდეომასალები', href: '/union/videos' },
+      { name_ru: 'Наши проекты',               name_ka: 'ჩვენი პროექტები',             name_en: 'Our projects',               href: '/union/projects' },
+      { name_ru: 'Новости компании',           name_ka: 'კომპანიის სიახლეები',         name_en: 'Company news',               href: '/union/news' },
+      { name_ru: 'Видеоматериалы',             name_ka: 'ვიდეომასალები',               name_en: 'Videos',                     href: '/union/videos' },
     ],
   },
 ];
@@ -90,11 +90,17 @@ export function UnionFooter() {
       <div className="border-b border-white/10 py-4">
         <div className="container">
           <p className="text-sm">
-            {language === 'ru' 
-              ? 'Больше идей для интерьера мечты - в официальном' 
-              : 'მეტი იდეა ოცნების ინტერიერისთვის - ოფიციალურ'}{' '}
+            {language === 'en'
+              ? 'More ideas for your dream interior — on the official'
+              : language === 'ru'
+                ? 'Больше идей для интерьера мечты - в официальном'
+                : 'მეტი იდეა ოცნების ინტერიერისთვის - ოფიციალურ'}{' '}
             <a href="#" className="underline hover:text-white/80">
-              {language === 'ru' ? 'телеграм канале UNION' : 'UNION-ის ტელეგრამ არხზე'}
+              {language === 'en'
+                ? 'UNION Telegram channel'
+                : language === 'ru'
+                  ? 'телеграм канале UNION'
+                  : 'UNION-ის ტელეგრამ არხზე'}
             </a>
           </p>
         </div>
@@ -125,7 +131,11 @@ export function UnionFooter() {
                       to={link.href}
                       className="text-sm text-white/60 hover:text-white transition-colors"
                     >
-                      {language === 'ka' ? link.name_ka : link.name_ru}
+                      {language === 'ka'
+                        ? link.name_ka
+                        : language === 'en'
+                          ? ((link as any).name_en || link.name_ru)
+                          : link.name_ru}
                     </Link>
                   </li>
                 ))}
@@ -152,9 +162,11 @@ export function UnionFooter() {
           </div>
 
           <p className="text-sm text-white/50">
-            © {language === 'ru' 
-              ? 'Официальный сайт производителя дверей и мебели UNION 1990' 
-              : 'კარებისა და ავეჯის მწარმოებელი UNION-ის ოფიციალური საიტი 1990'}
+            © {language === 'en'
+              ? 'Official site of UNION — manufacturer of doors and furniture, since 1990'
+              : language === 'ru'
+                ? 'Официальный сайт производителя дверей и мебели UNION 1990'
+                : 'კარებისა და ავეჯის მწარმოებელი UNION-ის ოფიციალური საიტი 1990'}
           </p>
         </div>
       </div>
@@ -163,9 +175,11 @@ export function UnionFooter() {
       <div className="border-t border-white/10 py-4">
         <div className="container">
           <p className="text-[10px] text-white/40 text-center leading-relaxed">
-            {language === 'ru'
-              ? 'Цены и описание товаров носят исключительно ознакомительный характер и не являются публичной офертой! Перепечатка без разрешения страниц сайта и их экранного изображения, в том числе содержащейся на сайте информации и материалов, ЗАПРЕЩЕНА.'
-              : 'საქონლის ფასები და აღწერილობა მხოლოდ ინფორმაციულ ხასიათს ატარებს და არ წარმოადგენს საჯარო შეთავაზებას!'}
+            {language === 'en'
+              ? 'Prices and product descriptions are for informational purposes only and do not constitute a public offer. Reproduction of any pages of the site, screenshots or content without permission is PROHIBITED.'
+              : language === 'ru'
+                ? 'Цены и описание товаров носят исключительно ознакомительный характер и не являются публичной офертой! Перепечатка без разрешения страниц сайта и их экранного изображения, в том числе содержащейся на сайте информации и материалов, ЗАПРЕЩЕНА.'
+                : 'საქონლის ფასები და აღწერილობა მხოლოდ ინფორმაციულ ხასიათს ატარებს და არ წარმოადგენს საჯარო შეთავაზებას!'}
           </p>
         </div>
       </div>
