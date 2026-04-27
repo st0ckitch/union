@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface UnionLogoProps {
   className?: string;
@@ -6,6 +7,32 @@ interface UnionLogoProps {
   withWordmark?: boolean;
   /** Inherit color from currentColor — defaults true */
   mono?: boolean;
+}
+
+/**
+ * Official UNION 35-year-anniversary brand lockup, language-aware.
+ * Renders the EN ("UNION DOORS · FURNITURE | 35 years") or RU
+ * ("UNION ДВЕРИ · МЕБЕЛЬ | 35 лет") variant. Georgian visitors get
+ * the EN lockup since UNION publishes only EN/RU artwork.
+ *
+ * Source PNGs cropped from the official brand sheet PDF live in
+ * public/logo/union-{en,ru}{,-35}.png.
+ */
+export function UnionLogoOfficial({
+  className,
+  withAnniversary = true,
+}: { className?: string; withAnniversary?: boolean }) {
+  const { language } = useLanguage();
+  const lang = language === 'ru' ? 'ru' : 'en';
+  const file = withAnniversary ? `union-${lang}-35.png` : `union-${lang}.png`;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return (
+    <img
+      src={`${base}/logo/${file}`}
+      alt="UNION — Doors & Furniture, 35 years of admitted excellence"
+      className={cn('block w-auto', className)}
+    />
+  );
 }
 
 /**

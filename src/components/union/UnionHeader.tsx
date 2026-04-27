@@ -7,7 +7,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { UnionMegaMenu } from './UnionMegaMenu';
 import { UnionMobileMenu } from './UnionMobileMenu';
-import { UnionLogoHorizontal } from './UnionLogo';
+import { UnionLogoOfficial } from './UnionLogo';
 import { AnimatePresence } from 'framer-motion';
 
 export function UnionHeader() {
@@ -47,9 +47,9 @@ export function UnionHeader() {
             <Menu className="h-6 w-6" />
           </Button>
 
-          {/* Logo */}
-          <Link to="/union" className="flex items-center gap-4 text-neutral-900">
-            <UnionLogoHorizontal className="h-12 md:h-14 w-auto" />
+          {/* Logo — official 35-year UNION lockup, language-aware */}
+          <Link to="/union" className="flex items-center text-neutral-900">
+            <UnionLogoOfficial className="h-10 md:h-12 lg:h-14" />
           </Link>
 
           {/* Desktop Navigation */}
