@@ -51,6 +51,10 @@ const navItems = [
   { href: '/admin/door-otdelka', icon: Palette, label: 'Door Finishes' },
   { href: '/admin/door-korobka', icon: Box, label: 'Door Frames' },
   { href: '/admin/door-models', icon: DoorOpen, label: 'Door Models' },
+  { href: '/admin/door-glass', icon: Box, label: 'Door Glass' },
+  { href: '/admin/door-locks', icon: Box, label: 'Door Locks' },
+  { href: '/admin/door-panels', icon: Box, label: 'Door Panels' },
+  { href: '/admin/furniture-modules', icon: Box, label: 'Furniture Modules' },
   { href: '/admin/product-blocks', icon: Layers, label: 'Product Blocks' },
   { href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
   // Navigation / banners

@@ -118,8 +118,19 @@ export type Database = {
       }
       categories: {
         Row: {
+          banner_image_url: string | null
+          banner_link_url: string | null
+          banner_subtitle_en: string | null
+          banner_subtitle_ka: string | null
+          banner_subtitle_ru: string | null
+          banner_title_en: string | null
+          banner_title_ka: string | null
+          banner_title_ru: string | null
           created_at: string
           description_ka: string | null
+          home_image_url: string | null
+          home_sort_order: number | null
+          home_visible: boolean | null
           id: string
           image_url: string | null
           is_active: boolean | null
@@ -130,13 +141,21 @@ export type Database = {
           slug: string
           sort_order: number | null
           updated_at: string
-          home_visible: boolean | null
-          home_sort_order: number | null
-          home_image_url: string | null
         }
         Insert: {
+          banner_image_url?: string | null
+          banner_link_url?: string | null
+          banner_subtitle_en?: string | null
+          banner_subtitle_ka?: string | null
+          banner_subtitle_ru?: string | null
+          banner_title_en?: string | null
+          banner_title_ka?: string | null
+          banner_title_ru?: string | null
           created_at?: string
           description_ka?: string | null
+          home_image_url?: string | null
+          home_sort_order?: number | null
+          home_visible?: boolean | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
@@ -147,13 +166,21 @@ export type Database = {
           slug: string
           sort_order?: number | null
           updated_at?: string
-          home_visible?: boolean | null
-          home_sort_order?: number | null
-          home_image_url?: string | null
         }
         Update: {
+          banner_image_url?: string | null
+          banner_link_url?: string | null
+          banner_subtitle_en?: string | null
+          banner_subtitle_ka?: string | null
+          banner_subtitle_ru?: string | null
+          banner_title_en?: string | null
+          banner_title_ka?: string | null
+          banner_title_ru?: string | null
           created_at?: string
           description_ka?: string | null
+          home_image_url?: string | null
+          home_sort_order?: number | null
+          home_visible?: boolean | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
@@ -164,9 +191,6 @@ export type Database = {
           slug?: string
           sort_order?: number | null
           updated_at?: string
-          home_visible?: boolean | null
-          home_sort_order?: number | null
-          home_image_url?: string | null
         }
         Relationships: [
           {
@@ -307,69 +331,138 @@ export type Database = {
       products: {
         Row: {
           category_id: string | null
+          category_type: string | null
+          collection_slug: string | null
+          country_of_origin: string | null
           created_at: string
+          delivery_days: number | null
+          delivery_text_en: string | null
+          delivery_text_ka: string | null
+          delivery_text_ru: string | null
           description_en: string | null
           description_ka: string | null
+          description_ru: string | null
+          designer_credit: string | null
+          download_links: Json | null
+          finish: string[] | null
+          frame_type: string | null
           id: string
           images: string[] | null
           is_active: boolean | null
           is_featured: boolean | null
           is_new: boolean | null
+          lifestyle_gallery_image_urls: string[] | null
           name_en: string | null
           name_ka: string
+          name_ru: string | null
           price: number
+          price_from: boolean | null
           sale_price: number | null
           slug: string
+          spec_sections: Json | null
           specifications: Json | null
           stock_quantity: number | null
+          stock_status: string | null
+          style_tags: string[] | null
           updated_at: string
+          video_provider: string | null
+          video_url: string | null
           has_otdelka_variants: boolean | null
           has_korobka_variants: boolean | null
           has_model_variants: boolean | null
+          has_glass_variants: boolean | null
+          has_lock_variants: boolean | null
+          has_panel_variants: boolean | null
         }
         Insert: {
           category_id?: string | null
+          category_type?: string | null
+          collection_slug?: string | null
+          country_of_origin?: string | null
           created_at?: string
+          delivery_days?: number | null
+          delivery_text_en?: string | null
+          delivery_text_ka?: string | null
+          delivery_text_ru?: string | null
           description_en?: string | null
           description_ka?: string | null
+          description_ru?: string | null
+          designer_credit?: string | null
+          download_links?: Json | null
+          finish?: string[] | null
+          frame_type?: string | null
           id?: string
           images?: string[] | null
           is_active?: boolean | null
           is_featured?: boolean | null
           is_new?: boolean | null
+          lifestyle_gallery_image_urls?: string[] | null
           name_en?: string | null
           name_ka: string
+          name_ru?: string | null
           price: number
+          price_from?: boolean | null
           sale_price?: number | null
           slug: string
+          spec_sections?: Json | null
           specifications?: Json | null
           stock_quantity?: number | null
+          stock_status?: string | null
+          style_tags?: string[] | null
           updated_at?: string
+          video_provider?: string | null
+          video_url?: string | null
           has_otdelka_variants?: boolean | null
           has_korobka_variants?: boolean | null
           has_model_variants?: boolean | null
+          has_glass_variants?: boolean | null
+          has_lock_variants?: boolean | null
+          has_panel_variants?: boolean | null
         }
         Update: {
           category_id?: string | null
+          category_type?: string | null
+          collection_slug?: string | null
+          country_of_origin?: string | null
           created_at?: string
+          delivery_days?: number | null
+          delivery_text_en?: string | null
+          delivery_text_ka?: string | null
+          delivery_text_ru?: string | null
           description_en?: string | null
           description_ka?: string | null
+          description_ru?: string | null
+          designer_credit?: string | null
+          download_links?: Json | null
+          finish?: string[] | null
+          frame_type?: string | null
           id?: string
           images?: string[] | null
           is_active?: boolean | null
           is_featured?: boolean | null
           is_new?: boolean | null
+          lifestyle_gallery_image_urls?: string[] | null
           name_en?: string | null
           name_ka?: string
+          name_ru?: string | null
           price?: number
+          price_from?: boolean | null
           sale_price?: number | null
           slug?: string
+          spec_sections?: Json | null
           specifications?: Json | null
           stock_quantity?: number | null
+          stock_status?: string | null
+          style_tags?: string[] | null
           updated_at?: string
+          video_provider?: string | null
+          video_url?: string | null
           has_otdelka_variants?: boolean | null
           has_korobka_variants?: boolean | null
           has_model_variants?: boolean | null
+          has_glass_variants?: boolean | null
+          has_lock_variants?: boolean | null
+          has_panel_variants?: boolean | null
         }
         Relationships: [
           {
@@ -754,6 +847,7 @@ export type Database = {
           description_ka: string | null
           description_ru: string | null
           description_en: string | null
+          swatch_color: string | null
           sort_order: number | null
           is_active: boolean | null
           created_at: string
@@ -768,6 +862,7 @@ export type Database = {
           description_ka?: string | null
           description_ru?: string | null
           description_en?: string | null
+          swatch_color?: string | null
           sort_order?: number | null
           is_active?: boolean | null
           created_at?: string
@@ -782,6 +877,7 @@ export type Database = {
           description_ka?: string | null
           description_ru?: string | null
           description_en?: string | null
+          swatch_color?: string | null
           sort_order?: number | null
           is_active?: boolean | null
           created_at?: string
@@ -798,6 +894,7 @@ export type Database = {
           label_ru: string | null
           label_en: string | null
           swatch_image_url: string | null
+          swatch_color: string | null
           preview_image_url: string | null
           price_modifier: number | null
           sort_order: number | null
@@ -813,6 +910,7 @@ export type Database = {
           label_ru?: string | null
           label_en?: string | null
           swatch_image_url?: string | null
+          swatch_color?: string | null
           preview_image_url?: string | null
           price_modifier?: number | null
           sort_order?: number | null
@@ -828,6 +926,7 @@ export type Database = {
           label_ru?: string | null
           label_en?: string | null
           swatch_image_url?: string | null
+          swatch_color?: string | null
           preview_image_url?: string | null
           price_modifier?: number | null
           sort_order?: number | null
@@ -1032,6 +1131,186 @@ export type Database = {
           sort_order?: number | null
           created_at?: string
         }
+        Relationships: []
+      }
+      door_glass_options: {
+        Row: {
+          id: string
+          code: string | null
+          name_ka: string
+          name_ru: string | null
+          name_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          image_url: string | null
+          preview_image_url: string | null
+          price_modifier: number | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code?: string | null
+          name_ka: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string | null
+          name_ka?: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      door_lock_options: {
+        Row: {
+          id: string
+          code: string | null
+          name_ka: string
+          name_ru: string | null
+          name_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          image_url: string | null
+          preview_image_url: string | null
+          price_modifier: number | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code?: string | null
+          name_ka: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string | null
+          name_ka?: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      door_panel_options: {
+        Row: {
+          id: string
+          code: string | null
+          name_ka: string
+          name_ru: string | null
+          name_en: string | null
+          description_ka: string | null
+          description_ru: string | null
+          description_en: string | null
+          image_url: string | null
+          preview_image_url: string | null
+          price_modifier: number | null
+          sort_order: number | null
+          is_active: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code?: string | null
+          name_ka: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string | null
+          name_ka?: string
+          name_ru?: string | null
+          name_en?: string | null
+          description_ka?: string | null
+          description_ru?: string | null
+          description_en?: string | null
+          image_url?: string | null
+          preview_image_url?: string | null
+          price_modifier?: number | null
+          sort_order?: number | null
+          is_active?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      product_glass_options: {
+        Row: { id: string; product_id: string; glass_option_id: string; is_default: boolean | null; sort_order: number | null; created_at: string }
+        Insert: { id?: string; product_id: string; glass_option_id: string; is_default?: boolean | null; sort_order?: number | null; created_at?: string }
+        Update: { id?: string; product_id?: string; glass_option_id?: string; is_default?: boolean | null; sort_order?: number | null; created_at?: string }
+        Relationships: []
+      }
+      product_lock_options: {
+        Row: { id: string; product_id: string; lock_option_id: string; is_default: boolean | null; sort_order: number | null; created_at: string }
+        Insert: { id?: string; product_id: string; lock_option_id: string; is_default?: boolean | null; sort_order?: number | null; created_at?: string }
+        Update: { id?: string; product_id?: string; lock_option_id?: string; is_default?: boolean | null; sort_order?: number | null; created_at?: string }
+        Relationships: []
+      }
+      product_panel_options: {
+        Row: { id: string; product_id: string; panel_option_id: string; is_default: boolean | null; sort_order: number | null; created_at: string }
+        Insert: { id?: string; product_id: string; panel_option_id: string; is_default?: boolean | null; sort_order?: number | null; created_at?: string }
+        Update: { id?: string; product_id?: string; panel_option_id?: string; is_default?: boolean | null; sort_order?: number | null; created_at?: string }
         Relationships: []
       }
       product_content_blocks: {

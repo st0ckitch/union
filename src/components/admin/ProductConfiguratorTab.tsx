@@ -11,11 +11,17 @@ interface Props {
   hasOtdelka: boolean; setHasOtdelka: (v: boolean) => void;
   hasKorobka: boolean; setHasKorobka: (v: boolean) => void;
   hasModel: boolean;   setHasModel: (v: boolean) => void;
+  hasGlass: boolean;   setHasGlass: (v: boolean) => void;
+  hasLock: boolean;    setHasLock: (v: boolean) => void;
+  hasPanel: boolean;   setHasPanel: (v: boolean) => void;
 
   // Selected option IDs (pivot rows)
   selectedOtdelka: string[]; setSelectedOtdelka: (ids: string[]) => void;
   selectedKorobka: string[]; setSelectedKorobka: (ids: string[]) => void;
   selectedModels: string[];  setSelectedModels: (ids: string[]) => void;
+  selectedGlass: string[];   setSelectedGlass: (ids: string[]) => void;
+  selectedLocks: string[];   setSelectedLocks: (ids: string[]) => void;
+  selectedPanels: string[];  setSelectedPanels: (ids: string[]) => void;
 }
 
 /**
@@ -52,6 +58,30 @@ export function ProductConfiguratorTab(p: Props) {
     queryKey: ['cfg-model-options'],
     queryFn: async () => {
       const { data, error } = await supabase.from('door_model_options').select('*').order('sort_order');
+      if (error) throw error;
+      return data;
+    }
+  });
+  const { data: glassOptions } = useQuery({
+    queryKey: ['cfg-glass-options'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('door_glass_options').select('*').order('sort_order');
+      if (error) throw error;
+      return data;
+    }
+  });
+  const { data: lockOptions } = useQuery({
+    queryKey: ['cfg-lock-options'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('door_lock_options').select('*').order('sort_order');
+      if (error) throw error;
+      return data;
+    }
+  });
+  const { data: panelOptions } = useQuery({
+    queryKey: ['cfg-panel-options'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('door_panel_options').select('*').order('sort_order');
       if (error) throw error;
       return data;
     }
@@ -104,7 +134,9 @@ export function ProductConfiguratorTab(p: Props) {
                           return (
                             <label key={o.id} className={`relative cursor-pointer border rounded overflow-hidden ${selected ? 'ring-2 ring-primary border-primary' : 'border-gray-200 hover:border-gray-300'}`}>
                               <input type="checkbox" className="sr-only" checked={selected} onChange={() => toggleId(p.selectedOtdelka, o.id, p.setSelectedOtdelka)} />
-                              {o.swatch_image_url ? (
+                              {(o as any).swatch_color ? (
+                                <div className="w-full aspect-square" style={{ background: (o as any).swatch_color }} />
+                              ) : o.swatch_image_url ? (
                                 <img src={o.swatch_image_url} alt={o.label_ka} className="w-full aspect-square object-cover" />
                               ) : (
                                 <div className="w-full aspect-square bg-gray-100" />
@@ -200,6 +232,123 @@ export function ProductConfiguratorTab(p: Props) {
                   );
                 })}
                 {modelOptions.length === 0 && <p className="col-span-full text-xs text-gray-500">No models in the pool yet.</p>}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Glass — sliding doors / partitions */}
+      <div className="border rounded-lg p-4 space-y-3 bg-gray-50/50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Switch checked={p.hasGlass} onCheckedChange={p.setHasGlass} />
+            <div>
+              <Label className="font-medium">Has glass variants</Label>
+              <p className="text-xs text-gray-500">Transparent / Frosted / Textured / Mirrored / Tinted</p>
+            </div>
+          </div>
+          <Link to="/admin/door-glass" target="_blank" className="text-xs text-primary flex items-center gap-1 hover:underline">Manage pool <ExternalLink className="h-3 w-3" /></Link>
+        </div>
+        {p.hasGlass && (
+          <div className="space-y-2 pt-2">
+            <div className="flex gap-2 text-xs">
+              <button type="button" className="underline text-gray-500" onClick={() => selectAll(glassOptions?.map(o => o.id) || [], p.setSelectedGlass)}>Select all</button>
+              <button type="button" className="underline text-gray-500" onClick={() => selectNone(p.setSelectedGlass)}>Clear</button>
+              <span className="ml-auto text-gray-500">{p.selectedGlass.length} selected</span>
+            </div>
+            {!glassOptions ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto pr-2">
+                {glassOptions.map(o => {
+                  const selected = p.selectedGlass.includes(o.id);
+                  return (
+                    <label key={o.id} className={`relative cursor-pointer border rounded overflow-hidden ${selected ? 'ring-2 ring-primary border-primary' : 'border-gray-200'}`}>
+                      <input type="checkbox" className="sr-only" checked={selected} onChange={() => toggleId(p.selectedGlass, o.id, p.setSelectedGlass)} />
+                      {o.image_url ? <img src={o.image_url} alt={o.name_ka} className="w-full aspect-square object-cover" /> : <div className="w-full aspect-square bg-gray-100" />}
+                      <p className="text-xs px-2 py-1 font-medium truncate">{o.name_ka}</p>
+                      {selected && <div className="absolute top-1 right-1 bg-primary text-primary-foreground rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-bold">✓</div>}
+                    </label>
+                  );
+                })}
+                {glassOptions.length === 0 && <p className="col-span-full text-xs text-gray-500">No glass options yet.</p>}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Lock — entrance doors */}
+      <div className="border rounded-lg p-4 space-y-3 bg-gray-50/50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Switch checked={p.hasLock} onCheckedChange={p.setHasLock} />
+            <div>
+              <Label className="font-medium">Has lock variants</Label>
+              <p className="text-xs text-gray-500">SECUREMME / MOTTURA / SECUREMME K2 etc.</p>
+            </div>
+          </div>
+          <Link to="/admin/door-locks" target="_blank" className="text-xs text-primary flex items-center gap-1 hover:underline">Manage pool <ExternalLink className="h-3 w-3" /></Link>
+        </div>
+        {p.hasLock && (
+          <div className="space-y-2 pt-2">
+            <div className="flex gap-2 text-xs">
+              <button type="button" className="underline text-gray-500" onClick={() => selectAll(lockOptions?.map(o => o.id) || [], p.setSelectedLocks)}>Select all</button>
+              <button type="button" className="underline text-gray-500" onClick={() => selectNone(p.setSelectedLocks)}>Clear</button>
+              <span className="ml-auto text-gray-500">{p.selectedLocks.length} selected</span>
+            </div>
+            {!lockOptions ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-64 overflow-y-auto pr-2">
+                {lockOptions.map(o => {
+                  const selected = p.selectedLocks.includes(o.id);
+                  return (
+                    <label key={o.id} className={`relative cursor-pointer border rounded overflow-hidden ${selected ? 'ring-2 ring-primary border-primary' : 'border-gray-200'}`}>
+                      <input type="checkbox" className="sr-only" checked={selected} onChange={() => toggleId(p.selectedLocks, o.id, p.setSelectedLocks)} />
+                      {o.image_url ? <img src={o.image_url} alt={o.name_ka} className="w-full aspect-video object-cover" /> : <div className="w-full aspect-video bg-gray-100" />}
+                      <p className="text-xs px-2 py-1 font-medium truncate">{o.name_ka}</p>
+                      {selected && <div className="absolute top-1 right-1 bg-primary text-primary-foreground rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-bold">✓</div>}
+                    </label>
+                  );
+                })}
+                {lockOptions.length === 0 && <p className="col-span-full text-xs text-gray-500">No locks yet.</p>}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Panel — entrance doors */}
+      <div className="border rounded-lg p-4 space-y-3 bg-gray-50/50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Switch checked={p.hasPanel} onCheckedChange={p.setHasPanel} />
+            <div>
+              <Label className="font-medium">Has decorative panel variants</Label>
+              <p className="text-xs text-gray-500">PK/P / BOSS / C-007 / COLONIALE etc.</p>
+            </div>
+          </div>
+          <Link to="/admin/door-panels" target="_blank" className="text-xs text-primary flex items-center gap-1 hover:underline">Manage pool <ExternalLink className="h-3 w-3" /></Link>
+        </div>
+        {p.hasPanel && (
+          <div className="space-y-2 pt-2">
+            <div className="flex gap-2 text-xs">
+              <button type="button" className="underline text-gray-500" onClick={() => selectAll(panelOptions?.map(o => o.id) || [], p.setSelectedPanels)}>Select all</button>
+              <button type="button" className="underline text-gray-500" onClick={() => selectNone(p.setSelectedPanels)}>Clear</button>
+              <span className="ml-auto text-gray-500">{p.selectedPanels.length} selected</span>
+            </div>
+            {!panelOptions ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 max-h-64 overflow-y-auto pr-2">
+                {panelOptions.map(o => {
+                  const selected = p.selectedPanels.includes(o.id);
+                  return (
+                    <label key={o.id} className={`relative cursor-pointer border rounded overflow-hidden ${selected ? 'ring-2 ring-primary border-primary' : 'border-gray-200'}`}>
+                      <input type="checkbox" className="sr-only" checked={selected} onChange={() => toggleId(p.selectedPanels, o.id, p.setSelectedPanels)} />
+                      {o.image_url ? <img src={o.image_url} alt={o.name_ka} className="w-full aspect-square object-cover" /> : <div className="w-full aspect-square bg-gray-100" />}
+                      <p className="text-xs px-2 py-1 font-medium truncate">{o.name_ka}</p>
+                      {selected && <div className="absolute top-1 right-1 bg-primary text-primary-foreground rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-bold">✓</div>}
+                    </label>
+                  );
+                })}
+                {panelOptions.length === 0 && <p className="col-span-full text-xs text-gray-500">No decorative panels yet.</p>}
               </div>
             )}
           </div>

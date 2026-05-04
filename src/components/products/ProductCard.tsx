@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Truck } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +14,7 @@ interface Product {
   id: string;
   name_ka: string;
   name_en: string | null;
+  name_ru?: string | null;
   slug: string;
   price: number;
   sale_price: number | null;
@@ -21,6 +22,9 @@ interface Product {
   is_new: boolean | null;
   is_featured: boolean | null;
   category_id: string | null;
+  price_from?: boolean | null;
+  delivery_days?: number | null;
+  stock_status?: string | null;
 }
 
 interface ProductCardProps {
@@ -44,8 +48,16 @@ export function ProductCard({ product, basePath = '/product' }: ProductCardProps
   });
 
   const categorySlug = product.category_id ? categorySlugs?.[product.category_id] : null;
-  const name = language === 'ka' ? product.name_ka : (product.name_en || product.name_ka);
+  const name = (() => {
+    if (language === 'ru') return product.name_ru || product.name_en || product.name_ka;
+    if (language === 'en') return product.name_en || product.name_ka;
+    return product.name_ka;
+  })();
   const imageUrl = resolveProductImage(product.images?.[0], categorySlug, product.slug);
+  const fromPrefix = product.price_from
+    ? (language === 'ru' ? 'от ' : language === 'en' ? 'from ' : '')
+    : '';
+  const showQuickDelivery = !!product.delivery_days && product.delivery_days <= 30;
   const hasDiscount = product.sale_price && product.sale_price < product.price;
   const displayPrice = hasDiscount ? product.sale_price : product.price;
   const discountPercent = hasDiscount 
@@ -88,6 +100,16 @@ export function ProductCard({ product, basePath = '/product' }: ProductCardProps
             )}
           </div>
 
+          {/* Delivery chip — top-right */}
+          {showQuickDelivery && (
+            <div className="absolute top-3 right-3">
+              <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-1 bg-white/90 backdrop-blur-sm text-foreground border border-neutral-200">
+                <Truck className="h-3 w-3" />
+                {language === 'ru' ? `${product.delivery_days} дней` : language === 'en' ? `${product.delivery_days} days` : `${product.delivery_days} დღე`}
+              </span>
+            </div>
+          )}
+
           {/* Quick add button */}
           <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
@@ -105,9 +127,9 @@ export function ProductCard({ product, basePath = '/product' }: ProductCardProps
             {name}
           </h3>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-baseline gap-2 flex-wrap">
             <span className="text-lg font-bold text-primary">
-              {displayPrice?.toLocaleString()} ₾
+              {fromPrefix}{displayPrice?.toLocaleString()} ₾
             </span>
             {hasDiscount && (
               <span className="text-sm text-muted-foreground line-through">

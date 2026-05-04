@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Site-wide rule: never render italics. The brand uses upright type only. */
+em, i, cite, dfn, var, address, blockquote, .italic {
+  font-style: normal !important;
+}
+
 /* PsGlaho — primary Georgian typeface (local .otf files in /public/fonts) */
 @font-face {
   font-family: 'PsGlaho';

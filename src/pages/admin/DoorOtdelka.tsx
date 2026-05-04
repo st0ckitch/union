@@ -129,6 +129,7 @@ export default function AdminDoorOtdelka() {
       label_ru: optionForm.label_ru || null,
       label_en: optionForm.label_en || null,
       swatch_image_url: optionForm.swatch_image_url || null,
+      swatch_color: optionForm.swatch_color || null,
       preview_image_url: optionForm.preview_image_url || null,
       price_modifier: parseFloat(optionForm.price_modifier?.toString() || '0') || 0,
       sort_order: parseInt(optionForm.sort_order?.toString() || '0') || 0,
@@ -181,7 +182,9 @@ export default function AdminDoorOtdelka() {
                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 py-3">
                             {groupOptions.map((o) => (
                               <div key={o.id} className="bg-white border rounded-lg overflow-hidden group relative">
-                                {o.swatch_image_url ? (
+                                {(o as any).swatch_color ? (
+                                  <div className="w-full aspect-square" style={{ background: (o as any).swatch_color }} />
+                                ) : o.swatch_image_url ? (
                                   <img src={o.swatch_image_url} alt={o.label_ka} className="w-full aspect-square object-cover" />
                                 ) : (
                                   <div className="w-full aspect-square bg-gray-100 flex items-center justify-center text-xs text-gray-400">no image</div>
@@ -250,8 +253,33 @@ export default function AdminDoorOtdelka() {
                 <div className="space-y-2"><Label>Label (RU)</Label><Input value={optionForm.label_ru || ''} onChange={(e) => setOptionForm({ ...optionForm, label_ru: e.target.value })} /></div>
                 <div className="space-y-2"><Label>Label (EN)</Label><Input value={optionForm.label_en || ''} onChange={(e) => setOptionForm({ ...optionForm, label_en: e.target.value })} /></div>
               </div>
-              <div className="space-y-2"><Label>Swatch image URL</Label><Input value={optionForm.swatch_image_url || ''} onChange={(e) => setOptionForm({ ...optionForm, swatch_image_url: e.target.value })} placeholder="https://..." /></div>
-              {optionForm.swatch_image_url && <img src={optionForm.swatch_image_url} alt="" className="h-24 w-24 object-cover rounded border" />}
+              <div className="grid grid-cols-1 md:grid-cols-[1fr,160px,80px] gap-3 items-end">
+                <div className="space-y-2">
+                  <Label>Swatch color (CSS)</Label>
+                  <Input
+                    value={optionForm.swatch_color || ''}
+                    onChange={(e) => setOptionForm({ ...optionForm, swatch_color: e.target.value })}
+                    placeholder="#FFFFFF or linear-gradient(...)"
+                    className="font-mono text-xs"
+                  />
+                  <p className="text-[10px] text-gray-500">Accepts any CSS color: hex (#FFF), rgb(), or a gradient. Renders directly as the swatch background. Wins over the image when both are set.</p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Color picker</Label>
+                  <Input
+                    type="color"
+                    value={(optionForm.swatch_color && /^#[0-9a-f]{6}$/i.test(optionForm.swatch_color)) ? optionForm.swatch_color : '#ffffff'}
+                    onChange={(e) => setOptionForm({ ...optionForm, swatch_color: e.target.value })}
+                    className="h-10 w-full p-1"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Preview</Label>
+                  <div className="h-10 w-full border rounded overflow-hidden" style={{ background: optionForm.swatch_color || '#f3f4f6' }} />
+                </div>
+              </div>
+              <div className="space-y-2"><Label>Swatch image URL (fallback)</Label><Input value={optionForm.swatch_image_url || ''} onChange={(e) => setOptionForm({ ...optionForm, swatch_image_url: e.target.value })} placeholder="https://... — used only when Swatch color is empty" /></div>
+              {!optionForm.swatch_color && optionForm.swatch_image_url && <img src={optionForm.swatch_image_url} alt="" className="h-24 w-24 object-cover rounded border" />}
               <div className="space-y-2"><Label>Preview image URL (full door with this finish)</Label><Input value={optionForm.preview_image_url || ''} onChange={(e) => setOptionForm({ ...optionForm, preview_image_url: e.target.value })} /></div>
               <div className="space-y-2"><Label>Price modifier</Label><Input type="number" step="0.01" value={optionForm.price_modifier ?? 0} onChange={(e) => setOptionForm({ ...optionForm, price_modifier: e.target.value })} placeholder="0 = no change" /></div>
               <div className="flex items-center gap-2"><Switch checked={optionForm.is_active ?? true} onCheckedChange={(v) => setOptionForm({ ...optionForm, is_active: v })} /><Label>Active</Label></div>

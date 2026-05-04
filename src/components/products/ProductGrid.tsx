@@ -5,6 +5,7 @@ interface Product {
   id: string;
   name_ka: string;
   name_en: string | null;
+  name_ru?: string | null;
   slug: string;
   price: number;
   sale_price: number | null;
@@ -12,6 +13,9 @@ interface Product {
   is_new: boolean | null;
   is_featured: boolean | null;
   category_id: string | null;
+  price_from?: boolean | null;
+  delivery_days?: number | null;
+  stock_status?: string | null;
 }
 
 interface ProductGridProps {

@@ -39,7 +39,7 @@ export function ArticlePreview() {
             viewport={{ once: true }}
             className="lg:pl-8"
           >
-            <h2 className="text-2xl md:text-3xl font-light italic mb-6 leading-relaxed">
+            <h2 className="text-2xl md:text-3xl font-light mb-6 leading-relaxed">
               {t('whyChooseStandardDoors')}
             </h2>
             

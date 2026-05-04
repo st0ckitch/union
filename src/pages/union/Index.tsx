@@ -4,7 +4,6 @@ import { PromoStrip } from '@/components/union/PromoStrip';
 import { CategoryProductsGrid } from '@/components/union/CategoryProductsGrid';
 import { QuickLinksBar } from '@/components/union/QuickLinksBar';
 import { TrendsSection } from '@/components/union/TrendsSection';
-import { TestimonialsSection } from '@/components/union/TestimonialsSection';
 import { ConsultationCTA } from '@/components/union/ConsultationCTA';
 import { BlogGrid } from '@/components/union/BlogGrid';
 import { AboutCompanySection } from '@/components/union/AboutCompanySection';
@@ -27,16 +26,13 @@ const UnionIndex = () => {
       {/* 5. Trends carousel (10 items) + Portfolio/YouTube/New arrivals strip */}
       <TrendsSection />
 
-      {/* 6. Stars about us — 8-card video carousel */}
-      <TestimonialsSection />
-
-      {/* 7. Consultation / Measurement strip */}
+      {/* 6. Consultation / Measurement strip */}
       <ConsultationCTA />
 
-      {/* 8. Blog — 4-card grid */}
+      {/* 7. Blog — 4-card grid */}
       <BlogGrid />
 
-      {/* 9. About company split section */}
+      {/* 8. About company split section */}
       <AboutCompanySection />
     </UnionLayout>
   );
