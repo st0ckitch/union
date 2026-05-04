@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ShoppingCart, Heart, Share2, Truck, Shield, CreditCard, Zap } from 'lucide-react';
+import { ShoppingCart, Heart, Share2, Truck, Zap, Check, Download, Info, FileText, Phone, MapPin, Clock } from 'lucide-react';
 import { UnionLayout } from '@/components/union/UnionLayout';
 import { OrderModal } from '@/components/union/OrderModal';
+import { CallbackModal } from '@/components/union/CallbackModal';
 import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { ProductGallery } from '@/components/products/ProductGallery';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { DoorConfigurator, ConfiguratorSelection } from '@/components/products/DoorConfigurator';
+import { FurnitureConfigurator } from '@/components/products/FurnitureConfigurator';
 import { ProductContentBlocks } from '@/components/products/ProductContentBlocks';
+import { ProductVideo } from '@/components/products/ProductVideo';
+import { LifestyleGallery } from '@/components/products/LifestyleGallery';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -24,6 +28,7 @@ const UnionProductDetail = () => {
   const { addItem } = useCart();
   const { language, t } = useLanguage();
   const [orderOpen, setOrderOpen] = useState(false);
+  const [callbackOpen, setCallbackOpen] = useState(false);
   const [configSelection, setConfigSelection] = useState<ConfiguratorSelection | null>(null);
 
   // Fetch product (and its category — we'll resolve the parent category separately)
@@ -115,8 +120,13 @@ const UnionProductDetail = () => {
     if (language === 'en') return cat.name_en || cat.name_ka || cat.name_ru || '';
     return cat.name_ka || cat.name_ru || cat.name_en || '';
   };
-  const name = language === 'ka' ? product.name_ka : (product.name_en || product.name_ka);
-  const description = language === 'ka' ? product.description_ka : (product.description_en || product.description_ka);
+  const pickProductLocalized = (ka: string | null, ru: string | null, en: string | null) => {
+    if (language === 'ru') return ru || en || ka || '';
+    if (language === 'en') return en || ka || ru || '';
+    return ka || ru || en || '';
+  };
+  const name = pickProductLocalized(product.name_ka, (product as any).name_ru, product.name_en) || product.name_ka;
+  const description = pickProductLocalized(product.description_ka, (product as any).description_ru, product.description_en);
   const categoryName = pickLocalizedCat(product.categories);
   const categorySlug = product.categories?.slug ?? null;
   const resolvedImages = resolveProductImages(product.images, categorySlug, product.slug);
@@ -130,7 +140,10 @@ const UnionProductDetail = () => {
   const hasAnyVariants =
     (product.has_otdelka_variants ?? false) ||
     (product.has_korobka_variants ?? false) ||
-    (product.has_model_variants ?? false);
+    (product.has_model_variants ?? false) ||
+    ((product as any).has_glass_variants ?? false) ||
+    ((product as any).has_lock_variants ?? false) ||
+    ((product as any).has_panel_variants ?? false);
   const variantSummary = configSelection?.summary || '';
   const displayName = variantSummary ? `${name} — ${variantSummary}` : name;
 
@@ -144,6 +157,40 @@ const UnionProductDetail = () => {
   };
 
   const parentCatLabel = pickLocalizedCat(parentCategory);
+
+  // Structured spec sections (e.g. Polotno / Korobka / Hardware bullet lists)
+  type SpecBullet = { ka?: string; ru?: string; en?: string };
+  type SpecSection = { code?: string; title_ka?: string; title_ru?: string; title_en?: string; bullets?: SpecBullet[] };
+  const specSections: SpecSection[] = Array.isArray((product as any).spec_sections)
+    ? ((product as any).spec_sections as SpecSection[])
+    : [];
+
+  // Download / resource links
+  type DownloadLink = { label_ka?: string; label_ru?: string; label_en?: string; url: string; icon?: string };
+  const downloadLinks: DownloadLink[] = Array.isArray((product as any).download_links)
+    ? ((product as any).download_links as DownloadLink[])
+    : [];
+
+  const pickLang = (item: { ka?: string; ru?: string; en?: string }) => {
+    if (language === 'ru') return item.ru || item.en || item.ka || '';
+    if (language === 'en') return item.en || item.ka || item.ru || '';
+    return item.ka || item.ru || item.en || '';
+  };
+  const pickLabel = (item: DownloadLink) => {
+    if (language === 'ru') return item.label_ru || item.label_en || item.label_ka || '';
+    if (language === 'en') return item.label_en || item.label_ka || item.label_ru || '';
+    return item.label_ka || item.label_ru || item.label_en || '';
+  };
+  const pickTitle = (s: SpecSection) => {
+    if (language === 'ru') return s.title_ru || s.title_en || s.title_ka || '';
+    if (language === 'en') return s.title_en || s.title_ka || s.title_ru || '';
+    return s.title_ka || s.title_ru || s.title_en || '';
+  };
+  const downloadIcon = (icon?: string) => {
+    if (icon === 'info') return <Info className="h-4 w-4" />;
+    if (icon === 'file') return <FileText className="h-4 w-4" />;
+    return <Download className="h-4 w-4" />;
+  };
 
   const breadcrumbItems = [
     { label: language === 'ka' ? 'კატალოგი' : 'Catalog', path: '/union/catalog' },
@@ -188,11 +235,23 @@ const UnionProductDetail = () => {
               )}
             </div>
 
-            {/* Title */}
-            <h1 className="text-3xl font-bold">{name}</h1>
+            {/* Title + designer credit */}
+            <div>
+              <h1 className="text-3xl font-bold">{name}</h1>
+              {(product as any).designer_credit && (
+                <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">
+                  {(product as any).designer_credit}
+                </p>
+              )}
+            </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-3 flex-wrap">
+              {(((product as any).price_from) || (configSelection && configSelection.priceModifier !== 0)) && (
+                <span className="text-base text-muted-foreground self-baseline">
+                  {language === 'ru' ? 'от' : language === 'en' ? 'from' : 'დან'}
+                </span>
+              )}
               <span className="text-3xl font-bold text-primary">
                 {displayPrice.toLocaleString()} ₾
               </span>
@@ -208,56 +267,77 @@ const UnionProductDetail = () => {
               )}
             </div>
 
-            {/* Stock Status */}
-            <div className="flex items-center gap-2">
-              {(product.stock_quantity ?? 0) > 0 ? (
-                <>
-                  <div className="w-2 h-2 rounded-full bg-success" />
-                  <span className="text-success font-medium">
-                    {t(UI_TEXT.inStock)} ({product.stock_quantity} {language === 'ka' ? 'ერთეული' : 'units'})
+            {/* Status / delivery / origin badges */}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Stock status */}
+              {(() => {
+                const stockStatus = (product as any).stock_status as 'in_stock' | 'to_order' | null;
+                if (stockStatus === 'in_stock' || (!stockStatus && (product.stock_quantity ?? 0) > 0)) {
+                  return (
+                    <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 bg-green-50 text-green-800 border border-green-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-600" />
+                      {language === 'ru' ? 'В наличии' : language === 'en' ? 'In stock' : 'მარაგშია'}
+                    </span>
+                  );
+                }
+                if (stockStatus === 'to_order') {
+                  return (
+                    <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200">
+                      <Clock className="h-3 w-3" />
+                      {language === 'ru' ? 'На заказ' : language === 'en' ? 'To order' : 'შეკვეთით'}
+                    </span>
+                  );
+                }
+                return (
+                  <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 bg-red-50 text-red-700 border border-red-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                    {t(UI_TEXT.outOfStock)}
                   </span>
-                </>
-              ) : (
-                <>
-                  <div className="w-2 h-2 rounded-full bg-destructive" />
-                  <span className="text-destructive font-medium">{t(UI_TEXT.outOfStock)}</span>
-                </>
+                );
+              })()}
+
+              {/* Delivery time */}
+              {(product as any).delivery_days && (
+                <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 bg-neutral-50 text-neutral-700 border border-neutral-200">
+                  <Truck className="h-3 w-3" />
+                  {pickProductLocalized(
+                    (product as any).delivery_text_ka,
+                    (product as any).delivery_text_ru,
+                    (product as any).delivery_text_en,
+                  ) || `${(product as any).delivery_days} ${language === 'ru' ? 'дней' : language === 'en' ? 'days' : 'დღე'}`}
+                </span>
+              )}
+
+              {/* Country of origin */}
+              {(product as any).country_of_origin && (
+                <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 bg-neutral-50 text-neutral-700 border border-neutral-200">
+                  <MapPin className="h-3 w-3" />
+                  {language === 'ru' ? `Сделано в ${(product as any).country_of_origin === 'Italy' ? 'Италии' : (product as any).country_of_origin}`
+                    : language === 'en' ? `Made in ${(product as any).country_of_origin}`
+                    : `${(product as any).country_of_origin === 'Italy' ? 'იტალია' : (product as any).country_of_origin}`}
+                </span>
               )}
             </div>
 
-            {/* Description */}
-            {description && (
-              <p className="text-muted-foreground leading-relaxed">
-                {description}
-              </p>
-            )}
-
-            {/* Specifications */}
-            {product.specifications && Object.keys(product.specifications as object).length > 0 && (
-              <div className="border-t pt-5">
-                <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                  {language === 'ka' ? 'მახასიათებლები' : language === 'ru' ? 'Характеристики' : 'Specifications'}
-                </h2>
-                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-                  {Object.entries(product.specifications as Record<string, any>).map(([key, value]) => (
-                    <div key={key} className="flex justify-between gap-4 py-1.5 border-b border-border/40 last:border-0">
-                      <dt className="text-muted-foreground capitalize">{key.replace(/_/g, ' ')}</dt>
-                      <dd className="font-medium text-right">{String(value)}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            )}
-
-            {/* Door configurator (only if product has variants enabled) */}
-            {hasAnyVariants && (
+            {/* Furniture module configurator — for parent products with sub-modules (FORMINA-style) */}
+            {((product as any).category_type === 'furniture' && (product as any).has_modules) ? (
+              <FurnitureConfigurator
+                parentProductId={product.id}
+                parentProductName={name}
+                parentImage={resolvedImages[0]}
+              />
+            ) : hasAnyVariants && (
               <DoorConfigurator
                 productId={product.id}
                 basePrice={basePrice}
+                categoryType={(product as any).category_type}
                 flags={{
                   hasOtdelka: product.has_otdelka_variants ?? false,
                   hasKorobka: product.has_korobka_variants ?? false,
                   hasModel:   product.has_model_variants ?? false,
+                  hasGlass:   (product as any).has_glass_variants ?? false,
+                  hasLock:    (product as any).has_lock_variants ?? false,
+                  hasPanel:   (product as any).has_panel_variants ?? false,
                 }}
                 onSelectionChange={setConfigSelection}
               />
@@ -284,7 +364,16 @@ const UnionProductDetail = () => {
                 onClick={() => setOrderOpen(true)}
               >
                 <Zap className="mr-2 h-5 w-5" />
-                Order now
+                {language === 'ru' ? 'Оставить заявку' : language === 'en' ? 'Order now' : 'შეკვეთა'}
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full"
+                onClick={() => setCallbackOpen(true)}
+              >
+                <Phone className="mr-2 h-5 w-5" />
+                {language === 'ru' ? 'Заказать обратный звонок' : language === 'en' ? 'Request a callback' : 'უკავშირდით'}
               </Button>
             </div>
 
@@ -299,31 +388,95 @@ const UnionProductDetail = () => {
               }}
             />
 
-            <Separator />
-
-            {/* Features */}
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="p-4 bg-secondary rounded-lg">
-                <Truck className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <p className="text-xs text-muted-foreground">
-                  {language === 'ka' ? 'უფასო მიწოდება' : 'Free Shipping'}
-                </p>
-              </div>
-              <div className="p-4 bg-secondary rounded-lg">
-                <Shield className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <p className="text-xs text-muted-foreground">
-                  {language === 'ka' ? '2 წლიანი გარანტია' : '2 Year Warranty'}
-                </p>
-              </div>
-              <div className="p-4 bg-secondary rounded-lg">
-                <CreditCard className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <p className="text-xs text-muted-foreground">
-                  {language === 'ka' ? '0% განვადება' : '0% Installments'}
-                </p>
-              </div>
-            </div>
+            <CallbackModal
+              open={callbackOpen}
+              onOpenChange={setCallbackOpen}
+              productContext={{ name: displayName, slug: product.slug, price: displayPrice }}
+            />
           </div>
         </div>
+
+        {/* === FULL-WIDTH spec band (Polotno / Korobka / Hardware) — mirrors union.ru === */}
+        {specSections.length > 0 && (
+          <section className="border-t border-b py-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+              {specSections.map((section, sIdx) => (
+                <div key={section.code || sIdx} className="space-y-3">
+                  {pickTitle(section) && (
+                    <h3 className="text-base font-semibold text-foreground">{pickTitle(section)}</h3>
+                  )}
+                  <ul className="space-y-2">
+                    {(section.bullets || []).map((b, bIdx) => (
+                      <li key={bIdx} className="flex gap-2 text-sm text-foreground/80 leading-snug">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{pickLang(b)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* === FULL-WIDTH download links row — Tech sheet / DWG / Catalog === */}
+        {downloadLinks.length > 0 && (
+          <section className="border-b py-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {downloadLinks.map((link, idx) => (
+                <a
+                  key={idx}
+                  href={link.url || '#'}
+                  target={link.url && link.url.startsWith('http') ? '_blank' : undefined}
+                  rel={link.url && link.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="flex items-center justify-center gap-2 text-xs uppercase tracking-wider text-foreground hover:text-primary border border-transparent hover:border-primary/30 px-3 py-3 transition-colors text-center"
+                >
+                  {downloadIcon(link.icon)}
+                  <span className="leading-tight">{pickLabel(link)}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* === Description (smaller, full-width) === */}
+        {description && (
+          <section className="py-6">
+            <p className="text-muted-foreground leading-relaxed max-w-3xl">{description}</p>
+          </section>
+        )}
+
+        {/* === Key-value Specifications (only if present) === */}
+        {product.specifications && Object.keys(product.specifications as object).length > 0 && (
+          <section className="border-t py-6">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              {language === 'ka' ? 'მახასიათებლები' : language === 'ru' ? 'Характеристики' : 'Specifications'}
+            </h2>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm max-w-5xl">
+              {Object.entries(product.specifications as Record<string, any>).map(([key, value]) => (
+                <div key={key} className="flex justify-between gap-4 py-1.5 border-b border-border/40">
+                  <dt className="text-muted-foreground capitalize">{key.replace(/_/g, ' ')}</dt>
+                  <dd className="font-medium text-right">{String(value)}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
+
+        {/* Product video (YouTube/Yandex/mp4) */}
+        {(product as any).video_url && (
+          <section className="py-8 border-t">
+            <h2 className="text-xl md:text-2xl font-semibold mb-5">
+              {language === 'ru' ? 'Видеообзор' : language === 'en' ? 'Video review' : 'ვიდეო მიმოხილვა'}
+            </h2>
+            <ProductVideo url={(product as any).video_url} provider={(product as any).video_provider} title={name} />
+          </section>
+        )}
+
+        {/* Lifestyle gallery — interior context shots */}
+        {Array.isArray((product as any).lifestyle_gallery_image_urls) && (product as any).lifestyle_gallery_image_urls.length > 0 && (
+          <LifestyleGallery images={(product as any).lifestyle_gallery_image_urls} />
+        )}
 
         {/* CMS content blocks (specs, gallery, diagram, CTAs, FAQ, contact, etc.) */}
         <ProductContentBlocks productId={product.id} categoryId={product.category_id} />

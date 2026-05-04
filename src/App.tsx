@@ -43,6 +43,10 @@ import AdminHomeCategories from "./pages/admin/HomeCategories";
 import AdminDoorOtdelka from "./pages/admin/DoorOtdelka";
 import AdminDoorKorobka from "./pages/admin/DoorKorobka";
 import AdminDoorModels from "./pages/admin/DoorModels";
+import AdminDoorGlass from "./pages/admin/DoorGlass";
+import AdminDoorLocks from "./pages/admin/DoorLocks";
+import AdminDoorPanels from "./pages/admin/DoorPanels";
+import AdminFurnitureModules from "./pages/admin/FurnitureModules";
 import AdminProductBlocks from "./pages/admin/ProductBlocks";
 
 // Shared pages (will use Union layout)
@@ -92,6 +96,10 @@ const App = () => (
               <Route path="/admin/door-otdelka" element={<AdminDoorOtdelka />} />
               <Route path="/admin/door-korobka" element={<AdminDoorKorobka />} />
               <Route path="/admin/door-models" element={<AdminDoorModels />} />
+              <Route path="/admin/door-glass" element={<AdminDoorGlass />} />
+              <Route path="/admin/door-locks" element={<AdminDoorLocks />} />
+              <Route path="/admin/door-panels" element={<AdminDoorPanels />} />
+              <Route path="/admin/furniture-modules" element={<AdminFurnitureModules />} />
               <Route path="/admin/product-blocks" element={<AdminProductBlocks />} />
               
               {/* UNION platform */}

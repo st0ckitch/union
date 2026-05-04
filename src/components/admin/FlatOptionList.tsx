@@ -11,8 +11,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { deleteRow } from '@/lib/adminMutations';
+import { LifestyleGalleryEditor } from '@/components/admin/LifestyleGalleryEditor';
 
-type Table = 'door_korobka_options' | 'door_model_options';
+type Table =
+  | 'door_korobka_options'
+  | 'door_model_options'
+  | 'door_glass_options'
+  | 'door_lock_options'
+  | 'door_panel_options';
 
 interface Props {
   table: Table;
@@ -76,6 +82,7 @@ export function FlatOptionList({ table, queryKey, singularNoun, pluralNoun, code
       description_en: form.description_en || null,
       image_url: form.image_url || null,
       preview_image_url: form.preview_image_url || null,
+      gallery_image_urls: Array.isArray(form.gallery_image_urls) ? form.gallery_image_urls : [],
       price_modifier: parseFloat(form.price_modifier?.toString() || '0') || 0,
       sort_order: parseInt(form.sort_order?.toString() || '0') || 0,
       is_active: form.is_active ?? true,
@@ -143,9 +150,16 @@ export function FlatOptionList({ table, queryKey, singularNoun, pluralNoun, code
               <div className="space-y-2"><Label>Description (RU)</Label><Textarea rows={2} value={form.description_ru || ''} onChange={(e) => setForm({ ...form, description_ru: e.target.value })} /></div>
               <div className="space-y-2"><Label>Description (EN)</Label><Textarea rows={2} value={form.description_en || ''} onChange={(e) => setForm({ ...form, description_en: e.target.value })} /></div>
             </div>
-            <div className="space-y-2"><Label>Image URL</Label><Input value={form.image_url || ''} onChange={(e) => setForm({ ...form, image_url: e.target.value })} /></div>
+            <div className="space-y-2"><Label>Primary image URL</Label><Input value={form.image_url || ''} onChange={(e) => setForm({ ...form, image_url: e.target.value })} placeholder="Used as the tile/thumbnail" /></div>
             {form.image_url && <img src={form.image_url} alt="" className="h-32 w-full object-cover rounded border" />}
             <div className="space-y-2"><Label>Preview image URL (full door with this option)</Label><Input value={form.preview_image_url || ''} onChange={(e) => setForm({ ...form, preview_image_url: e.target.value })} /></div>
+
+            {/* Bulk gallery — multiple images shown when the user clicks "More about frame" on the public page */}
+            <LifestyleGalleryEditor
+              value={Array.isArray(form.gallery_image_urls) ? form.gallery_image_urls : []}
+              onChange={(next) => setForm({ ...form, gallery_image_urls: next })}
+            />
+
             <div className="space-y-2"><Label>Price modifier</Label><Input type="number" step="0.01" value={form.price_modifier ?? 0} onChange={(e) => setForm({ ...form, price_modifier: e.target.value })} placeholder="0 = no change" /></div>
             <div className="flex items-center gap-2"><Switch checked={form.is_active ?? true} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><Label>Active</Label></div>
             <div className="flex justify-end gap-2 border-t pt-4">

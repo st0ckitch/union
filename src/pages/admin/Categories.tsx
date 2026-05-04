@@ -32,6 +32,14 @@ export default function AdminCategories() {
     parent_id: '',
     is_active: true,
     sort_order: '0',
+    banner_image_url: '',
+    banner_link_url: '',
+    banner_title_ka: '',
+    banner_title_ru: '',
+    banner_title_en: '',
+    banner_subtitle_ka: '',
+    banner_subtitle_ru: '',
+    banner_subtitle_en: '',
   });
   const queryClient = useQueryClient();
 
@@ -94,6 +102,14 @@ export default function AdminCategories() {
       parent_id: '',
       is_active: true,
       sort_order: '0',
+      banner_image_url: '',
+      banner_link_url: '',
+      banner_title_ka: '',
+      banner_title_ru: '',
+      banner_title_en: '',
+      banner_subtitle_ka: '',
+      banner_subtitle_ru: '',
+      banner_subtitle_en: '',
     });
     setEditingCategory(null);
     setIsDialogOpen(false);
@@ -110,6 +126,14 @@ export default function AdminCategories() {
       parent_id: category.parent_id || '',
       is_active: category.is_active ?? true,
       sort_order: category.sort_order?.toString() || '0',
+      banner_image_url: (category as any).banner_image_url || '',
+      banner_link_url: (category as any).banner_link_url || '',
+      banner_title_ka: (category as any).banner_title_ka || '',
+      banner_title_ru: (category as any).banner_title_ru || '',
+      banner_title_en: (category as any).banner_title_en || '',
+      banner_subtitle_ka: (category as any).banner_subtitle_ka || '',
+      banner_subtitle_ru: (category as any).banner_subtitle_ru || '',
+      banner_subtitle_en: (category as any).banner_subtitle_en || '',
     });
     setIsDialogOpen(true);
   };
@@ -125,6 +149,14 @@ export default function AdminCategories() {
       parent_id: formData.parent_id || null,
       is_active: formData.is_active,
       sort_order: parseInt(formData.sort_order) || 0,
+      banner_image_url: formData.banner_image_url || null,
+      banner_link_url: formData.banner_link_url || null,
+      banner_title_ka: formData.banner_title_ka || null,
+      banner_title_ru: formData.banner_title_ru || null,
+      banner_title_en: formData.banner_title_en || null,
+      banner_subtitle_ka: formData.banner_subtitle_ka || null,
+      banner_subtitle_ru: formData.banner_subtitle_ru || null,
+      banner_subtitle_en: formData.banner_subtitle_en || null,
     };
 
     if (editingCategory) {
@@ -155,7 +187,7 @@ export default function AdminCategories() {
                 {t('Add Category')}
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>{editingCategory ? t('Edit') : t('Add Category')}</DialogTitle>
               </DialogHeader>
@@ -232,6 +264,62 @@ export default function AdminCategories() {
                   <Switch checked={formData.is_active} onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })} />
                   <Label>Active</Label>
                 </div>
+
+                {/* === Phase A: per-category banner === */}
+                <div className="border rounded-lg p-4 bg-gray-50/50 space-y-3">
+                  <div>
+                    <Label className="font-medium">Category page banner</Label>
+                    <p className="text-xs text-gray-500 mt-0.5">Optional hero shown above the product grid on /catalog/&lt;slug&gt;.</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Banner image URL</Label>
+                    <Input
+                      value={formData.banner_image_url}
+                      onChange={(e) => setFormData({ ...formData, banner_image_url: e.target.value })}
+                      placeholder="https://..."
+                    />
+                  </div>
+                  {formData.banner_image_url && (
+                    <img src={formData.banner_image_url} alt="" className="h-32 w-full object-cover rounded border" />
+                  )}
+                  <div className="space-y-2">
+                    <Label>Banner click-through URL</Label>
+                    <Input
+                      value={formData.banner_link_url}
+                      onChange={(e) => setFormData({ ...formData, banner_link_url: e.target.value })}
+                      placeholder="/union/sale (optional)"
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="space-y-2">
+                      <Label>Title (KA)</Label>
+                      <Input value={formData.banner_title_ka} onChange={(e) => setFormData({ ...formData, banner_title_ka: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Title (RU)</Label>
+                      <Input value={formData.banner_title_ru} onChange={(e) => setFormData({ ...formData, banner_title_ru: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Title (EN)</Label>
+                      <Input value={formData.banner_title_en} onChange={(e) => setFormData({ ...formData, banner_title_en: e.target.value })} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="space-y-2">
+                      <Label>Subtitle (KA)</Label>
+                      <Input value={formData.banner_subtitle_ka} onChange={(e) => setFormData({ ...formData, banner_subtitle_ka: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Subtitle (RU)</Label>
+                      <Input value={formData.banner_subtitle_ru} onChange={(e) => setFormData({ ...formData, banner_subtitle_ru: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Subtitle (EN)</Label>
+                      <Input value={formData.banner_subtitle_en} onChange={(e) => setFormData({ ...formData, banner_subtitle_en: e.target.value })} />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="flex justify-end gap-2">
                   <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>

@@ -135,7 +135,7 @@ export function BlogGrid() {
                     loading="lazy"
                   />
                 </div>
-                <h3 className="text-lg font-light italic mb-3 leading-snug group-hover:text-primary transition-colors">
+                <h3 className="text-lg font-light mb-3 leading-snug group-hover:text-primary transition-colors">
                   {article.title[lang]}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-3">

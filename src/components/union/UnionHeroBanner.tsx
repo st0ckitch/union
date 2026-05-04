@@ -270,7 +270,7 @@ export function UnionHeroBanner() {
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 leading-[1.1] uppercase tracking-tight">
             {slide.headline[lang]}
           </h1>
-          <p className={`text-lg md:text-xl lg:text-2xl font-light italic mb-5 ${isDark ? 'text-white/80' : 'text-neutral-700'}`}>
+          <p className={`text-lg md:text-xl lg:text-2xl font-light mb-5 ${isDark ? 'text-white/80' : 'text-neutral-700'}`}>
             {slide.subhead[lang]}
           </p>
           {slide.tagline && (

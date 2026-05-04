@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { UnionLayout } from '@/components/union/UnionLayout';
 import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { CategorySidebar } from '@/components/catalog/CategorySidebar';
 import { ProductGrid } from '@/components/products/ProductGrid';
-import { ProductFilters } from '@/components/products/ProductFilters';
+import { ProductFilters, FacetCounts } from '@/components/products/ProductFilters';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -18,12 +18,40 @@ type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'name';
 const UnionCatalog = () => {
   const { category: categorySlug, subcategory: subcategorySlug } = useParams();
   const { language } = useLanguage();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
-  const [showNewOnly, setShowNewOnly] = useState(false);
-  const [showSaleOnly, setShowSaleOnly] = useState(false);
-  const [sortBy, setSortBy] = useState<SortOption>('newest');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Filters — initial values come from the URL so links are shareable.
+  const initialCsv = (k: string) => (searchParams.get(k) ?? '').split(',').filter(Boolean);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(() => initialCsv('cat'));
+  const [priceRange, setPriceRange] = useState<[number, number]>(() => {
+    const min = parseInt(searchParams.get('pmin') ?? '');
+    const max = parseInt(searchParams.get('pmax') ?? '');
+    return [Number.isFinite(min) ? min : 0, Number.isFinite(max) ? max : 100000];
+  });
+  const [showNewOnly, setShowNewOnly] = useState(searchParams.get('new') === '1');
+  const [showSaleOnly, setShowSaleOnly] = useState(searchParams.get('sale') === '1');
+  const [inStockOnly, setInStockOnly] = useState(searchParams.get('stock') === '1');
+  const [selectedFinishes, setSelectedFinishes] = useState<string[]>(() => initialCsv('finish'));
+  const [selectedFrameTypes, setSelectedFrameTypes] = useState<string[]>(() => initialCsv('frame'));
+  const [selectedCollections, setSelectedCollections] = useState<string[]>(() => initialCsv('coll'));
+  const [sortBy, setSortBy] = useState<SortOption>(((searchParams.get('sort') as SortOption) || 'newest'));
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+
+  // Push current filter state into the URL (shareable links). Defaults are omitted to keep URLs clean.
+  useEffect(() => {
+    const next = new URLSearchParams();
+    if (selectedCategories.length) next.set('cat', selectedCategories.join(','));
+    if (priceRange[0] > 0) next.set('pmin', String(priceRange[0]));
+    if (priceRange[1] < 100000 && priceRange[1] > 0) next.set('pmax', String(priceRange[1]));
+    if (showNewOnly)  next.set('new', '1');
+    if (showSaleOnly) next.set('sale', '1');
+    if (inStockOnly)  next.set('stock', '1');
+    if (selectedFinishes.length)    next.set('finish', selectedFinishes.join(','));
+    if (selectedFrameTypes.length)  next.set('frame',  selectedFrameTypes.join(','));
+    if (selectedCollections.length) next.set('coll',   selectedCollections.join(','));
+    if (sortBy !== 'newest') next.set('sort', sortBy);
+    setSearchParams(next, { replace: true });
+  }, [selectedCategories, priceRange, showNewOnly, showSaleOnly, inStockOnly, selectedFinishes, selectedFrameTypes, selectedCollections, sortBy, setSearchParams]);
 
   // Fetch all categories so we can resolve parents/children client-side
   const { data: categories = [] } = useQuery({
@@ -66,15 +94,17 @@ const UnionCatalog = () => {
   //   - Otherwise → show products
   const showSubcategoryGrid = !!parentCategory && !subCategory && children.length > 0;
 
-  // Fetch products (skipped when we're showing a subcategory grid)
-  const { data: products = [], isLoading } = useQuery({
+  // Fetch products (skipped when we're showing a subcategory grid).
+  // We fetch the BASE result set with only category + price + universal filters;
+  // facet-specific filters (finish/frame/collection/inStock) are applied client-side
+  // so we can compute facet counts and let the user toggle without round-trips.
+  const { data: baseProducts = [], isLoading } = useQuery({
     queryKey: ['products', activeCategory?.id, selectedCategories, priceRange, showNewOnly, showSaleOnly, showSubcategoryGrid],
     enabled: !showSubcategoryGrid,
     queryFn: async () => {
       let query = supabase.from('products').select('*').eq('is_active', true);
 
       if (activeCategory) {
-        // Use child if we drilled in, parent otherwise
         query = query.eq('category_id', activeCategory.id);
       } else if (selectedCategories.length > 0) {
         query = query.in('category_id', selectedCategories);
@@ -89,6 +119,33 @@ const UnionCatalog = () => {
       return data;
     },
   });
+
+  // Apply facet filters client-side
+  const products = useMemo(() => {
+    return baseProducts.filter((p: any) => {
+      if (inStockOnly && p.stock_status !== 'in_stock' && (p.stock_quantity ?? 0) <= 0) return false;
+      if (selectedFinishes.length > 0) {
+        const f = (p.finish ?? []) as string[];
+        if (!selectedFinishes.some((s) => f.includes(s))) return false;
+      }
+      if (selectedFrameTypes.length > 0 && !selectedFrameTypes.includes(p.frame_type)) return false;
+      if (selectedCollections.length > 0 && !selectedCollections.includes(p.collection_slug)) return false;
+      return true;
+    });
+  }, [baseProducts, inStockOnly, selectedFinishes, selectedFrameTypes, selectedCollections]);
+
+  // Compute facet counts from the base result set (so toggling one filter doesn't zero out the others)
+  const facets: FacetCounts = useMemo(() => {
+    const finish: Record<string, number> = {};
+    const frame_type: Record<string, number> = {};
+    const collection: Record<string, number> = {};
+    baseProducts.forEach((p: any) => {
+      ((p.finish ?? []) as string[]).forEach((f) => { finish[f] = (finish[f] ?? 0) + 1; });
+      if (p.frame_type) frame_type[p.frame_type] = (frame_type[p.frame_type] ?? 0) + 1;
+      if (p.collection_slug) collection[p.collection_slug] = (collection[p.collection_slug] ?? 0) + 1;
+    });
+    return { finish, frame_type, collection };
+  }, [baseProducts]);
 
   const maxPrice = useMemo(() => {
     if (products.length === 0) return 100000;
@@ -110,6 +167,20 @@ const UnionCatalog = () => {
     setSelectedCategories(prev =>
       prev.includes(categoryId) ? prev.filter(id => id !== categoryId) : [...prev, categoryId]
     );
+  };
+
+  const toggle = (arr: string[], setter: (v: string[]) => void) => (code: string) =>
+    setter(arr.includes(code) ? arr.filter(x => x !== code) : [...arr, code]);
+
+  const clearAllFilters = () => {
+    setSelectedCategories([]);
+    setPriceRange([0, 100000]);
+    setShowNewOnly(false);
+    setShowSaleOnly(false);
+    setInStockOnly(false);
+    setSelectedFinishes([]);
+    setSelectedFrameTypes([]);
+    setSelectedCollections([]);
   };
 
   const catLabel = (c: any) => {
@@ -145,13 +216,60 @@ const UnionCatalog = () => {
       onNewOnlyChange={setShowNewOnly}
       showSaleOnly={showSaleOnly}
       onSaleOnlyChange={setShowSaleOnly}
+      selectedFinishes={selectedFinishes}
+      onFinishChange={toggle(selectedFinishes, setSelectedFinishes)}
+      selectedFrameTypes={selectedFrameTypes}
+      onFrameTypeChange={toggle(selectedFrameTypes, setSelectedFrameTypes)}
+      selectedCollections={selectedCollections}
+      onCollectionChange={toggle(selectedCollections, setSelectedCollections)}
+      inStockOnly={inStockOnly}
+      onInStockOnlyChange={setInStockOnly}
+      facets={facets}
+      onClearAll={clearAllFilters}
     />
   );
+
+  // Category banner (resolved on the active category — parent or subcategory)
+  const banner = (() => {
+    const c: any = activeCategory;
+    if (!c?.banner_image_url) return null;
+    const title = language === 'ru' ? (c.banner_title_ru || c.banner_title_ka)
+                : language === 'en' ? (c.banner_title_en || c.banner_title_ka)
+                : (c.banner_title_ka || c.banner_title_ru);
+    const subtitle = language === 'ru' ? (c.banner_subtitle_ru || c.banner_subtitle_ka)
+                  : language === 'en' ? (c.banner_subtitle_en || c.banner_subtitle_ka)
+                  : (c.banner_subtitle_ka || c.banner_subtitle_ru);
+    return { image: c.banner_image_url, link: c.banner_link_url, title, subtitle };
+  })();
 
   return (
     <UnionLayout>
       <div className="container py-4">
         <Breadcrumb items={breadcrumbItems} />
+
+        {/* Category banner (per-category hero — set in admin → Categories) */}
+        {banner && (
+          (() => {
+            const inner = (
+              <div
+                className="relative h-40 md:h-56 mt-3 overflow-hidden bg-neutral-200"
+                style={{ backgroundImage: `url(${banner.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              >
+                {(banner.title || banner.subtitle) && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex items-center">
+                    <div className="px-6 md:px-10 max-w-2xl text-white">
+                      {banner.title && <h2 className="text-xl md:text-3xl font-bold mb-1">{banner.title}</h2>}
+                      {banner.subtitle && <p className="text-sm md:text-base opacity-90">{banner.subtitle}</p>}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+            return banner.link
+              ? <Link to={banner.link} className="block">{inner}</Link>
+              : inner;
+          })()
+        )}
 
         <div className="flex items-center justify-between mb-6 mt-4">
           <h1 className="text-2xl md:text-3xl font-bold">{pageTitle}</h1>

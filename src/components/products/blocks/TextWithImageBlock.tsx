@@ -23,7 +23,7 @@ export function TextWithImageBlock({ block }: Props) {
       {title && <h2 className="text-2xl md:text-3xl font-bold mb-6 leading-tight">{title}</h2>}
       {body && (
         <div
-          className="prose prose-sm md:prose max-w-none prose-p:text-muted-foreground prose-strong:text-foreground prose-em:text-foreground"
+          className="prose prose-sm md:prose max-w-none prose-p:text-muted-foreground prose-strong:text-foreground"
           dangerouslySetInnerHTML={{ __html: body }}
         />
       )}
