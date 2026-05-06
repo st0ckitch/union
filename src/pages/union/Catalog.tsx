@@ -84,7 +84,7 @@ const UnionCatalog = () => {
           query = query.eq('category_id', parentCategory.id);
         }
       }
-      const { data, error } = await query.order('sort_order', { ascending: true });
+      const { data, error } = await query.order('created_at', { ascending: false });
       if (error) throw error;
       return data || [];
     },
