@@ -100,7 +100,7 @@ interface UnionMegaMenuProps {
 /* ------------------------------------------------------------------ */
 function NewBadge() {
   return (
-    <sup className="ml-1 text-[9px] font-bold text-black uppercase tracking-wider align-super">
+    <sup className="ml-1.5 text-[9px] font-bold text-[#e63946] uppercase tracking-wider align-super">
       NEW
     </sup>
   );
@@ -122,21 +122,21 @@ function DbGroupBlock({
   const title = lang === 'ka' ? group.name_ka : lang === 'en' ? (group.name_en || group.name_ka) : (group.name_ru || group.name_ka);
 
   return (
-    <div className="mb-5">
-      <Link to={group.href} onClick={onClose} className="flex items-start gap-2.5 mb-2 group">
-        {Icon && <Icon className="h-5 w-5 text-foreground shrink-0 mt-0.5" strokeWidth={1.3} />}
-        <h3 className="font-bold text-[15px] text-foreground group-hover:text-primary transition-colors leading-tight">
+    <div className="mb-6">
+      <Link to={group.href} onClick={onClose} className="flex items-start gap-3 mb-2 group">
+        {Icon && <Icon className="h-5 w-5 text-foreground shrink-0 mt-0.5" strokeWidth={1.4} />}
+        <h3 className="font-medium text-[15px] text-foreground group-hover:text-primary transition-colors leading-tight">
           {title}
           {group.is_new && <NewBadge />}
         </h3>
       </Link>
       {children.length > 0 && (
-        <ul className="space-y-1 pl-7">
+        <ul className="space-y-1.5 pl-8">
           {children.map((it) => {
             const name = lang === 'ka' ? it.name_ka : lang === 'en' ? (it.name_en || it.name_ka) : (it.name_ru || it.name_ka);
             return (
               <li key={it.id}>
-                <Link to={it.href} onClick={onClose} className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">
+                <Link to={it.href} onClick={onClose} className="text-[13px] text-foreground/70 hover:text-foreground transition-colors">
                   {name}
                   {it.is_new && <NewBadge />}
                 </Link>
@@ -161,19 +161,19 @@ function FallbackGroupBlock({
 }) {
   const Icon = group.icon;
   return (
-    <div className="mb-5">
-      <Link to={group.href} onClick={onClose} className="flex items-start gap-2.5 mb-2 group">
-        <Icon className="h-5 w-5 text-foreground shrink-0 mt-0.5" strokeWidth={1.3} />
-        <h3 className="font-bold text-[15px] text-foreground group-hover:text-primary transition-colors leading-tight">
+    <div className="mb-6">
+      <Link to={group.href} onClick={onClose} className="flex items-start gap-3 mb-2 group">
+        <Icon className="h-5 w-5 text-foreground shrink-0 mt-0.5" strokeWidth={1.4} />
+        <h3 className="font-medium text-[15px] text-foreground group-hover:text-primary transition-colors leading-tight">
           {group.title[lang]}
           {group.isNew && <NewBadge />}
         </h3>
       </Link>
       {group.items && group.items.length > 0 && (
-        <ul className="space-y-1 pl-7">
+        <ul className="space-y-1.5 pl-8">
           {group.items.map((it) => (
             <li key={it.href}>
-              <Link to={it.href} onClick={onClose} className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">
+              <Link to={it.href} onClick={onClose} className="text-[13px] text-foreground/70 hover:text-foreground transition-colors">
                 {it.name[lang]}
                 {it.isNew && <NewBadge />}
               </Link>
@@ -207,80 +207,94 @@ export function UnionMegaMenu({ onClose, onMouseEnter, onMouseLeave }: UnionMega
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -4 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.18 }}
+      exit={{ opacity: 0, y: -4 }}
+      transition={{ duration: 0.15 }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="fixed left-4 right-4 md:left-6 md:right-6 bg-white shadow-2xl border border-border z-50 max-w-[1400px] mx-auto"
-      style={{ top: '72px' }}
+      className="absolute left-0 right-0 top-full bg-white shadow-2xl border-t border-[#e7e7e7] z-50"
     >
-      <div className="flex">
-        {/* Left sidebar */}
-        <aside className="w-52 bg-[#f5f5f5] border-r border-border shrink-0">
-          <div className="bg-black text-white px-5 py-4 font-bold text-sm uppercase tracking-wide">
-            {lang === 'ka' ? 'ასორტიმენტი UNION' : lang === 'en' ? 'UNION Assortment' : 'Ассортимент UNION'}
-          </div>
-          <nav className="py-2">
-            {useDb
-              ? sidebarLinks.sort((a, b) => a.sort_order - b.sort_order).map((l) => {
-                  const Icon = getIcon(l.icon);
-                  const name = lang === 'ka' ? l.name_ka : lang === 'en' ? (l.name_en || l.name_ka) : (l.name_ru || l.name_ka);
-                  return (
-                    <Link
-                      key={l.id}
-                      to={l.href}
-                      onClick={onClose}
-                      className={`flex items-center gap-3 px-5 py-3 hover:bg-white transition-colors text-sm ${
-                        l.is_sale ? 'text-black font-bold text-lg tracking-wider' : 'text-foreground'
-                      }`}
-                    >
-                      {Icon && <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} />}
-                      <span className="flex-1">{name}</span>
-                      <ChevronRight className="h-4 w-4 opacity-40" />
-                    </Link>
-                  );
-                })
-              : fallbackSidebar.map((l) => {
-                  const Icon = l.icon;
-                  return (
-                    <Link
+      <div className="container">
+        <div className="grid grid-cols-12 gap-x-8 py-8">
+          {/* Left sidebar — text-only links matching union.ru's `navigator-menu-desktop` */}
+          <aside className="col-span-3 xl:col-span-2">
+            <nav className="space-y-1">
+              <SidebarRow
+                key="assortment"
+                href="/union/catalog"
+                onClose={onClose}
+                label={lang === 'ka' ? 'ასორტიმენტი UNION' : lang === 'en' ? 'UNION Assortment' : 'Ассортимент UNION'}
+                accent
+              />
+              {useDb
+                ? sidebarLinks.sort((a, b) => a.sort_order - b.sort_order).map((l) => {
+                    const name = lang === 'ka' ? l.name_ka : lang === 'en' ? (l.name_en || l.name_ka) : (l.name_ru || l.name_ka);
+                    return (
+                      <SidebarRow
+                        key={l.id}
+                        href={l.href}
+                        onClose={onClose}
+                        label={name}
+                        sale={!!l.is_sale}
+                      />
+                    );
+                  })
+                : fallbackSidebar.map((l) => (
+                    <SidebarRow
                       key={l.name.ru}
-                      to={l.href}
-                      onClick={onClose}
-                      className={`flex items-center gap-3 px-5 py-3 hover:bg-white transition-colors text-sm ${
-                        l.isSale ? 'text-black font-bold text-lg tracking-wider' : 'text-foreground'
-                      }`}
-                    >
-                      {Icon && <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} />}
-                      <span className="flex-1">{l.name[lang]}</span>
-                      <ChevronRight className="h-4 w-4 opacity-40" />
-                    </Link>
-                  );
-                })}
-          </nav>
-        </aside>
+                      href={l.href}
+                      onClose={onClose}
+                      label={l.name[lang]}
+                      sale={!!l.isSale}
+                    />
+                  ))}
+            </nav>
+          </aside>
 
-        {/* 3-column grid */}
-        <div className="flex-1 min-w-0 p-6 lg:p-8 grid grid-cols-3 gap-5 lg:gap-8 max-h-[calc(100vh-120px)] overflow-y-auto">
-          {useDb
-            ? dbColumns.map((colGroups, idx) => (
-                <div key={idx}>
-                  {colGroups.map((g) => (
-                    <DbGroupBlock key={g.id} group={g} children={childrenOf(g.id)} lang={lang} onClose={onClose} />
-                  ))}
-                </div>
-              ))
-            : [fallbackCol1, fallbackCol2, fallbackCol3].map((col, idx) => (
-                <div key={idx}>
-                  {col.map((g) => (
-                    <FallbackGroupBlock key={g.title.ru} group={g} lang={lang} onClose={onClose} />
-                  ))}
-                </div>
-              ))}
+          {/* 3-column category grid */}
+          <div className="col-span-9 xl:col-span-10 grid grid-cols-3 gap-x-8 max-h-[calc(100vh-160px)] overflow-y-auto pr-2">
+            {useDb
+              ? dbColumns.map((colGroups, idx) => (
+                  <div key={idx}>
+                    {colGroups.map((g) => (
+                      <DbGroupBlock key={g.id} group={g} children={childrenOf(g.id)} lang={lang} onClose={onClose} />
+                    ))}
+                  </div>
+                ))
+              : [fallbackCol1, fallbackCol2, fallbackCol3].map((col, idx) => (
+                  <div key={idx}>
+                    {col.map((g) => (
+                      <FallbackGroupBlock key={g.title.ru} group={g} lang={lang} onClose={onClose} />
+                    ))}
+                  </div>
+                ))}
+          </div>
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/** Sidebar link row — used by both DB and fallback variants. */
+function SidebarRow({
+  href, label, onClose, accent, sale,
+}: { href: string; label: string; onClose: () => void; accent?: boolean; sale?: boolean }) {
+  return (
+    <Link
+      to={href}
+      onClick={onClose}
+      className={
+        'group flex items-center justify-between py-2 transition-colors ' +
+        (accent
+          ? 'text-foreground font-semibold border-b border-[#f0f0f0] pb-3 mb-2'
+          : sale
+          ? 'text-foreground font-bold tracking-wider'
+          : 'text-foreground/80 hover:text-foreground')
+      }
+    >
+      <span className="text-[14px]">{label}</span>
+      <ChevronRight className="h-4 w-4 opacity-30 group-hover:opacity-70 transition-opacity" />
+    </Link>
   );
 }
