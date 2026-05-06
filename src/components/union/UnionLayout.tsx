@@ -11,7 +11,7 @@ interface UnionLayoutProps {
 
 export function UnionLayout({ children }: UnionLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col bx-no-touch">
+    <div className="min-h-screen flex flex-col bx-no-touch" data-allow-tw-hidden>
       <UnionStylesheets />
       <UnionHeader />
       <main className="flex-1">

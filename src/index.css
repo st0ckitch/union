@@ -498,6 +498,17 @@ em, i, cite, dfn, var, address, blockquote, .italic {
   }
   .union-btn-dark:hover { background: #000; color: #fff; }
 
+  /* Custom responsive utilities used by union/* components. They
+     intentionally avoid the class name `hidden` because Bootstrap
+     (loaded on union pages) defines `.hidden { display: none !important }`,
+     which would override Tailwind's responsive `lg:flex`/`md:block` sibling. */
+  .union-show-md { display: none !important; }
+  @media (min-width: 768px)  { .union-show-md { display: block !important; } }
+  .union-show-lg-flex { display: none !important; }
+  @media (min-width: 1024px) { .union-show-lg-flex { display: flex !important; } }
+  .union-show-lg-only-mobile { display: block !important; }
+  @media (min-width: 1024px) { .union-show-lg-only-mobile { display: none !important; } }
+
   /* === Catalog page primitives — copied from union.ru's
         templates/union_2024/components/all-doors_3el/style.css === */
 

@@ -44,7 +44,7 @@ export function UnionHeader() {
   return (
     <header className="bg-white sticky top-0 z-50">
       {/* === Top utility row === */}
-      <div className="hidden md:block bg-surface text-[14px] text-foreground">
+      <div className="union-show-md bg-surface text-[14px] text-foreground">
         <div className="union-container flex items-center justify-end gap-6 py-2.5">
           <h1 className="mr-auto text-[14px] font-normal text-[#b5b3b3] tracking-[0.02em]">
             {t({ ka: 'კარები და ავეჯი ერთიანი სტილით', ru: 'Двери и мебель в едином стиле', en: 'Doors and furniture in a unified style' })}
@@ -97,7 +97,7 @@ export function UnionHeader() {
           <div className="flex items-center gap-6">
             <button
               type="button"
-              className="lg:hidden p-2 -ml-2 text-foreground"
+              className="union-show-lg-only-mobile p-2 -ml-2 text-foreground"
               onClick={() => setShowMobileMenu(true)}
               aria-label="Menu"
             >
@@ -111,7 +111,7 @@ export function UnionHeader() {
 
           {/* Desktop nav — right aligned, plain black, gold hover */}
           <nav
-            className="hidden lg:flex items-center gap-7"
+            className="union-show-lg-flex items-center gap-7"
             onMouseLeave={closeMegaDelayed}
           >
             <button
@@ -163,7 +163,7 @@ export function UnionHeader() {
           </nav>
 
           {/* Mobile cart icon */}
-          <button onClick={toggleCart} className="lg:hidden relative p-2 text-foreground" aria-label="Cart">
+          <button onClick={toggleCart} className="union-show-lg-only-mobile relative p-2 text-foreground" aria-label="Cart">
             <ShoppingCart className="h-5 w-5" strokeWidth={1.5} />
             {cartItemsCount > 0 && (
               <span className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
