@@ -190,9 +190,11 @@ const UnionCatalog = () => {
     return c.name_ka || c.name_ru || c.name_en || '';
   };
 
+  const catalogLabel = language === 'ru' ? 'Каталог' : language === 'en' ? 'Catalog' : 'კატალოგი';
+
   // Hierarchical breadcrumb: Catalog → Parent → Subcategory
   const breadcrumbItems = [
-    { label: language === 'ka' ? 'კატალოგი' : 'Catalog', path: '/union/catalog' },
+    { label: catalogLabel, path: '/union/catalog' },
     ...(parentCategory
       ? [{
           label: catLabel(parentCategory),
@@ -202,7 +204,27 @@ const UnionCatalog = () => {
     ...(subCategory ? [{ label: catLabel(subCategory) }] : []),
   ];
 
-  const pageTitle = activeCategory ? catLabel(activeCategory) : (language === 'ka' ? 'კატალოგი' : 'Catalog');
+  const pageTitle = activeCategory ? catLabel(activeCategory) : catalogLabel;
+
+  // Small subtitle word next to H1 (e.g. "Межкомнатные двери" + "распашные").
+  // Pulled from the active category's banner_subtitle_* (multilingual).
+  const headlineSub = (() => {
+    const c: any = activeCategory;
+    if (!c) return '';
+    if (language === 'ru') return c.banner_subtitle_ru || '';
+    if (language === 'en') return c.banner_subtitle_en || '';
+    return c.banner_subtitle_ka || '';
+  })();
+
+  // Collapsible SEO/description text under H1 (~70px tall, "Show all text" toggle).
+  const description = (() => {
+    const c: any = activeCategory;
+    if (!c) return '';
+    if (language === 'ka') return c.description_ka || '';
+    // RU/EN don't have dedicated columns yet — fall back to KA so admins
+    // still get to ship copy until a translation is added.
+    return c.description_ka || '';
+  })();
 
   const FiltersContent = () => (
     <ProductFilters
@@ -271,8 +293,44 @@ const UnionCatalog = () => {
           })()
         )}
 
-        <div className="flex items-center justify-between mb-6 mt-4">
-          <h1 className="text-2xl md:text-3xl font-bold">{pageTitle}</h1>
+        {/* Page title — H1 + small colored subtitle word, mirrors union.ru's `wrapper-h1 secH1` */}
+        <div className="mt-4">
+          <div className="flex items-baseline gap-3 flex-wrap">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{pageTitle}</h1>
+            {headlineSub && (
+              <span className="text-base md:text-xl text-primary font-medium leading-none">
+                {headlineSub}
+              </span>
+            )}
+          </div>
+
+          {description && <CollapsibleDescription html={description} language={language} />}
+
+          {/* Inline subcategory chip nav — pipe-separated text links (top_submenu).
+              Only shows on a parent page when there are children to drill into. */}
+          {parentCategory && children.length > 0 && (
+            <SubcategoryChipNav
+              parent={parentCategory}
+              children={children}
+              activeSlug={subcategorySlug}
+              t={catLabel}
+              language={language}
+            />
+          )}
+        </div>
+
+        <div className="flex items-center justify-between mb-6 mt-6">
+          <div className="text-sm text-muted-foreground">
+            {!showSubcategoryGrid && sortedProducts.length > 0 && (
+              <span>
+                {language === 'ru'
+                  ? `Найдено: ${sortedProducts.length}`
+                  : language === 'en'
+                  ? `Found: ${sortedProducts.length}`
+                  : `ნაპოვნია: ${sortedProducts.length}`}
+              </span>
+            )}
+          </div>
 
           {!showSubcategoryGrid && (
             <div className="flex items-center gap-4">
@@ -386,12 +444,10 @@ function SubcategorySectionedFeed({
         return (
           <section key={sub.id}>
             <div className="flex items-end justify-between mb-5 gap-4">
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold leading-tight">{t(sub)}</h2>
-                {sub.description_ka && (
-                  <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{sub.description_ka}</p>
-                )}
-              </div>
+              {/* Subcategory title — mirrors union.ru's `title_sec` (light, simple paragraph) */}
+              <p className="text-base md:text-lg font-medium tracking-tight uppercase text-foreground/85 leading-tight m-0">
+                {t(sub)}
+              </p>
               <Link
                 to={`/union/catalog/${parent.slug}/${sub.slug}`}
                 className="text-sm text-muted-foreground hover:text-foreground whitespace-nowrap shrink-0"
@@ -476,6 +532,71 @@ function SubcategoryGrid({ parent, children, t }: { parent: any; children: any[]
         })}
       </div>
     </section>
+  );
+}
+
+/**
+ * Mirrors union.ru's `top_submenu mrl15` — pipe-separated inline text links
+ * that switch among a parent's subcategories. The active item is bold and
+ * linked back to the parent (so users can clear the filter).
+ */
+function SubcategoryChipNav({
+  parent, children, activeSlug, t, language,
+}: { parent: any; children: any[]; activeSlug?: string; t: (c: any) => string; language: string }) {
+  const allLabel = language === 'ru' ? 'Все' : language === 'en' ? 'All' : 'ყველა';
+  return (
+    <nav className="mt-4 text-[15px] leading-7 text-foreground/80 flex flex-wrap items-center gap-x-2">
+      <Link
+        to={`/union/catalog/${parent.slug}`}
+        className={!activeSlug
+          ? 'font-semibold text-foreground'
+          : 'hover:text-foreground transition-colors'}
+      >
+        {allLabel}
+      </Link>
+      {children.map((sub) => {
+        const isActive = activeSlug === sub.slug;
+        return (
+          <span key={sub.id} className="flex items-center gap-x-2">
+            <span className="text-muted-foreground/50 select-none">|</span>
+            <Link
+              to={`/union/catalog/${parent.slug}/${sub.slug}`}
+              className={isActive
+                ? 'font-semibold text-foreground'
+                : 'hover:text-foreground transition-colors'}
+            >
+              {t(sub)}
+            </Link>
+          </span>
+        );
+      })}
+    </nav>
+  );
+}
+
+/**
+ * Mirrors union.ru's `part-toggle--text` — a description block that's clamped
+ * to ~70px on first paint with a "Show all text" / "Hide" toggle.
+ */
+function CollapsibleDescription({ html, language }: { html: string; language: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const showLabel = language === 'ru' ? 'Показать весь текст' : language === 'en' ? 'Show all text' : 'სრული ტექსტი';
+  const hideLabel = language === 'ru' ? 'Свернуть' : language === 'en' ? 'Hide' : 'დაკეცვა';
+  return (
+    <div className="mt-4 max-w-4xl">
+      <div
+        className={'prose prose-sm max-w-none text-foreground/85 ' + (expanded ? '' : 'overflow-hidden')}
+        style={!expanded ? { maxHeight: 70 } : undefined}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+      <button
+        type="button"
+        className="mt-2 text-sm text-primary hover:underline"
+        onClick={() => setExpanded((v) => !v)}
+      >
+        {expanded ? hideLabel : showLabel}
+      </button>
+    </div>
   );
 }
 

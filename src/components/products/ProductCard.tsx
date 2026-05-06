@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, Truck } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { UI_TEXT } from '@/lib/constants';
@@ -76,69 +74,64 @@ export function ProductCard({ product, basePath = '/product' }: ProductCardProps
   };
 
   return (
-    <Link to={`${basePath}/${product.slug}`}>
-      <Card className="group product-card overflow-hidden border-0 shadow-sm h-full">
-        <div className="relative aspect-square overflow-hidden bg-secondary">
-          <img
-            src={imageUrl}
-            alt={name}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {product.is_new && (
-              <Badge className="badge-new rounded-none">
-                {t(UI_TEXT.new)}
-              </Badge>
-            )}
-            {hasDiscount && (
-              <Badge className="badge-sale rounded-none">
-                -{discountPercent}%
-              </Badge>
-            )}
-          </div>
+    <Link to={`${basePath}/${product.slug}`} className="group block">
+      {/* Image — full-bleed, no card chrome (matches union.ru `link_sec → divimg`) */}
+      <div className="relative aspect-[3/2] overflow-hidden bg-neutral-100">
+        <img
+          src={imageUrl}
+          alt={name}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
 
-          {/* Delivery chip — top-right */}
-          {showQuickDelivery && (
-            <div className="absolute top-3 right-3">
-              <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-1 bg-white/90 backdrop-blur-sm text-foreground border border-neutral-200">
-                <Truck className="h-3 w-3" />
-                {language === 'ru' ? `${product.delivery_days} дней` : language === 'en' ? `${product.delivery_days} days` : `${product.delivery_days} დღე`}
-              </span>
-            </div>
+        {/* Badges (top-left, stacked) — small chip-style overlays like union.ru's `all_avalible_img` */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {product.is_new && (
+            <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded-sm">
+              {t(UI_TEXT.new)}
+            </span>
           )}
-
-          {/* Quick add button */}
-          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button
-              size="icon"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
-              onClick={handleAddToCart}
-            >
-              <ShoppingCart className="h-4 w-4" />
-            </Button>
-          </div>
+          {hasDiscount && (
+            <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-red-600 text-white rounded-sm">
+              -{discountPercent}%
+            </span>
+          )}
+          {showQuickDelivery && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium bg-white/95 text-foreground border border-neutral-200 rounded-sm">
+              <Truck className="h-3 w-3" />
+              {language === 'ru' ? `${product.delivery_days} дней` : language === 'en' ? `${product.delivery_days} days` : `${product.delivery_days} დღე`}
+            </span>
+          )}
         </div>
 
-        <CardContent className="p-4">
-          <h3 className="font-medium text-foreground line-clamp-2 mb-2 min-h-[3rem]">
-            {name}
-          </h3>
-          
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-lg font-bold text-primary">
-              {fromPrefix}{displayPrice?.toLocaleString()} ₾
-            </span>
-            {hasDiscount && (
-              <span className="text-sm text-muted-foreground line-through">
-                {product.price.toLocaleString()} ₾
-              </span>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+        {/* Quick add button (bottom-right on hover) */}
+        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button
+            size="icon"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
+            onClick={handleAddToCart}
+          >
+            <ShoppingCart className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Price line — bold, primary color (matches `price_el`) */}
+      <div className="mt-3 flex items-baseline gap-2 flex-wrap">
+        <span className="text-base md:text-lg font-bold text-foreground">
+          {fromPrefix}{displayPrice?.toLocaleString()} ₾
+        </span>
+        {hasDiscount && (
+          <span className="text-sm text-muted-foreground line-through">
+            {product.price.toLocaleString()} ₾
+          </span>
+        )}
+      </div>
+
+      {/* Name — secondary, two lines max (matches `name_el`) */}
+      <h3 className="mt-1 text-sm text-muted-foreground leading-snug line-clamp-2 group-hover:text-foreground transition-colors">
+        {name}
+      </h3>
     </Link>
   );
 }
