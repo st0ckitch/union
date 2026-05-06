@@ -24,17 +24,17 @@ export function CategorySidebar({ categories, basePath = '/catalog' }: CategoryS
   const parentCategories = categories.filter(c => !c.parent_id);
 
   return (
-    <nav className="space-y-1">
+    <nav className="border border-border bg-surface">
       <Link
         to={basePath}
         className={cn(
-          'flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+          'flex items-center justify-between px-5 py-3 text-[13px] uppercase tracking-[0.04em] transition-colors border-b border-border last:border-b-0',
           !activeCategory
-            ? 'bg-primary text-primary-foreground'
-            : 'text-foreground hover:bg-secondary'
+            ? 'bg-primary text-white font-semibold'
+            : 'text-foreground hover:bg-white font-medium'
         )}
       >
-        <span>{language === 'ka' ? 'ყველა პროდუქტი' : 'All Products'}</span>
+        <span>{language === 'ka' ? 'ყველა' : language === 'ru' ? 'Все товары' : 'All Products'}</span>
       </Link>
 
       {parentCategories.map((category) => {
@@ -43,32 +43,31 @@ export function CategorySidebar({ categories, basePath = '/catalog' }: CategoryS
         const name = language === 'ka' ? category.name_ka : (category.name_en || category.name_ka);
 
         return (
-          <div key={category.id}>
+          <div key={category.id} className="border-b border-border last:border-b-0">
             <Link
               to={`${basePath}/${category.slug}`}
               className={cn(
-                'flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+                'flex items-center justify-between px-5 py-3 text-[13px] uppercase tracking-[0.04em] transition-colors',
                 isActive
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-foreground hover:bg-secondary'
+                  ? 'bg-primary text-white font-semibold'
+                  : 'text-foreground hover:bg-white font-medium'
               )}
             >
               <span>{name}</span>
               {subcategories.length > 0 && (
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-3.5 w-3.5 opacity-60" strokeWidth={2} />
               )}
             </Link>
 
-            {/* Subcategories */}
             {isActive && subcategories.length > 0 && (
-              <div className="ml-4 mt-1 space-y-1">
+              <div className="bg-white/60">
                 {subcategories.map((sub) => {
                   const subName = language === 'ka' ? sub.name_ka : (sub.name_en || sub.name_ka);
                   return (
                     <Link
                       key={sub.id}
                       to={`${basePath}/${category.slug}/${sub.slug}`}
-                      className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="block px-8 py-2.5 text-[13px] text-muted-foreground hover:text-primary transition-colors"
                     >
                       {subName}
                     </Link>

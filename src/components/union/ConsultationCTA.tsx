@@ -1,62 +1,48 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Phone, MessageCircle, PlayCircle, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { MessageCircle, PlayCircle, ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function ConsultationCTA() {
+  const { t } = useLanguage();
   return (
-    <section className="py-12 bg-[#f8f8f8]">
-      <div className="container">
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Consultation */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+    <section className="union-section bg-white">
+      <div className="union-container">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Link
+            to="/union/contact"
+            className="group flex items-center gap-5 bg-surface hover:bg-surface-muted p-7 transition-colors border border-border"
           >
-            <Link 
-              to="/union/contact"
-              className="flex items-center justify-between p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center">
-                  <MessageCircle className="h-5 w-5 text-neutral-900" />
-                </div>
-                <div>
-                  <h3 className="text-base md:text-lg font-bold">კონსულტაცია</h3>
-                  <p className="text-muted-foreground text-xs md:text-sm">
-                    მიიღეთ პროფესიონალური რჩევა
-                  </p>
-                </div>
-              </div>
-              <ChevronRight className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
-            </Link>
-          </motion.div>
+            <div className="w-14 h-14 rounded-full bg-white border border-border flex items-center justify-center shrink-0">
+              <MessageCircle className="h-5 w-5 text-primary" strokeWidth={1.5} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-[16px] md:text-[18px] font-medium text-primary">
+                {t({ ka: 'კონსულტაცია', ru: 'Консультация', en: 'Consultation' })}
+              </h3>
+              <p className="text-[13px] text-muted-foreground mt-1">
+                {t({ ka: 'პროფესიონალური რჩევა მოდელის არჩევაზე', ru: 'рекомендации по выбору продукта', en: 'professional product advice' })}
+              </p>
+            </div>
+            <ChevronRight className="h-4 w-4 text-primary opacity-50 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          </Link>
 
-          {/* Video review */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <Link
+            to="/union/about"
+            className="group flex items-center gap-5 bg-surface hover:bg-surface-muted p-7 transition-colors border border-border"
           >
-            <Link 
-              to="/union/about#videos"
-              className="flex items-center justify-between p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center">
-                  <PlayCircle className="h-5 w-5 text-neutral-900" />
-                </div>
-                <div>
-                  <h3 className="text-base md:text-lg font-bold">მიმოხილვა</h3>
-                  <p className="text-muted-foreground text-xs md:text-sm">
-                    ვიდეო მიმოხილვები პროდუქციაზე
-                  </p>
-                </div>
-              </div>
-              <ChevronRight className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
-            </Link>
-          </motion.div>
+            <div className="w-14 h-14 rounded-full bg-white border border-border flex items-center justify-center shrink-0">
+              <PlayCircle className="h-5 w-5 text-primary" strokeWidth={1.5} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-[16px] md:text-[18px] font-medium text-primary">
+                {t({ ka: 'გაცნობა', ru: 'Обзор', en: 'Overview' })}
+              </h3>
+              <p className="text-[13px] text-muted-foreground mt-1">
+                {t({ ka: 'გამოძახება რეალურ დროში', ru: 'выезд замерщика в удобное время', en: 'measurement at a convenient time' })}
+              </p>
+            </div>
+            <ChevronRight className="h-4 w-4 text-primary opacity-50 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          </Link>
         </div>
       </div>
     </section>

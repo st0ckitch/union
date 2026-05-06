@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { SectionHeader } from './_shared/SectionHeader';
 
 interface Category {
   slug: string;
@@ -97,43 +96,34 @@ export function CategoryProductsGrid() {
   const lang = (language === 'ru' || language === 'en' ? language : 'ka') as 'ka' | 'ru' | 'en';
 
   return (
-    <section className="py-12 md:py-16 bg-white">
-      <div className="container">
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl md:text-3xl font-light mb-8"
-        >
-          {t('doorsAndFurnitureUnion')}
-        </motion.h2>
+    <section className="union-section bg-white">
+      <div className="union-container">
+        <SectionHeader title={t('doorsAndFurnitureUnion')} />
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
           {categories.map((cat, idx) => (
             <motion.div
               key={cat.slug}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.04 }}
+              transition={{ delay: idx * 0.03 }}
             >
               <Link to={`/union/catalog/${cat.slug}`} className="block group">
-                <div className="aspect-[4/5] bg-neutral-50 overflow-hidden mb-3 relative flex items-center justify-center p-4">
+                <div className="aspect-[4/3] bg-surface overflow-hidden relative">
                   <img
                     src={cat.img}
                     alt={cat.name[lang]}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).style.visibility = 'hidden';
                     }}
                   />
-                  <button className="absolute bottom-3 left-3 w-9 h-9 bg-[#333] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                    <ChevronUp className="h-4 w-4 text-white" />
-                  </button>
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/12 transition-colors" />
                 </div>
-                <h3 className="text-sm md:text-base font-medium group-hover:text-primary transition-colors leading-snug text-center">
+                <h3 className="mt-3 text-[15px] font-medium text-foreground group-hover:text-primary transition-colors leading-snug">
                   {cat.name[lang]}
                 </h3>
               </Link>
@@ -141,16 +131,13 @@ export function CategoryProductsGrid() {
           ))}
         </div>
 
-        <div className="mt-10 text-center">
-          <Button
-            asChild
-            size="lg"
-            className="bg-black text-white hover:bg-neutral-800 rounded-none px-12 py-6 text-sm tracking-widest uppercase"
+        <div className="mt-10">
+          <Link
+            to="/union/catalog"
+            className="flex w-full items-center justify-center bg-primary text-white h-14 text-[13px] font-bold uppercase tracking-[0.06em] hover:bg-primary-deep transition-colors"
           >
-            <Link to="/union/catalog">
-              {t('toCatalog')} <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+            {t('toCatalog')}
+          </Link>
         </div>
       </div>
     </section>

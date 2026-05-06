@@ -21,77 +21,79 @@ const UnionDesigners = () => {
 
   return (
     <UnionLayout>
-      <div className="container py-4">
+      <div className="union-container pt-6 pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
-        {/* Hero */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-12"
+          className="py-12 max-w-3xl"
         >
-          <h1 className="text-4xl font-bold mb-4">
-            {language === 'ka' ? 'პროგრამა დიზაინერებისთვის' : 'Designer Program'}
+          <div className="union-eyebrow mb-3">
+            {language === 'ka' ? 'პარტნიორობა' : language === 'ru' ? 'Партнёрство' : 'Partnership'}
+          </div>
+          <h1 className="union-section-title mb-4">
+            {language === 'ka' ? 'პროგრამა დიზაინერებისთვის' : language === 'ru' ? 'Программа для дизайнеров' : 'Designer Program'}
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {language === 'ka' 
+          <p className="text-[15px] leading-[1.7] text-muted-foreground">
+            {language === 'ka'
               ? 'გახდით UNION-ის პარტნიორი და ისარგებლეთ ექსკლუზიური პირობებით თქვენი პროექტებისთვის.'
-              : 'Become a UNION partner and enjoy exclusive terms for your projects.'}
+              : language === 'ru'
+                ? 'Станьте партнёром UNION и пользуйтесь эксклюзивными условиями для своих проектов.'
+                : 'Become a UNION partner and enjoy exclusive terms for your projects.'}
           </p>
         </motion.div>
 
-        {/* Benefits */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-border bg-surface">
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.title.en}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="p-6 bg-card rounded-lg shadow-sm text-center"
+              transition={{ delay: index * 0.05 }}
+              className={`p-6 md:p-8 ${index < benefits.length - 1 ? 'md:border-r border-border' : ''} ${
+                index < 2 ? 'border-b md:border-b-0 border-border' : ''
+              }`}
             >
-              <div className="p-3 bg-primary/10 rounded-full w-fit mx-auto mb-4">
-                <benefit.icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-bold mb-2">{benefit.title[language]}</h3>
-              <p className="text-sm text-muted-foreground">{benefit.description[language]}</p>
+              <benefit.icon className="h-6 w-6 text-primary mb-4" strokeWidth={1.25} />
+              <h3 className="text-[16px] font-semibold text-primary mb-2">{benefit.title[language] || benefit.title.en}</h3>
+              <p className="text-[13px] text-muted-foreground leading-snug">{benefit.description[language] || benefit.description.en}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Form */}
-        <div className="grid lg:grid-cols-2 gap-12 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 py-16">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl font-bold mb-4">
-              {language === 'ka' ? 'როგორ გახდეთ პარტნიორი' : 'How to Become a Partner'}
+            <h2 className="union-section-title mb-6">
+              {language === 'ka' ? 'როგორ გახდეთ პარტნიორი' : language === 'ru' ? 'Как стать партнёром' : 'How to Become a Partner'}
             </h2>
             <ul className="space-y-4">
               {[
-                { ka: 'შეავსეთ განაცხადის ფორმა', en: 'Fill out the application form' },
-                { ka: 'ჩვენი მენეჯერი დაგიკავშირდებათ', en: 'Our manager will contact you' },
-                { ka: 'გაიარეთ ვერიფიკაცია', en: 'Complete verification' },
-                { ka: 'მიიღეთ პარტნიორის სტატუსი', en: 'Get partner status' },
+                { ka: 'შეავსეთ განაცხადის ფორმა', ru: 'Заполните форму заявки', en: 'Fill out the application form' },
+                { ka: 'ჩვენი მენეჯერი დაგიკავშირდებათ', ru: 'Менеджер свяжется с вами', en: 'Our manager will contact you' },
+                { ka: 'გაიარეთ ვერიფიკაცია', ru: 'Пройдите верификацию', en: 'Complete verification' },
+                { ka: 'მიიღეთ პარტნიორის სტატუსი', ru: 'Получите статус партнёра', en: 'Get partner status' },
               ].map((step, index) => (
-                <li key={index} className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-primary" />
-                  <span>{step[language]}</span>
+                <li key={index} className="flex items-start gap-3 text-[14px]">
+                  <CheckCircle className="h-5 w-5 text-primary mt-0.5 shrink-0" strokeWidth={1.25} />
+                  <span>{step[language] || step.en}</span>
                 </li>
               ))}
             </ul>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="bg-card rounded-lg p-8 shadow-sm">
-              <h2 className="text-xl font-bold mb-6">
-                {language === 'ka' ? 'მოითხოვეთ კონსულტაცია' : 'Request Consultation'}
+            <div className="bg-surface border border-border p-8">
+              <h2 className="text-[20px] font-medium text-primary mb-6">
+                {language === 'ka' ? 'მოითხოვეთ კონსულტაცია' : language === 'ru' ? 'Запросить консультацию' : 'Request Consultation'}
               </h2>
               <ConsultationForm />
             </div>

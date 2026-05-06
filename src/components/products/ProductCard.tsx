@@ -76,69 +76,66 @@ export function ProductCard({ product, basePath = '/product' }: ProductCardProps
   };
 
   return (
-    <Link to={`${basePath}/${product.slug}`}>
-      <Card className="group product-card overflow-hidden border-0 shadow-sm h-full">
-        <div className="relative aspect-square overflow-hidden bg-secondary">
-          <img
-            src={imageUrl}
-            alt={name}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {product.is_new && (
-              <Badge className="badge-new rounded-none">
-                {t(UI_TEXT.new)}
-              </Badge>
-            )}
-            {hasDiscount && (
-              <Badge className="badge-sale rounded-none">
-                -{discountPercent}%
-              </Badge>
-            )}
-          </div>
+    <Link to={`${basePath}/${product.slug}`} className="group block">
+      <div className="relative aspect-[3/4] overflow-hidden bg-surface">
+        <img
+          src={imageUrl}
+          alt={name}
+          referrerPolicy="no-referrer"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/12 transition-colors" />
 
-          {/* Delivery chip — top-right */}
-          {showQuickDelivery && (
-            <div className="absolute top-3 right-3">
-              <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-1 bg-white/90 backdrop-blur-sm text-foreground border border-neutral-200">
-                <Truck className="h-3 w-3" />
-                {language === 'ru' ? `${product.delivery_days} дней` : language === 'en' ? `${product.delivery_days} days` : `${product.delivery_days} დღე`}
-              </span>
-            </div>
+        {/* Badges */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {product.is_new && (
+            <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-1 bg-primary text-white">
+              {t(UI_TEXT.new)}
+            </span>
           )}
-
-          {/* Quick add button */}
-          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button
-              size="icon"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
-              onClick={handleAddToCart}
-            >
-              <ShoppingCart className="h-4 w-4" />
-            </Button>
-          </div>
+          {hasDiscount && (
+            <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-1 bg-accent-sale text-white">
+              -{discountPercent}%
+            </span>
+          )}
         </div>
 
-        <CardContent className="p-4">
-          <h3 className="font-medium text-foreground line-clamp-2 mb-2 min-h-[3rem]">
-            {name}
-          </h3>
-          
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-lg font-bold text-primary">
-              {fromPrefix}{displayPrice?.toLocaleString()} ₾
+        {showQuickDelivery && (
+          <div className="absolute top-3 right-3">
+            <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-1 bg-white/95 text-foreground border border-border">
+              <Truck className="h-3 w-3" strokeWidth={1.5} />
+              {language === 'ru' ? `${product.delivery_days} дней` : language === 'en' ? `${product.delivery_days} days` : `${product.delivery_days} დღე`}
             </span>
-            {hasDiscount && (
-              <span className="text-sm text-muted-foreground line-through">
-                {product.price.toLocaleString()} ₾
-              </span>
-            )}
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button
+            size="icon"
+            className="bg-primary hover:bg-primary-deep text-white rounded-none h-9 w-9"
+            onClick={handleAddToCart}
+          >
+            <ShoppingCart className="h-4 w-4" strokeWidth={1.5} />
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <h3 className="text-[15px] font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+          {name}
+        </h3>
+        <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+          <span className="text-[16px] font-bold text-primary">
+            {fromPrefix}{displayPrice?.toLocaleString()} ₾
+          </span>
+          {hasDiscount && (
+            <span className="text-[13px] text-muted-foreground line-through">
+              {product.price.toLocaleString()} ₾
+            </span>
+          )}
+        </div>
+      </div>
     </Link>
   );
 }

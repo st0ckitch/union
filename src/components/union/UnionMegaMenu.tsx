@@ -207,19 +207,18 @@ export function UnionMegaMenu({ onClose, onMouseEnter, onMouseLeave }: UnionMega
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.18 }}
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.15 }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="fixed left-4 right-4 md:left-6 md:right-6 bg-white shadow-2xl border border-border z-50 max-w-[1400px] mx-auto"
-      style={{ top: '72px' }}
+      className="absolute left-0 right-0 bg-white border-t border-border shadow-[0_24px_40px_-20px_rgba(0,0,0,0.12)] z-40"
     >
-      <div className="flex">
+      <div className="union-container flex">
         {/* Left sidebar */}
-        <aside className="w-52 bg-[#f5f5f5] border-r border-border shrink-0">
-          <div className="bg-black text-white px-5 py-4 font-bold text-sm uppercase tracking-wide">
+        <aside className="w-56 bg-surface border-r border-border shrink-0">
+          <div className="bg-primary text-white px-5 py-4 font-bold text-[12px] uppercase tracking-[0.08em]">
             {lang === 'ka' ? 'ასორტიმენტი UNION' : lang === 'en' ? 'UNION Assortment' : 'Ассортимент UNION'}
           </div>
           <nav className="py-2">
@@ -232,13 +231,13 @@ export function UnionMegaMenu({ onClose, onMouseEnter, onMouseLeave }: UnionMega
                       key={l.id}
                       to={l.href}
                       onClick={onClose}
-                      className={`flex items-center gap-3 px-5 py-3 hover:bg-white transition-colors text-sm ${
-                        l.is_sale ? 'text-black font-bold text-lg tracking-wider' : 'text-foreground'
+                      className={`flex items-center gap-3 px-5 py-2.5 hover:bg-white transition-colors text-[13px] ${
+                        l.is_sale ? 'text-accent-sale font-bold tracking-[0.1em]' : 'text-foreground'
                       }`}
                     >
                       {Icon && <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} />}
                       <span className="flex-1">{name}</span>
-                      <ChevronRight className="h-4 w-4 opacity-40" />
+                      <ChevronRight className="h-3.5 w-3.5 opacity-40" />
                     </Link>
                   );
                 })
@@ -249,13 +248,13 @@ export function UnionMegaMenu({ onClose, onMouseEnter, onMouseLeave }: UnionMega
                       key={l.name.ru}
                       to={l.href}
                       onClick={onClose}
-                      className={`flex items-center gap-3 px-5 py-3 hover:bg-white transition-colors text-sm ${
-                        l.isSale ? 'text-black font-bold text-lg tracking-wider' : 'text-foreground'
+                      className={`flex items-center gap-3 px-5 py-2.5 hover:bg-white transition-colors text-[13px] ${
+                        l.isSale ? 'text-accent-sale font-bold tracking-[0.1em]' : 'text-foreground'
                       }`}
                     >
                       {Icon && <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} />}
                       <span className="flex-1">{l.name[lang]}</span>
-                      <ChevronRight className="h-4 w-4 opacity-40" />
+                      <ChevronRight className="h-3.5 w-3.5 opacity-40" />
                     </Link>
                   );
                 })}
@@ -263,7 +262,7 @@ export function UnionMegaMenu({ onClose, onMouseEnter, onMouseLeave }: UnionMega
         </aside>
 
         {/* 3-column grid */}
-        <div className="flex-1 min-w-0 p-6 lg:p-8 grid grid-cols-3 gap-5 lg:gap-8 max-h-[calc(100vh-120px)] overflow-y-auto">
+        <div className="flex-1 min-w-0 p-6 lg:p-8 grid grid-cols-3 gap-5 lg:gap-8 max-h-[calc(100vh-160px)] overflow-y-auto">
           {useDb
             ? dbColumns.map((colGroups, idx) => (
                 <div key={idx}>

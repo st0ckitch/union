@@ -29,7 +29,7 @@ const UnionBlogPost = () => {
   if (isLoading) {
     return (
       <UnionLayout>
-        <div className="container py-8">
+        <div className="union-container py-8">
           <Skeleton className="h-8 w-3/4 mb-4" />
           <Skeleton className="h-64 w-full mb-6" />
           <Skeleton className="h-4 w-full mb-2" />
@@ -43,15 +43,13 @@ const UnionBlogPost = () => {
   if (!post) {
     return (
       <UnionLayout>
-        <div className="container py-16 text-center">
-          <h1 className="text-2xl font-bold mb-4">
-            {language === 'ka' ? 'სტატია ვერ მოიძებნა' : 'Article not found'}
+        <div className="union-container py-16 text-center">
+          <h1 className="union-section-title mb-4">
+            {language === 'ka' ? 'სტატია ვერ მოიძებნა' : language === 'ru' ? 'Статья не найдена' : 'Article not found'}
           </h1>
-          <Button asChild>
-            <Link to="/union/blog">
-              {language === 'ka' ? 'ბლოგში დაბრუნება' : 'Back to Blog'}
-            </Link>
-          </Button>
+          <Link to="/union/blog" className="inline-flex items-center justify-center bg-primary text-white h-11 px-7 text-[12px] font-bold uppercase tracking-[0.06em] hover:bg-primary-deep transition-colors">
+            {language === 'ka' ? 'ბლოგში დაბრუნება' : language === 'ru' ? 'Назад в блог' : 'Back to Blog'}
+          </Link>
         </div>
       </UnionLayout>
     );
@@ -61,38 +59,41 @@ const UnionBlogPost = () => {
   const content = language === 'ka' ? post.content_ka : (post.content_en || post.content_ka);
 
   const breadcrumbItems = [
-    { label: language === 'ka' ? 'ბლოგი' : 'Blog', path: '/union/blog' },
+    { label: language === 'ka' ? 'ბლოგი' : language === 'ru' ? 'Блог' : 'Blog', path: '/union/blog' },
     { label: title },
   ];
 
   return (
     <UnionLayout>
-      <div className="container py-4">
+      <div className="union-container pt-6 pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
-        <article className="max-w-3xl mx-auto py-8">
-          <Button variant="ghost" asChild className="mb-6">
-            <Link to="/union/blog">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {language === 'ka' ? 'უკან' : 'Back'}
-            </Link>
-          </Button>
+        <article className="max-w-[760px] mx-auto py-8">
+          <Link
+            to="/union/blog"
+            className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.06em] text-muted-foreground hover:text-primary mb-6 transition-colors"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.75} />
+            {language === 'ka' ? 'უკან' : language === 'ru' ? 'Назад' : 'Back'}
+          </Link>
 
           {post.featured_image && (
-            <img
-              src={post.featured_image}
-              alt={title}
-              className="w-full aspect-video object-cover rounded-lg mb-8"
-            />
+            <div className="aspect-[16/9] overflow-hidden bg-surface mb-8">
+              <img
+                src={post.featured_image}
+                alt={title}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
 
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
+          <h1 className="text-[32px] md:text-[40px] font-medium leading-tight mb-4">{title}</h1>
 
           {post.published_at && (
-            <div className="flex items-center gap-2 text-muted-foreground mb-8">
-              <Calendar className="h-4 w-4" />
+            <div className="flex items-center gap-2 text-[13px] text-muted-foreground mb-8">
+              <Calendar className="h-3.5 w-3.5" strokeWidth={1.5} />
               <time dateTime={post.published_at}>
-                {new Date(post.published_at).toLocaleDateString(language === 'ka' ? 'ka-GE' : 'en-US', {
+                {new Date(post.published_at).toLocaleDateString(language === 'ka' ? 'ka-GE' : language === 'ru' ? 'ru-RU' : 'en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -101,8 +102,8 @@ const UnionBlogPost = () => {
             </div>
           )}
 
-          <div 
-            className="prose prose-lg max-w-none"
+          <div
+            className="prose prose-base max-w-none prose-headings:font-medium prose-headings:tracking-tight prose-a:text-primary prose-img:my-6"
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </article>

@@ -27,17 +27,17 @@ const UnionBlog = () => {
 
   return (
     <UnionLayout>
-      <div className="container py-4">
+      <div className="union-container pt-6 pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
-        <h1 className="text-3xl font-bold mb-8">
-          {language === 'ka' ? 'ბლოგი' : 'Blog'}
+        <h1 className="union-section-title mb-10 mt-4">
+          {language === 'ka' ? 'ბლოგი' : language === 'ru' ? 'Блог' : 'Blog'}
         </h1>
 
         {posts.length === 0 && !isLoading ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              {language === 'ka' ? 'სტატიები მალე დაემატება' : 'Articles coming soon'}
+          <div className="border border-border bg-surface text-center py-16">
+            <p className="text-[14px] text-muted-foreground">
+              {language === 'ka' ? 'სტატიები მალე დაემატება' : language === 'ru' ? 'Статьи скоро' : 'Articles coming soon'}
             </p>
           </div>
         ) : (

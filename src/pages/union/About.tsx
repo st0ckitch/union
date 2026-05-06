@@ -27,92 +27,103 @@ const UnionAbout = () => {
 
   return (
     <UnionLayout>
-      <div className="container py-4">
+      <div className="union-container pt-6 pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
-        {/* Hero */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-12"
+          className="py-12 max-w-3xl"
         >
-          <h1 className="text-4xl font-bold mb-4">UNION</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {language === 'ka' 
-              ? 'პრემიუმ კარებისა და ავეჯის ლიდერი საქართველოში. 35 წელზე მეტი გამოცდილებით ჩვენ ვთავაზობთ უმაღლესი ხარისხის იტალიურ პროდუქციას.'
-              : 'The leader in premium doors and furniture in Georgia. With over 35 years of experience, we offer the highest quality Italian products.'}
+          <div className="union-eyebrow mb-3">UNION</div>
+          <h1 className="union-section-title mb-4">
+            {language === 'ka' ? 'კომპანიის შესახებ' : language === 'ru' ? 'О компании' : 'About the company'}
+          </h1>
+          <p className="text-[15px] leading-[1.7] text-muted-foreground">
+            {language === 'ka'
+              ? 'პრემიუმ კარებისა და ავეჯის ლიდერი. 35 წელზე მეტი გამოცდილებით ჩვენ ვთავაზობთ უმაღლესი ხარისხის იტალიურ პროდუქციას.'
+              : language === 'ru'
+                ? 'Лидер рынка премиальных дверей и мебели. С более чем 35-летним опытом мы предлагаем продукцию итальянского качества.'
+                : 'A leader in premium doors and furniture. With over 35 years of experience we deliver the highest quality Italian products.'}
           </p>
         </motion.div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 border border-border bg-surface">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.value}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="text-center p-6 bg-secondary rounded-lg"
+              transition={{ delay: index * 0.05 }}
+              className={`p-6 md:p-8 text-center ${
+                index < stats.length - 1 ? 'md:border-r border-border' : ''
+              } ${index < 2 ? 'border-b md:border-b-0 border-border' : ''}`}
             >
-              <stat.icon className="h-8 w-8 mx-auto mb-3 text-primary" />
-              <p className="text-3xl font-bold mb-1">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label[language]}</p>
+              <stat.icon className="h-7 w-7 mx-auto mb-3 text-primary" strokeWidth={1.25} />
+              <p className="text-[28px] font-bold text-primary leading-none mb-2">{stat.value}</p>
+              <p className="text-[13px] text-muted-foreground">{stat.label[language] || stat.label.en}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Story */}
-        <div className="grid lg:grid-cols-2 gap-12 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 py-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl font-bold mb-4">
-              {language === 'ka' ? 'ჩვენი ისტორია' : 'Our Story'}
+            <h2 className="union-section-title mb-5">
+              {language === 'ka' ? 'ჩვენი ისტორია' : language === 'ru' ? 'Наша история' : 'Our Story'}
             </h2>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-[15px] leading-[1.7] text-muted-foreground mb-4">
               {language === 'ka'
-                ? 'UNION დაარსდა 1990 წელს და მას შემდეგ ლიდერობს პრემიუმ კარებისა და ავეჯის ბაზარზე საქართველოში. ჩვენ ვთანამშრომლობთ საუკეთესო იტალიურ მწარმოებლებთან და ვთავაზობთ მომხმარებელს უმაღლესი ხარისხის პროდუქციას.'
-                : 'UNION was founded in 1990 and has since led the premium doors and furniture market in Georgia. We partner with the best Italian manufacturers and offer customers the highest quality products.'}
+                ? 'UNION დაარსდა 1990 წელს და მას შემდეგ ლიდერობს პრემიუმ კარების ბაზარზე. ჩვენ ვთანამშრომლობთ საუკეთესო იტალიურ მწარმოებლებთან.'
+                : language === 'ru'
+                  ? 'UNION была основана в 1990 году и с тех пор задаёт стандарт на рынке премиальных дверей. Мы сотрудничаем с лучшими итальянскими производителями.'
+                  : 'UNION was founded in 1990 and has since set the standard in the premium doors market. We partner with the finest Italian manufacturers.'}
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-[15px] leading-[1.7] text-muted-foreground">
               {language === 'ka'
-                ? 'ჩვენი მისიაა შევქმნათ სივრცეები, რომლებიც ასახავენ მომხმარებლის ინდივიდუალურ სტილს და ხარისხისადმი მოთხოვნილებას.'
-                : 'Our mission is to create spaces that reflect the individual style and quality requirements of our customers.'}
+                ? 'ჩვენი მისიაა შევქმნათ სივრცეები, რომლებიც ასახავენ მომხმარებლის ინდივიდუალურ სტილს.'
+                : language === 'ru'
+                  ? 'Наша миссия — создавать пространства, в которых отражается индивидуальный стиль клиента.'
+                  : 'Our mission is to create spaces that reflect each customer’s individual style.'}
             </p>
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <img
-              src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=600&q=80"
-              alt="UNION showroom"
-              className="rounded-lg w-full object-cover aspect-video"
-            />
+            <div className="aspect-[4/3] overflow-hidden bg-surface">
+              <img
+                src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=1200&q=80"
+                alt="UNION showroom"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </motion.div>
         </div>
 
-        {/* Values */}
-        <div className="py-12">
-          <h2 className="text-2xl font-bold mb-8 text-center">
-            {language === 'ka' ? 'ჩვენი ღირებულებები' : 'Our Values'}
+        <div className="py-12 border-t border-border">
+          <h2 className="union-section-title mb-10">
+            {language === 'ka' ? 'ჩვენი ღირებულებები' : language === 'ru' ? 'Наши ценности' : 'Our Values'}
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-border bg-surface">
             {values.map((value, index) => (
               <motion.div
                 key={value.title.en}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-6 bg-card rounded-lg shadow-sm"
+                transition={{ delay: index * 0.05 }}
+                className={`p-6 md:p-8 ${index < values.length - 1 ? 'md:border-r border-border' : ''} ${
+                  index < 2 ? 'border-b md:border-b-0 border-border' : ''
+                }`}
               >
-                <CheckCircle className="h-8 w-8 text-primary mb-4" />
-                <h3 className="font-bold mb-2">{value.title[language]}</h3>
-                <p className="text-sm text-muted-foreground">{value.description[language]}</p>
+                <CheckCircle className="h-6 w-6 text-primary mb-4" strokeWidth={1.25} />
+                <h3 className="text-[16px] font-semibold text-primary mb-2">{value.title[language] || value.title.en}</h3>
+                <p className="text-[13px] text-muted-foreground leading-snug">{value.description[language] || value.description.en}</p>
               </motion.div>
             ))}
           </div>

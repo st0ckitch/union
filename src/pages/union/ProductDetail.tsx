@@ -82,9 +82,9 @@ const UnionProductDetail = () => {
   if (isLoading) {
     return (
       <UnionLayout>
-        <div className="container py-8">
-          <div className="grid lg:grid-cols-2 gap-12">
-            <Skeleton className="aspect-square" />
+        <div className="union-container py-8">
+          <div className="grid lg:grid-cols-[3fr_2fr] gap-12">
+            <Skeleton className="aspect-[4/5]" />
             <div className="space-y-4">
               <Skeleton className="h-8 w-3/4" />
               <Skeleton className="h-6 w-1/4" />
@@ -100,15 +100,13 @@ const UnionProductDetail = () => {
   if (!product) {
     return (
       <UnionLayout>
-        <div className="container py-16 text-center">
-          <h1 className="text-2xl font-bold mb-4">
-            {language === 'ka' ? 'პროდუქტი ვერ მოიძებნა' : 'Product not found'}
+        <div className="union-container py-16 text-center">
+          <h1 className="union-section-title mb-4">
+            {language === 'ka' ? 'პროდუქტი ვერ მოიძებნა' : language === 'ru' ? 'Товар не найден' : 'Product not found'}
           </h1>
-          <Button asChild>
-            <Link to="/union/catalog">
-              {language === 'ka' ? 'კატალოგში დაბრუნება' : 'Back to Catalog'}
-            </Link>
-          </Button>
+          <Link to="/union/catalog" className="inline-flex items-center justify-center bg-primary text-white h-11 px-7 text-[12px] font-bold uppercase tracking-[0.06em] hover:bg-primary-deep transition-colors">
+            {language === 'ka' ? 'კატალოგში დაბრუნება' : language === 'ru' ? 'Назад в каталог' : 'Back to Catalog'}
+          </Link>
         </div>
       </UnionLayout>
     );
@@ -209,59 +207,56 @@ const UnionProductDetail = () => {
 
   return (
     <UnionLayout>
-      <div className="container py-4">
+      <div className="union-container pt-6 pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className="grid lg:grid-cols-2 gap-12 py-8">
+        <div className="grid lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 py-8">
           {/* Gallery */}
           <ProductGallery
             images={resolvedImages}
-            productName={name} 
+            productName={name}
           />
 
           {/* Product Info */}
           <div className="space-y-6">
-            {/* Badges */}
             <div className="flex gap-2">
               {product.is_new && (
-                <Badge className="badge-new rounded-none">
+                <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-1 bg-primary text-white">
                   {t(UI_TEXT.new)}
-                </Badge>
+                </span>
               )}
               {hasDiscount && (
-                <Badge className="badge-sale rounded-none">
+                <span className="text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-1 bg-accent-sale text-white">
                   -{discountPercent}%
-                </Badge>
+                </span>
               )}
             </div>
 
-            {/* Title + designer credit */}
             <div>
-              <h1 className="text-3xl font-bold">{name}</h1>
+              <h1 className="text-[28px] md:text-[32px] font-medium leading-tight">{name}</h1>
               {(product as any).designer_credit && (
-                <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">
+                <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-2">
                   {(product as any).designer_credit}
                 </p>
               )}
             </div>
 
-            {/* Price */}
             <div className="flex items-baseline gap-3 flex-wrap">
               {(((product as any).price_from) || (configSelection && configSelection.priceModifier !== 0)) && (
-                <span className="text-base text-muted-foreground self-baseline">
+                <span className="text-[14px] text-muted-foreground self-baseline">
                   {language === 'ru' ? 'от' : language === 'en' ? 'from' : 'დან'}
                 </span>
               )}
-              <span className="text-3xl font-bold text-primary">
+              <span className="text-[28px] font-bold text-primary leading-none">
                 {displayPrice.toLocaleString()} ₾
               </span>
               {hasDiscount && (
-                <span className="text-xl text-muted-foreground line-through">
+                <span className="text-[16px] text-muted-foreground line-through">
                   {product.price.toLocaleString()} ₾
                 </span>
               )}
               {configSelection && configSelection.priceModifier !== 0 && (
-                <span className="text-xs text-muted-foreground">
+                <span className="text-[12px] text-muted-foreground">
                   ({language === 'ru' ? 'с опциями' : language === 'en' ? 'with options' : 'ოფციებით'})
                 </span>
               )}
@@ -343,38 +338,42 @@ const UnionProductDetail = () => {
               />
             )}
 
-            {/* Actions */}
-            <div className="space-y-3">
-              <div className="flex gap-3">
-                <Button size="lg" className="flex-1" onClick={handleAddToCart}>
-                  <ShoppingCart className="mr-2 h-5 w-5" />
+            <div className="space-y-3 pt-2">
+              <div className="flex gap-2">
+                <button
+                  onClick={handleAddToCart}
+                  className="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-white h-12 text-[12px] font-bold uppercase tracking-[0.06em] hover:bg-primary-deep transition-colors"
+                >
+                  <ShoppingCart className="h-4 w-4" strokeWidth={1.5} />
                   {t(UI_TEXT.addToCart)}
-                </Button>
-                <Button size="lg" variant="outline">
-                  <Heart className="h-5 w-5" />
-                </Button>
-                <Button size="lg" variant="outline">
-                  <Share2 className="h-5 w-5" />
-                </Button>
+                </button>
+                <button
+                  className="w-12 h-12 inline-flex items-center justify-center border border-border text-foreground hover:bg-surface transition-colors"
+                  aria-label="Wishlist"
+                >
+                  <Heart className="h-4 w-4" strokeWidth={1.5} />
+                </button>
+                <button
+                  className="w-12 h-12 inline-flex items-center justify-center border border-border text-foreground hover:bg-surface transition-colors"
+                  aria-label="Share"
+                >
+                  <Share2 className="h-4 w-4" strokeWidth={1.5} />
+                </button>
               </div>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full bg-black text-white hover:bg-neutral-800 border-black"
+              <button
                 onClick={() => setOrderOpen(true)}
+                className="w-full inline-flex items-center justify-center gap-2 bg-accent-sale text-white h-12 text-[12px] font-bold uppercase tracking-[0.06em] hover:bg-accent-sale-hover transition-colors"
               >
-                <Zap className="mr-2 h-5 w-5" />
+                <Zap className="h-4 w-4" strokeWidth={1.5} />
                 {language === 'ru' ? 'Оставить заявку' : language === 'en' ? 'Order now' : 'შეკვეთა'}
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full"
+              </button>
+              <button
                 onClick={() => setCallbackOpen(true)}
+                className="w-full inline-flex items-center justify-center gap-2 border border-primary text-primary h-12 text-[12px] font-bold uppercase tracking-[0.06em] hover:bg-primary hover:text-white transition-colors"
               >
-                <Phone className="mr-2 h-5 w-5" />
+                <Phone className="h-4 w-4" strokeWidth={1.5} />
                 {language === 'ru' ? 'Заказать обратный звонок' : language === 'en' ? 'Request a callback' : 'უკავშირდით'}
-              </Button>
+              </button>
             </div>
 
             <OrderModal
@@ -481,11 +480,10 @@ const UnionProductDetail = () => {
         {/* CMS content blocks (specs, gallery, diagram, CTAs, FAQ, contact, etc.) */}
         <ProductContentBlocks productId={product.id} categoryId={product.category_id} />
 
-        {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <section className="py-12">
-            <h2 className="text-2xl font-bold mb-8">
-              {language === 'ka' ? 'მსგავსი პროდუქტები' : 'Related Products'}
+          <section className="py-12 border-t border-border mt-12">
+            <h2 className="union-section-title mb-8">
+              {language === 'ka' ? 'მსგავსი პროდუქტები' : language === 'ru' ? 'Похожие товары' : 'Related Products'}
             </h2>
             <ProductGrid products={relatedProducts} basePath="/union/product" />
           </section>

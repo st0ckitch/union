@@ -244,22 +244,22 @@ const UnionCatalog = () => {
 
   return (
     <UnionLayout>
-      <div className="container py-4">
+      <div className="union-container pt-6 pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
-        {/* Category banner (per-category hero — set in admin → Categories) */}
+        {/* Category banner */}
         {banner && (
           (() => {
             const inner = (
               <div
-                className="relative h-40 md:h-56 mt-3 overflow-hidden bg-neutral-200"
+                className="relative h-44 md:h-64 mt-4 overflow-hidden bg-surface"
                 style={{ backgroundImage: `url(${banner.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
               >
                 {(banner.title || banner.subtitle) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex items-center">
-                    <div className="px-6 md:px-10 max-w-2xl text-white">
-                      {banner.title && <h2 className="text-xl md:text-3xl font-bold mb-1">{banner.title}</h2>}
-                      {banner.subtitle && <p className="text-sm md:text-base opacity-90">{banner.subtitle}</p>}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/30 to-transparent flex items-center">
+                    <div className="px-8 md:px-12 max-w-2xl text-white">
+                      {banner.title && <h2 className="text-[28px] md:text-[40px] font-medium leading-tight mb-1">{banner.title}</h2>}
+                      {banner.subtitle && <p className="text-[14px] md:text-[15px] opacity-90">{banner.subtitle}</p>}
                     </div>
                   </div>
                 )}
@@ -271,16 +271,16 @@ const UnionCatalog = () => {
           })()
         )}
 
-        <div className="flex items-center justify-between mb-6 mt-4">
-          <h1 className="text-2xl md:text-3xl font-bold">{pageTitle}</h1>
+        <div className="flex items-end justify-between mb-8 mt-6 gap-4">
+          <h1 className="union-section-title">{pageTitle}</h1>
 
           {!showSubcategoryGrid && (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="lg:hidden">
-                    <SlidersHorizontal className="h-4 w-4 mr-2" />
-                    {language === 'ka' ? 'ფილტრი' : 'Filters'}
+                  <Button variant="outline" className="lg:hidden rounded-none border-border h-10">
+                    <SlidersHorizontal className="h-4 w-4 mr-2" strokeWidth={1.5} />
+                    {language === 'ka' ? 'ფილტრი' : language === 'ru' ? 'Фильтры' : 'Filters'}
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80">
@@ -289,14 +289,14 @@ const UnionCatalog = () => {
               </Sheet>
 
               <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={language === 'ka' ? 'დალაგება' : 'Sort by'} />
+                <SelectTrigger className="w-[200px] h-10 rounded-none border-border text-[13px] uppercase tracking-[0.04em] focus:ring-primary">
+                  <SelectValue placeholder={language === 'ka' ? 'დალაგება' : language === 'ru' ? 'Сортировка' : 'Sort by'} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="newest">{language === 'ka' ? 'უახლესი' : 'Newest'}</SelectItem>
-                  <SelectItem value="price-asc">{language === 'ka' ? 'ფასი: დაბალი' : 'Price: Low to High'}</SelectItem>
-                  <SelectItem value="price-desc">{language === 'ka' ? 'ფასი: მაღალი' : 'Price: High to Low'}</SelectItem>
-                  <SelectItem value="name">{language === 'ka' ? 'სახელით' : 'By Name'}</SelectItem>
+                  <SelectItem value="newest">{language === 'ka' ? 'უახლესი' : language === 'ru' ? 'Новинки' : 'Newest'}</SelectItem>
+                  <SelectItem value="price-asc">{language === 'ka' ? 'ფასი: დაბალი' : language === 'ru' ? 'Цена ↑' : 'Price ↑'}</SelectItem>
+                  <SelectItem value="price-desc">{language === 'ka' ? 'ფასი: მაღალი' : language === 'ru' ? 'Цена ↓' : 'Price ↓'}</SelectItem>
+                  <SelectItem value="name">{language === 'ka' ? 'სახელით' : language === 'ru' ? 'По названию' : 'By Name'}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -317,13 +317,13 @@ const UnionCatalog = () => {
         ) : showSubcategoryGrid ? (
           <SubcategorySectionedFeed parent={parentCategory!} children={children} t={catLabel} language={language} />
         ) : (
-          <div className="flex gap-8">
-            <aside className="hidden lg:block w-64 flex-shrink-0">
+          <div className="flex gap-10">
+            <aside className="hidden lg:block w-60 flex-shrink-0">
               <CategorySidebar categories={categories} basePath="/union/catalog" />
               <div className="mt-8"><FiltersContent /></div>
             </aside>
 
-            <main className="flex-1">
+            <main className="flex-1 min-w-0">
               <ProductGrid products={sortedProducts} isLoading={isLoading} basePath="/union/product" />
             </main>
           </div>
@@ -442,8 +442,8 @@ function SubcategoryGrid({ parent, children, t }: { parent: any; children: any[]
   });
 
   return (
-    <section className="py-2 md:py-4">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <section>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
         {children.map((c) => {
           const explicit = c.home_image_url || c.image_url;
           const fallback = fallbackImages[c.id];
@@ -452,25 +452,27 @@ function SubcategoryGrid({ parent, children, t }: { parent: any; children: any[]
             <Link
               key={c.id}
               to={`/union/catalog/${parent.slug}/${c.slug}`}
-              className="group relative overflow-hidden rounded-lg bg-secondary aspect-[4/5] flex flex-col"
+              className="group block"
             >
-              {bg ? (
-                <img
-                  src={bg}
-                  alt={t(c)}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary to-muted" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="relative mt-auto p-4 md:p-5">
-                <h3 className="text-white text-base md:text-xl font-semibold leading-tight">{t(c)}</h3>
-                {c.description_ka && (
-                  <p className="text-xs md:text-sm text-white/70 mt-1 line-clamp-2">{c.description_ka}</p>
+              <div className="relative aspect-[4/3] overflow-hidden bg-surface">
+                {bg ? (
+                  <img
+                    src={bg}
+                    alt={t(c)}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-surface" />
                 )}
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/12 transition-colors" />
               </div>
+              <h3 className="mt-3 text-[15px] font-medium text-foreground group-hover:text-primary transition-colors leading-snug">
+                {t(c)}
+              </h3>
+              {c.description_ka && (
+                <p className="text-[13px] text-muted-foreground mt-1 line-clamp-1">{c.description_ka}</p>
+              )}
             </Link>
           );
         })}
