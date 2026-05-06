@@ -2,9 +2,7 @@ import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { UnionLayout } from '@/components/union/UnionLayout';
-import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { ProductCard } from '@/components/products/ProductCard';
-import { Skeleton } from '@/components/ui/skeleton';
 import { CallbackModal } from '@/components/union/CallbackModal';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -12,17 +10,14 @@ import { cn } from '@/lib/utils';
 
 const UnionCatalog = () => {
   const { category: categorySlug, subcategory: subcategorySlug } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  // ?f=sub-slug — union.ru-style filter (parallel to route-based navigation)
   const filterParam = searchParams.get('f');
-
   const [seoExpanded, setSeoExpanded] = useState(false);
   const [callbackOpen, setCallbackOpen] = useState(false);
 
-  // Categories tree
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
@@ -45,7 +40,6 @@ const UnionCatalog = () => {
   const subFromQuery = filterParam && categories.length > 0
     ? categories.find(c => c.slug === filterParam) || null
     : null;
-
   const subCategory = subFromRoute || subFromQuery;
   const slugUnknown = !!categorySlug && categories.length > 0 && !parentCategory;
   const activeCategory = subCategory || parentCategory;
@@ -64,7 +58,6 @@ const UnionCatalog = () => {
     return c.name_ka || c.name_ru || c.name_en || '';
   };
 
-  // Fetch products
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['catalog-products', parentCategory?.id, subCategory?.id],
     enabled: !slugUnknown && (!!parentCategory || !categorySlug),
@@ -86,7 +79,6 @@ const UnionCatalog = () => {
     },
   });
 
-  // Group products by their direct category for the sectioned layout
   const productsBySubcat = useMemo(() => {
     const map = new Map<string, any[]>();
     for (const p of products) {
@@ -97,293 +89,251 @@ const UnionCatalog = () => {
     return map;
   }, [products]);
 
-  // Breadcrumb
-  const breadcrumbItems = [
-    { label: language === 'ka' ? 'კატალოგი' : language === 'ru' ? 'Каталог' : 'Catalog', path: '/union/catalog' },
-    ...(parentCategory ? [{
-      label: catLabel(parentCategory),
-      path: subCategory ? `/union/catalog/${parentCategory.slug}` : undefined,
-    }] : []),
-    ...(subCategory ? [{ label: catLabel(subCategory) }] : []),
-  ];
+  const setFilter = (slug?: string) => {
+    if (!parentCategory) return;
+    if (!slug) navigate(`/union/catalog/${parentCategory.slug}`, { replace: true });
+    else navigate(`/union/catalog/${parentCategory.slug}?f=${slug}`, { replace: true });
+  };
 
-  // Page title + subtitle (h1 with adjacent span)
-  // Real union.ru: H1 = "Межкомнатные двери", span = "распашные" (the parent slug name lowercase).
-  // We expose: title = active category, subtitle = parent category when on a sub.
+  const sectionsToRender = useMemo(() => {
+    if (subCategory) {
+      return [{ id: subCategory.id, title: catLabel(subCategory), items: productsBySubcat.get(subCategory.id) || [] }];
+    }
+    if (parentCategory && children.length > 0) {
+      return children
+        .map((c) => ({ id: c.id, title: catLabel(c), items: productsBySubcat.get(c.id) || [] }))
+        .filter((s) => s.items.length > 0);
+    }
+    return [{ id: 'all', title: '', items: products }];
+  }, [parentCategory, subCategory, children, productsBySubcat, products, language]);
+
+  const totalShown = sectionsToRender.reduce((sum, s) => sum + s.items.length, 0);
+
+  // Page title + adjacent subtitle (matching union.ru's wrapper-h1)
   const pageTitle = activeCategory ? catLabel(activeCategory) : (
     language === 'ka' ? 'კატალოგი' : language === 'ru' ? 'Каталог' : 'Catalog'
   );
-  const pageSubtitle = subCategory ? catLabel(parentCategory).toLowerCase() : null;
+  const pageSubtitle = subCategory ? catLabel(parentCategory).toLowerCase() : (
+    parentCategory ? (
+      language === 'ka' ? 'გაშლადი' : language === 'ru' ? 'распашные' : 'swing'
+    ) : null
+  );
 
-  // Default lead/USP bullets (only shown when no DB description)
-  const defaultLead = (() => {
-    if (!parentCategory && !subCategory) return null;
+  // Default lead/USP bullets when no DB description
+  const introNode = (() => {
+    if (!parentCategory) return null;
+    const desc = (() => {
+      const c: any = activeCategory;
+      if (language === 'ru') return c?.description_ru || c?.description_ka;
+      if (language === 'en') return c?.description_en || c?.description_ka;
+      return c?.description_ka;
+    })();
+    if (desc) return <div dangerouslySetInnerHTML={{ __html: desc }} />;
     if (language === 'ru') {
       return (
         <>
-          <p>В каталоге представлены премиальные межкомнатные распашные, скрытые и поворотные двери. Каждая модель доступна в нескольких вариантах коробов, включая инновационный короб с теневым зазором.</p>
-          <p><strong>Почему архитекторы выбирают двери UNION:</strong></p>
-          <ul>
-            <li><strong>Надёжность и тишина:</strong> полотна на 50% толще стандарта, безупречная геометрия даже на высоте 3.5 м.</li>
-            <li><strong>Сила в деталях:</strong> закалённые алюминиевые короба, патент UNION, итальянская сборка.</li>
-            <li><strong>Безупречный комфорт:</strong> скрытые петли INVISTA / OTLAV и магнитные защёлки AGB.</li>
-            <li><strong>Дизайн без границ:</strong> широчайший выбор отделок и индивидуальные размеры под заказ.</li>
-          </ul>
-        </>
-      );
-    }
-    if (language === 'en') {
-      return (
-        <>
-          <p>The catalog features premium swing, hidden and pivot interior doors. Each model is available with several frame options, including the patented shadow-gap frame.</p>
-          <p><strong>Why architects choose UNION:</strong></p>
-          <ul>
-            <li><strong>Reliability & silence:</strong> doors 50% thicker than standard, perfect geometry up to 3.5 m height.</li>
-            <li><strong>Strength in details:</strong> hardened aluminum frames, UNION patent, Italian assembly.</li>
-            <li><strong>Flawless comfort:</strong> hidden INVISTA / OTLAV hinges and AGB magnetic latches.</li>
-            <li><strong>Design without limits:</strong> the widest range of finishes and custom sizing on order.</li>
+          <p style={{ color: '#2c2d2e' }}>В каталоге представлены все виды премиальных межкомнатных распашных, скрытых дверей и поворотных дверей, каждая из которых может быть поставлена в одном из нескольких коробов на выбор, включая новейшую разработку компании — короб с теневым зазором.</p>
+          <p style={{ color: '#2c2d2e' }}><u><span style={{ color: '#0f1115' }}>Почему архитекторы выбирают двери UNION:</span></u></p>
+          <ul style={{ color: '#2c2d2e' }}>
+            <li><span style={{ fontWeight: 700 }}>Надёжность и тишина:</span> Полотна дверей UNION на 50% толще стандартных, что улучшает звукоизоляцию и гарантирует идеальную геометрию даже при высоте до 3.5 метров.</li>
+            <li><span style={{ fontWeight: 700 }}>Сила в деталях: </span>Усиленные короба изготовлены из закалённого алюминия по итальянской технологии и запатентованы UNION. Они абсолютно устойчивы к влаге и прослужат вам долгие годы.</li>
+            <li><span style={{ fontWeight: 700 }}>Безупречный комфорт:</span> Европейская фурнитура (скрытые петли INVISTA / OTLAV, магнитный AGB) обеспечивает максимально плавное и комфортное использование.</li>
+            <li><span style={{ fontWeight: 700 }}>Дизайн без границ:</span> Широчайший выбор моделей и отделок из экологически чистых материалов даст возможность вписать дверь в любой стиль интерьера.</li>
           </ul>
         </>
       );
     }
     return (
       <>
-        <p>კატალოგში წარმოდგენილია პრემიუმ შიდა, ფარული და მბრუნავი კარები. თითოეული მოდელი ხელმისაწვდომია რამდენიმე ჩარჩოს ვარიანტში.</p>
+        <p>The catalog features premium swing, hidden and pivot interior doors. Each model is available with several frame options, including the patented shadow-gap frame.</p>
+        <p><u><strong>Why architects choose UNION:</strong></u></p>
         <ul>
-          <li><strong>სანდოობა და სიჩუმე</strong> — 50%-ით უფრო სქელი ფარდები.</li>
-          <li><strong>ძალა დეტალებში</strong> — გამდნარი ალუმინის ჩარჩოები, UNION-ის პატენტი.</li>
-          <li><strong>უნაკლო კომფორტი</strong> — INVISTA / OTLAV ფარული ანჯამები.</li>
-          <li><strong>დიზაინი ლიმიტების გარეშე</strong> — ფართო არჩევანი და ინდივიდუალური ზომები.</li>
+          <li><strong>Reliability & silence:</strong> doors 50% thicker than standard.</li>
+          <li><strong>Strength in details:</strong> hardened aluminum frames, UNION patent.</li>
+          <li><strong>Flawless comfort:</strong> hidden INVISTA / OTLAV hinges.</li>
+          <li><strong>Design without limits:</strong> custom finishes and sizing.</li>
         </ul>
       </>
     );
   })();
 
-  const introHtml = activeCategory && (activeCategory as any).description_ka
-    ? (language === 'ru' ? (activeCategory as any).description_ru : language === 'en' ? (activeCategory as any).description_en : (activeCategory as any).description_ka) || ''
-    : null;
-
-  // Banner (admin-managed)
-  const banner = (() => {
-    const c: any = activeCategory;
-    if (!c?.banner_image_url) return null;
-    const title = language === 'ru' ? (c.banner_title_ru || c.banner_title_ka)
-                : language === 'en' ? (c.banner_title_en || c.banner_title_ka)
-                : (c.banner_title_ka || c.banner_title_ru);
-    const subtitle = language === 'ru' ? (c.banner_subtitle_ru || c.banner_subtitle_ka)
-                  : language === 'en' ? (c.banner_subtitle_en || c.banner_subtitle_ka)
-                  : (c.banner_subtitle_ka || c.banner_subtitle_ru);
-    return { image: c.banner_image_url, link: c.banner_link_url, title, subtitle };
-  })();
-
-  // Filter row navigation
-  const setFilter = (slug?: string) => {
-    if (!parentCategory) return;
-    if (!slug) {
-      setSearchParams({}, { replace: true });
-      navigate(`/union/catalog/${parentCategory.slug}`, { replace: true });
-    } else {
-      navigate(`/union/catalog/${parentCategory.slug}?f=${slug}`, { replace: true });
-    }
-  };
-
-  // Decide what to render in #blockSection:
-  //   - When a subcategory is active → render that single section
-  //   - Else if parent has children with products → render a section per child
-  //   - Else → flat row of all products
-  const sectionsToRender = useMemo(() => {
-    if (subCategory) {
-      const list = productsBySubcat.get(subCategory.id) || [];
-      return [{ id: subCategory.id, title: catLabel(subCategory), items: list }];
-    }
-    if (parentCategory && children.length > 0) {
-      return children
-        .map((c) => ({
-          id: c.id,
-          title: catLabel(c),
-          items: productsBySubcat.get(c.id) || [],
-        }))
-        .filter((s) => s.items.length > 0);
-    }
-    return [{ id: 'all', title: '', items: products }];
-  }, [parentCategory, subCategory, children, productsBySubcat, products]);
-
-  const totalShown = sectionsToRender.reduce((sum, s) => sum + s.items.length, 0);
-
   return (
     <UnionLayout>
-      <div className="union-container pb-20">
-        {/* breadcrumb-main / breadcrumb-h1 */}
-        <div className="breadcrumb-main breadcrumb-h1">
-          <Breadcrumb items={breadcrumbItems} />
+      <main className="main">
+        <div className="container">
+          <div className="bf_skv_b_area"></div>
         </div>
+        <div className="container-fluid combine-container page-container">
+          <div className="row">
 
-        {/* Optional banner from admin */}
-        {banner && (
-          (() => {
-            const inner = (
-              <div
-                className="relative h-44 md:h-64 mt-4 overflow-hidden bg-[#f4f4f4]"
-                style={{ backgroundImage: `url(${banner.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-              >
-                {(banner.title || banner.subtitle) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#002b45]/70 via-[#002b45]/30 to-transparent flex items-center">
-                    <div className="px-8 md:px-12 max-w-2xl text-white">
-                      {banner.title && <h2 className="text-[28px] md:text-[40px] font-medium leading-tight mb-1">{banner.title}</h2>}
-                      {banner.subtitle && <p className="text-[14px] md:text-[15px] opacity-90">{banner.subtitle}</p>}
-                    </div>
-                  </div>
-                )}
+            {/* Breadcrumb */}
+            <div className="breadcrumb-main breadcrumb-h1">
+              <div className="container">
+                <ol id="breadcrumbs-list" className="breadcrumb">
+                  <li className="active">
+                    <Link to="/union/catalog" title={language === 'ru' ? 'Каталог' : 'Catalog'}>
+                      <span>{language === 'ru' ? 'Каталог' : language === 'ka' ? 'კატალოგი' : 'Catalog'}</span>
+                    </Link>
+                  </li>
+                  {parentCategory && (
+                    <li className="active">
+                      {subCategory ? (
+                        <Link to={`/union/catalog/${parentCategory.slug}`}>
+                          <span>{catLabel(parentCategory)}</span>
+                        </Link>
+                      ) : (
+                        <span>{catLabel(parentCategory)}</span>
+                      )}
+                    </li>
+                  )}
+                  {subCategory && (
+                    <li className="active">
+                      <span>{catLabel(subCategory)}</span>
+                    </li>
+                  )}
+                </ol>
               </div>
-            );
-            return banner.link ? <Link to={banner.link} className="block">{inner}</Link> : inner;
-          })()
-        )}
-
-        {/* H1 + adjacent subtitle */}
-        <div className="wrapper-h1 secH1 mrl15 mt-3">
-          <h1>{pageTitle}</h1>
-          {pageSubtitle && <span>{pageSubtitle}</span>}
-        </div>
-
-        {/* SEO text — collapsible */}
-        {(introHtml || defaultLead) && (
-          <div className="seotext_top mrl15">
-            <div
-              className="part-toggle--text"
-              style={{
-                height: seoExpanded ? 'auto' : '70px',
-                maskImage: seoExpanded ? 'none' : 'linear-gradient(180deg, #000 60%, transparent)',
-                WebkitMaskImage: seoExpanded ? 'none' : 'linear-gradient(180deg, #000 60%, transparent)',
-              }}
-            >
-              {introHtml ? (
-                <div dangerouslySetInnerHTML={{ __html: introHtml }} />
-              ) : (
-                defaultLead
-              )}
             </div>
-            <button
-              type="button"
-              className="btn-show-more-ext"
-              onClick={() => setSeoExpanded((v) => !v)}
-            >
-              {seoExpanded
-                ? (language === 'ru' ? 'Свернуть' : language === 'en' ? 'Hide' : 'დაკეცვა')
-                : (language === 'ru' ? 'Показать весь текст' : language === 'en' ? 'Show full text' : 'სრული ტექსტი')}
-            </button>
-          </div>
-        )}
 
-        {/* Pipe-separated filter row */}
-        {children.length > 0 && (
-          <div className="top_submenu mrl15">
-            <span
-              className={cn(!subCategory && 'active')}
-              onClick={() => setFilter(undefined)}
-            >
-              <a href={`/union/catalog/${parentCategory!.slug}`} onClick={(e) => { e.preventDefault(); setFilter(undefined); }}>
-                {language === 'ru' ? 'Все' : language === 'en' ? 'All' : 'ყველა'}
-              </a>
-            </span>
-            {children.map((c, i) => (
-              <span key={c.id} className="contents">
-                <span className="delimiter_sec">|</span>
-                <span className={cn(subCategory?.id === c.id && 'active')}>
+            {/* H1 + adjacent subtitle */}
+            <div className="wrapper-h1 secH1 mrl15">
+              <h1>{pageTitle}</h1>
+              {pageSubtitle && <span>{pageSubtitle}</span>}
+            </div>
+
+            {/* SEO text — collapsible */}
+            <div className="col-xs-12">
+              <div id="seotext_top">
+                <div
+                  className="pdrl15 part-toggle--text"
+                  style={{
+                    overflow: 'hidden',
+                    height: seoExpanded ? 'auto' : '70px',
+                  }}
+                >
+                  {introNode}
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-sm mr-b15 btn-show-more-ext"
+                  onClick={() => setSeoExpanded(v => !v)}
+                >
+                  {seoExpanded
+                    ? (language === 'ru' ? 'Свернуть' : language === 'en' ? 'Hide' : 'დაკეცვა')
+                    : (language === 'ru' ? 'Показать весь текст' : language === 'en' ? 'Show full text' : 'სრული ტექსტი')}
+                </button>
+              </div>
+            </div>
+
+            {/* Pipe-separated filter row */}
+            {children.length > 0 && (
+              <div className="top_submenu mrl15">
+                <span className={cn(!subCategory && 'active')}>
                   <a
-                    href={`/union/catalog/${parentCategory!.slug}?f=${c.slug}`}
-                    onClick={(e) => { e.preventDefault(); setFilter(c.slug); }}
+                    href={`/union/catalog/${parentCategory!.slug}`}
+                    onClick={(e) => { e.preventDefault(); setFilter(undefined); }}
                   >
-                    {catLabel(c)}
+                    {language === 'ru' ? ' Все ' : language === 'en' ? ' All ' : ' ყველა '}
                   </a>
                 </span>
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Result count */}
-        {!slugUnknown && !isLoading && (
-          <p className="text-center text-[13px] text-[#5a5a5a] mt-4 mb-10">
-            {language === 'ru'
-              ? `Показано: ${totalShown}`
-              : language === 'en'
-                ? `Showing: ${totalShown}`
-                : `ნაჩვენებია: ${totalShown}`}
-          </p>
-        )}
-
-        {/* Product sections (#blockSection > .section > <p class="title_sec"> + .row > col-lg-4*) */}
-        <div className="view-container2">
-          <div id="blockSection">
-            {slugUnknown ? (
-              <div className="py-20 text-center border-t border-[#e3e5ef]">
-                <p className="text-[18px] font-medium text-[#002b45] mb-2">
-                  {language === 'ka' ? 'კატეგორია ვერ მოიძებნა' : language === 'ru' ? 'Категория не найдена' : 'Category not found'}
-                </p>
-                <p className="text-[14px] text-[#5a5a5a] mb-6">"{categorySlug}"</p>
-                <Link to="/union/catalog" className="text-[hsl(var(--accent))] hover:underline">
-                  {language === 'ka' ? 'მთლიანი კატალოგი' : language === 'ru' ? 'Открыть весь каталог' : 'Browse the full catalog'}
-                </Link>
-              </div>
-            ) : isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[60px] my-12">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="space-y-4">
-                    <Skeleton className="w-full" style={{ aspectRatio: '490/330' }} />
-                    <Skeleton className="h-5 w-1/3 mx-auto" />
-                    <Skeleton className="h-4 w-2/3 mx-auto" />
-                  </div>
+                {children.map((c) => (
+                  <span key={c.id} style={{ display: 'contents' }}>
+                    <span className="delimiter_sec">|</span>
+                    <span className={cn(subCategory?.id === c.id && 'active')}>
+                      <a
+                        href={`/union/catalog/${parentCategory!.slug}?f=${c.slug}`}
+                        onClick={(e) => { e.preventDefault(); setFilter(c.slug); }}
+                      >
+                        {' '}{catLabel(c)}{' '}
+                      </a>
+                    </span>
+                  </span>
                 ))}
+                <hr style={{ marginTop: 0 }} />
               </div>
-            ) : sectionsToRender.length === 0 || totalShown === 0 ? (
-              <div className="py-20 text-center">
-                <p className="text-[15px] text-[#5a5a5a]">
-                  {language === 'ru' ? 'Товары пока не добавлены' : language === 'en' ? 'No products yet' : 'ჯერ პროდუქტები არაა'}
-                </p>
-              </div>
-            ) : (
-              sectionsToRender.map((section) => (
-                <section key={section.id} className="mb-14">
-                  {section.title && (
-                    <p className="title_sec">{section.title}</p>
-                  )}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[50px]">
-                    {section.items.map((p: any) => (
-                      <ProductCard key={p.id} product={p} basePath="/union/product" />
-                    ))}
-                  </div>
-                </section>
-              ))
             )}
+
+            {/* #blockSection */}
+            <div className="view-container2">
+              <div className="container-fluid">
+                <div id="blockSection">
+                  {slugUnknown ? (
+                    <div style={{ padding: '80px 0', textAlign: 'center' }}>
+                      <p style={{ fontSize: 18, fontWeight: 500, color: '#002b45', marginBottom: 8 }}>
+                        {language === 'ka' ? 'კატეგორია ვერ მოიძებნა' : language === 'ru' ? 'Категория не найдена' : 'Category not found'}
+                      </p>
+                      <p style={{ fontSize: 14, color: '#5a5a5a', marginBottom: 24 }}>"{categorySlug}"</p>
+                      <Link to="/union/catalog" style={{ color: '#e3ae46' }}>
+                        {language === 'ka' ? 'მთლიანი კატალოგი' : language === 'ru' ? 'Открыть весь каталог' : 'Browse the full catalog'}
+                      </Link>
+                    </div>
+                  ) : isLoading ? (
+                    <div className="section">
+                      <div className="row">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                          <div key={i} className="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div className="divimg" style={{ background: '#f4f4f4' }} />
+                            <div className="price_el">&nbsp;</div>
+                            <div className="name_el">&nbsp;</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : totalShown === 0 ? (
+                    <div style={{ padding: '80px 0', textAlign: 'center' }}>
+                      <p style={{ fontSize: 15, color: '#5a5a5a' }}>
+                        {language === 'ru' ? 'Товары пока не добавлены' : language === 'en' ? 'No products yet' : 'ჯერ პროდუქტები არაა'}
+                      </p>
+                    </div>
+                  ) : (
+                    sectionsToRender.map((section) => (
+                      <div key={section.id} className="section">
+                        {section.title && (
+                          <p className="title_sec">{section.title}</p>
+                        )}
+                        <div className="row">
+                          {section.items.map((p: any) => (
+                            <div key={p.id} className="col-xs-12 col-sm-6 col-md-4">
+                              <ProductCard product={p} basePath="/union/product" />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom callback CTA */}
+            {!slugUnknown && (
+              <div className="col-xs-12">
+                <section style={{ marginTop: 60, marginBottom: 40, background: '#f4f4f4', padding: '56px 24px', textAlign: 'center' }}>
+                  <h2 style={{ color: '#002b45', fontSize: 28, fontWeight: 400, letterSpacing: '0.04em', textTransform: 'uppercase', margin: 0 }}>
+                    {language === 'ru' ? 'Оставить заявку' : language === 'en' ? 'Leave a request' : 'შეტყობინების გაგზავნა'}
+                  </h2>
+                  <p style={{ marginTop: 16, fontSize: 15, fontWeight: 300, lineHeight: 1.6, color: '#5a5a5a', maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
+                    {language === 'ru'
+                      ? 'Подберём решение под ваш проект, рассчитаем стоимость и пригласим в шоурум.'
+                      : language === 'en'
+                        ? "We'll match a solution to your project, prepare a quote, and invite you to a showroom."
+                        : 'შევარჩევთ თქვენი პროექტის შესაფერის ვარიანტს და მოგიწვევთ შოურუმში.'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setCallbackOpen(true)}
+                    className="btn"
+                    style={{ marginTop: 28, background: '#484848', color: '#fff', height: 50, padding: '0 32px', fontSize: 14, fontWeight: 300, letterSpacing: '0.16em', textTransform: 'uppercase', border: 0 }}
+                  >
+                    {language === 'ru' ? 'Заказать звонок' : language === 'en' ? 'Request a callback' : 'უკავშირდით'}
+                  </button>
+                </section>
+              </div>
+            )}
+
           </div>
         </div>
-
-        {/* Bottom callback */}
-        {!slugUnknown && (
-          <section className="mt-20 md:mt-24 bg-[#f4f4f4] py-14 md:py-16 -mx-4 md:-mx-6 lg:-mx-10 px-4 md:px-6 lg:px-10">
-            <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-[#002b45] text-[26px] md:text-[32px] font-normal leading-tight tracking-[0.04em] uppercase">
-                {language === 'ru' ? 'Оставить заявку' : language === 'en' ? 'Leave a request' : 'შეტყობინების გაგზავნა'}
-              </h2>
-              <p className="mt-4 text-[15px] font-light leading-[1.6] text-[#5a5a5a]">
-                {language === 'ru'
-                  ? 'Подберём решение под ваш проект, рассчитаем стоимость и пригласим в шоурум.'
-                  : language === 'en'
-                    ? "We'll match a solution to your project, prepare a quote, and invite you to a showroom."
-                    : 'შევარჩევთ თქვენი პროექტის შესაფერის ვარიანტს და მოგიწვევთ შოურუმში.'}
-              </p>
-              <button
-                type="button"
-                onClick={() => setCallbackOpen(true)}
-                className="union-btn-dark mt-7 inline-flex"
-              >
-                {language === 'ru' ? 'Заказать звонок' : language === 'en' ? 'Request a callback' : 'უკავშირდით'}
-              </button>
-            </div>
-          </section>
-        )}
-      </div>
+      </main>
 
       <CallbackModal open={callbackOpen} onOpenChange={setCallbackOpen} />
     </UnionLayout>
