@@ -151,18 +151,25 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <Globe className="h-3 w-3" /> {t('Language')}
             </div>
             <div className="flex gap-1">
-              {(['ka', 'ru', 'en'] as const).map((lang) => (
+              {([
+                { code: 'ka', flag: '🇬🇪', label: 'ქარ' },
+                { code: 'ru', flag: '🇷🇺', label: 'РУС' },
+                { code: 'en', flag: '🇬🇧', label: 'ENG' },
+              ] as const).map(({ code, flag, label }) => (
                 <button
-                  key={lang}
-                  onClick={() => setLanguage(lang)}
+                  key={code}
+                  onClick={() => setLanguage(code)}
                   className={cn(
-                    'flex-1 py-1.5 text-xs font-medium rounded transition-colors',
-                    language === lang
-                      ? 'bg-primary text-primary-foreground'
+                    'flex-1 py-1.5 text-xs font-medium rounded transition-colors flex items-center justify-center gap-1',
+                    language === code
+                      ? 'bg-primary text-primary-foreground shadow-sm'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   )}
+                  aria-label={code}
+                  aria-pressed={language === code}
                 >
-                  {lang.toUpperCase()}
+                  <span aria-hidden="true">{flag}</span>
+                  <span>{label}</span>
                 </button>
               ))}
             </div>
@@ -171,10 +178,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           <div className="p-2 border-b">
             <button
               onClick={() => setLanguage(language === 'ka' ? 'ru' : language === 'ru' ? 'en' : 'ka')}
-              className="w-full h-9 rounded bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-xs font-semibold"
+              className="w-full h-9 rounded bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-base"
               title={t('Language')}
+              aria-label={t('Language')}
             >
-              {language.toUpperCase()}
+              {language === 'ka' ? '🇬🇪' : language === 'ru' ? '🇷🇺' : '🇬🇧'}
             </button>
           </div>
         )}

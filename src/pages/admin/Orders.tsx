@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { Eye, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { format } from 'date-fns';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Order = Tables<'orders'>;
 
@@ -22,6 +23,7 @@ export default function AdminOrders() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const queryClient = useQueryClient();
+  const t = useAdminT();
 
   const { data: orders, isLoading } = useQuery({
     queryKey: ['admin-orders'],
@@ -55,7 +57,7 @@ export default function AdminOrders() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-orders'] });
-      toast.success('Order status updated');
+      toast.success(t('Order status updated'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -80,8 +82,8 @@ export default function AdminOrders() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Orders</h1>
-          <p className="text-gray-500 mt-1">Manage customer orders</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('Orders')}</h1>
+          <p className="text-gray-500 mt-1">{t('Manage customer orders')}</p>
         </div>
 
         <Card>
@@ -94,12 +96,12 @@ export default function AdminOrders() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Order ID</TableHead>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Order ID')}</TableHead>
+                    <TableHead>{t('Customer')}</TableHead>
+                    <TableHead>{t('Total')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead>{t('Date')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -124,7 +126,7 @@ export default function AdminOrders() {
                           <SelectContent>
                             {statusOptions.map((status) => (
                               <SelectItem key={status} value={status}>
-                                {status.charAt(0).toUpperCase() + status.slice(1)}
+                                {t(status)}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -143,7 +145,7 @@ export default function AdminOrders() {
                   {orders?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                        No orders yet
+                        {t('No orders yet')}
                       </TableCell>
                     </TableRow>
                   )}
@@ -156,48 +158,48 @@ export default function AdminOrders() {
         <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>Order Details</DialogTitle>
+              <DialogTitle>{t('Order Details')}</DialogTitle>
             </DialogHeader>
             {selectedOrder && (
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-gray-500">Customer Name</Label>
+                    <Label className="text-gray-500">{t('Customer Name')}</Label>
                     <p className="font-medium">{selectedOrder.customer_name}</p>
                   </div>
                   <div>
-                    <Label className="text-gray-500">Email</Label>
+                    <Label className="text-gray-500">{t('Email')}</Label>
                     <p className="font-medium">{selectedOrder.customer_email}</p>
                   </div>
                   <div>
-                    <Label className="text-gray-500">Phone</Label>
+                    <Label className="text-gray-500">{t('Phone')}</Label>
                     <p className="font-medium">{selectedOrder.customer_phone}</p>
                   </div>
                   <div>
-                    <Label className="text-gray-500">Total Amount</Label>
+                    <Label className="text-gray-500">{t('Total Amount')}</Label>
                     <p className="font-medium text-lg">₾{selectedOrder.total_amount}</p>
                   </div>
                 </div>
                 <div>
-                  <Label className="text-gray-500">Shipping Address</Label>
+                  <Label className="text-gray-500">{t('Shipping Address')}</Label>
                   <p className="font-medium">{selectedOrder.shipping_address}</p>
                 </div>
                 {selectedOrder.notes && (
                   <div>
-                    <Label className="text-gray-500">Notes</Label>
+                    <Label className="text-gray-500">{t('Notes')}</Label>
                     <p>{selectedOrder.notes}</p>
                   </div>
                 )}
                 <div>
-                  <Label className="text-gray-500 mb-2 block">Order Items</Label>
+                  <Label className="text-gray-500 mb-2 block">{t('Order Items')}</Label>
                   <div className="border rounded-lg overflow-hidden">
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Product</TableHead>
-                          <TableHead>Price</TableHead>
-                          <TableHead>Qty</TableHead>
-                          <TableHead>Total</TableHead>
+                          <TableHead>{t('Product')}</TableHead>
+                          <TableHead>{t('Price')}</TableHead>
+                          <TableHead>{t('Qty')}</TableHead>
+                          <TableHead>{t('Total')}</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>

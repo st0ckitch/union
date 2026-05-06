@@ -113,7 +113,7 @@ export default function AdminProducts() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
-      toast.success('Product created');
+      toast.success(t('Product created'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -126,7 +126,7 @@ export default function AdminProducts() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
-      toast.success('Product updated');
+      toast.success(t('Product updated'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -136,7 +136,7 @@ export default function AdminProducts() {
     mutationFn: (id: string) => deleteRow('products', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
-      toast.success('Product deleted');
+      toast.success(t('Product deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -348,10 +348,10 @@ export default function AdminProducts() {
       }
 
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
-      toast.success(editingProduct ? 'Product updated' : 'Product created');
+      toast.success(editingProduct ? t('Product updated') : t('Product created'));
       resetForm();
     } catch (err: any) {
-      toast.error(err.message || 'Save failed');
+      toast.error(err.message || t('Save failed'));
     }
   };
 
@@ -377,7 +377,7 @@ export default function AdminProducts() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label>Name (Georgian) *</Label>
+                    <Label>{t('Name (Georgian) *')}</Label>
                     <Input
                       value={formData.name_ka}
                       onChange={(e) => setFormData({ ...formData, name_ka: e.target.value })}
@@ -385,14 +385,14 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Name (Russian)</Label>
+                    <Label>{t('Name (Russian)')}</Label>
                     <Input
                       value={formData.name_ru}
                       onChange={(e) => setFormData({ ...formData, name_ru: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Name (English)</Label>
+                    <Label>{t('Name (English)')}</Label>
                     <Input
                       value={formData.name_en}
                       onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
@@ -400,7 +400,7 @@ export default function AdminProducts() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Slug</Label>
+                  <Label>{t('Slug')}</Label>
                   <Input
                     value={formData.slug}
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
@@ -409,7 +409,7 @@ export default function AdminProducts() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label>Description (Georgian)</Label>
+                    <Label>{t('Description (Georgian)')}</Label>
                     <Textarea
                       value={formData.description_ka}
                       onChange={(e) => setFormData({ ...formData, description_ka: e.target.value })}
@@ -417,7 +417,7 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Description (Russian)</Label>
+                    <Label>{t('Description (Russian)')}</Label>
                     <Textarea
                       value={formData.description_ru}
                       onChange={(e) => setFormData({ ...formData, description_ru: e.target.value })}
@@ -425,7 +425,7 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Description (English)</Label>
+                    <Label>{t('Description (English)')}</Label>
                     <Textarea
                       value={formData.description_en}
                       onChange={(e) => setFormData({ ...formData, description_en: e.target.value })}
@@ -435,7 +435,7 @@ export default function AdminProducts() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label>Price *</Label>
+                    <Label>{t('Price *')}</Label>
                     <Input
                       type="number"
                       step="0.01"
@@ -445,7 +445,7 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Sale Price</Label>
+                    <Label>{t('Sale Price')}</Label>
                     <Input
                       type="number"
                       step="0.01"
@@ -454,7 +454,7 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Stock</Label>
+                    <Label>{t('Stock')}</Label>
                     <Input
                       type="number"
                       value={formData.stock_quantity}
@@ -463,16 +463,16 @@ export default function AdminProducts() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Category</Label>
+                  <Label>{t('Category')}</Label>
                   <Select
                     value={formData.category_id || '__none__'}
                     onValueChange={(value) => setFormData({ ...formData, category_id: value === '__none__' ? '' : value })}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
+                      <SelectValue placeholder={t('Select category')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__none__">— No category —</SelectItem>
+                      <SelectItem value="__none__">{t('— No category —')}</SelectItem>
                       {categories?.map((cat) => (
                         <SelectItem key={cat.id} value={cat.id}>{cat.name_ka}</SelectItem>
                       ))}
@@ -647,7 +647,7 @@ export default function AdminProducts() {
                         </div>
                       )}
                       {formData.has_modules && !editingProduct && (
-                        <p className="text-xs text-amber-600">Save the product first, then re-open to manage modules.</p>
+                        <p className="text-xs text-amber-600">{t('Save the product first, then re-open to manage modules.')}</p>
                       )}
                       <div className="space-y-2">
                         <Label>Configuration styles (CSV)</Label>

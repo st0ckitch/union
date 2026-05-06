@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Loader2, Lock } from 'lucide-react';
+import { useAdminT } from '@/lib/adminI18n';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
   const navigate = useNavigate();
+  const t = useAdminT();
 
   useEffect(() => {
     const checkExistingSession = async () => {
@@ -50,7 +52,7 @@ export default function AdminLogin() {
       }
 
       if (!data.user) {
-        toast.error('Login failed');
+        toast.error(t('Login failed'));
         setIsLoading(false);
         return;
       }
@@ -62,23 +64,23 @@ export default function AdminLogin() {
       });
 
       if (roleError) {
-        toast.error('Error checking permissions');
+        toast.error(t('Error checking permissions'));
         await supabase.auth.signOut();
         setIsLoading(false);
         return;
       }
 
       if (!hasRole) {
-        toast.error('You do not have admin access');
+        toast.error(t('You do not have admin access'));
         await supabase.auth.signOut();
         setIsLoading(false);
         return;
       }
 
-      toast.success('Welcome to Admin Panel');
+      toast.success(t('Welcome to Admin Panel'));
       navigate('/admin');
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error(t('An error occurred'));
       setIsLoading(false);
     }
   };
@@ -98,13 +100,13 @@ export default function AdminLogin() {
           <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
             <Lock className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Admin Panel</CardTitle>
-          <CardDescription>Enter your credentials to access the admin panel</CardDescription>
+          <CardTitle className="text-2xl">{t('Admin Panel')}</CardTitle>
+          <CardDescription>{t('Enter your credentials to access the admin panel')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('Email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -116,7 +118,7 @@ export default function AdminLogin() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('Password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -131,10 +133,10 @@ export default function AdminLogin() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
+                  {t('Signing in...')}
                 </>
               ) : (
-                'Sign In'
+                t('Sign In')
               )}
             </Button>
           </form>

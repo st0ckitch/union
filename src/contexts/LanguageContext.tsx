@@ -1,6 +1,15 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Language = 'ka' | 'ru' | 'en';
+
+const LANGUAGE_STORAGE_KEY = 'union-admin-lang';
+
+function readStoredLanguage(): Language {
+  if (typeof window === 'undefined') return 'ka';
+  const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  if (stored === 'ka' || stored === 'ru' || stored === 'en') return stored;
+  return 'ka';
+}
 
 interface TranslationObject {
   ka: string;
@@ -260,7 +269,20 @@ const translations: Record<string, { ka: string; ru: string; en?: string }> = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('ka');
+  const [language, setLanguageState] = useState<Language>(readStoredLanguage);
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
+    }
+  }, [language]);
 
   const t = (keyOrObj: string | TranslationObject): string => {
     if (typeof keyOrObj === 'string') {

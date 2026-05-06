@@ -13,12 +13,14 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type LegalPage = Tables<'legal_pages'>;
 
 const COMMON_SLUGS = ['privacy', 'terms', 'delivery', 'warranty', 'returns'];
 
 export default function AdminLegalPages() {
+  const t = useAdminT();
   const [isOpen, setIsOpen] = useState(false);
   const [editing, setEditing] = useState<LegalPage | null>(null);
   const [form, setForm] = useState<any>({
@@ -39,17 +41,17 @@ export default function AdminLegalPages() {
 
   const create = useMutation({
     mutationFn: async (d: any) => { const { error } = await supabase.from('legal_pages').insert([d]); if (error) throw error; },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success('Page created'); reset(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success(t('Page created')); reset(); },
     onError: (e: any) => toast.error(e.message),
   });
   const update = useMutation({
     mutationFn: async ({ id, d }: { id: string; d: any }) => { const { error } = await supabase.from('legal_pages').update(d).eq('id', id); if (error) throw error; },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success('Page updated'); reset(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success(t('Page updated')); reset(); },
     onError: (e: any) => toast.error(e.message),
   });
   const del = useMutation({
     mutationFn: (id: string) => deleteRow('legal_pages', id),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success('Page deleted'); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-legal-pages'] }); toast.success(t('Page deleted')); },
     onError: (e: any) => toast.error(e.message),
   });
 
@@ -96,47 +98,47 @@ export default function AdminLegalPages() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Legal & Info Pages</h1>
-            <p className="text-gray-500 mt-1">Privacy, Terms, Delivery, Warranty, Returns — HTML body supported.</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Legal & Info Pages')}</h1>
+            <p className="text-gray-500 mt-1">{t('Privacy, Terms, Delivery, Warranty, Returns — HTML body supported.')}</p>
           </div>
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild><Button onClick={reset}><Plus className="h-4 w-4 mr-2" />Add Page</Button></DialogTrigger>
+            <DialogTrigger asChild><Button onClick={reset}><Plus className="h-4 w-4 mr-2" />{t('Add Page')}</Button></DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader><DialogTitle>{editing ? `Edit: ${editing.slug}` : 'Add Page'}</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{editing ? `${t('Edit')}: ${editing.slug}` : t('Add Page')}</DialogTitle></DialogHeader>
               <form onSubmit={onSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Slug *</Label>
+                    <Label>{t('Slug *')}</Label>
                     <Input list="legal-slug-list" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-') })} required placeholder="privacy" />
                     <datalist id="legal-slug-list">
                       {COMMON_SLUGS.map(s => <option key={s} value={s} />)}
                     </datalist>
                   </div>
-                  <div className="space-y-2"><Label>Sort Order</Label><Input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Sort Order')}</Label><Input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} /></div>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="space-y-2"><Label>Title (KA) *</Label><Input value={form.title_ka} onChange={(e) => setForm({ ...form, title_ka: e.target.value })} required /></div>
-                  <div className="space-y-2"><Label>Title (RU)</Label><Input value={form.title_ru} onChange={(e) => setForm({ ...form, title_ru: e.target.value })} /></div>
-                  <div className="space-y-2"><Label>Title (EN)</Label><Input value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Title (KA) *')}</Label><Input value={form.title_ka} onChange={(e) => setForm({ ...form, title_ka: e.target.value })} required /></div>
+                  <div className="space-y-2"><Label>{t('Title (RU)')}</Label><Input value={form.title_ru} onChange={(e) => setForm({ ...form, title_ru: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Title (EN)')}</Label><Input value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })} /></div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Body KA (HTML allowed: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;a&gt;, etc.)</Label>
+                  <Label>{t('Body KA (HTML allowed: <h2>, <p>, <ul>, <a>, etc.)')}</Label>
                   <Textarea rows={8} className="font-mono text-xs" value={form.body_ka} onChange={(e) => setForm({ ...form, body_ka: e.target.value })} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Body RU</Label>
+                  <Label>{t('Body')} (RU)</Label>
                   <Textarea rows={8} className="font-mono text-xs" value={form.body_ru} onChange={(e) => setForm({ ...form, body_ru: e.target.value })} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Body EN</Label>
+                  <Label>{t('Body')} (EN)</Label>
                   <Textarea rows={8} className="font-mono text-xs" value={form.body_en} onChange={(e) => setForm({ ...form, body_en: e.target.value })} />
                 </div>
-                <div className="flex items-center gap-2"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><Label>Active</Label></div>
+                <div className="flex items-center gap-2"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><Label>{t('Active')}</Label></div>
                 <div className="flex justify-end gap-2 border-t pt-4">
-                  <Button type="button" variant="outline" onClick={reset}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={reset}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={create.isPending || update.isPending}>
                     {(create.isPending || update.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editing ? 'Update' : 'Create'}
+                    {editing ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -154,12 +156,12 @@ export default function AdminLegalPages() {
                     <p className="font-medium">{p.title_ka}</p>
                     <p className="text-xs text-gray-500 truncate">{p.body_ka?.replace(/<[^>]+>/g, ' ').slice(0, 150)}</p>
                   </div>
-                  <span className={`px-2 py-0.5 rounded-full text-xs ${p.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>{p.is_active ? 'Active' : 'Inactive'}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-xs ${p.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>{p.is_active ? t('Active') : t('Inactive')}</span>
                   <Button variant="ghost" size="icon" onClick={() => onEdit(p)}><Pencil className="h-4 w-4" /></Button>
-                  <Button variant="ghost" size="icon" onClick={() => { if (confirm(`Delete page "${p.slug}"?`)) del.mutate(p.id); }} className="text-red-600"><Trash2 className="h-4 w-4" /></Button>
+                  <Button variant="ghost" size="icon" onClick={() => { if (confirm(t('Delete this page?'))) del.mutate(p.id); }} className="text-red-600"><Trash2 className="h-4 w-4" /></Button>
                 </div>
               ))}
-              {data?.length === 0 && <div className="text-center py-8 text-gray-500">No pages yet</div>}
+              {data?.length === 0 && <div className="text-center py-8 text-gray-500">{t('No pages yet')}</div>}
             </div>
           )}
         </CardContent></Card>

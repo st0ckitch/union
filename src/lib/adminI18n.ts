@@ -277,19 +277,200 @@ export const adminDict: Record<string, { ka: string; ru?: string; en?: string }>
   'New Block':               { ka: 'ახალი ბლოკი',           ru: 'Новый блок',          en: 'New Block' },
   'Edit block':              { ka: 'ბლოკის რედაქტირება',    ru: 'Редактировать блок',  en: 'Edit block' },
   'New block':               { ka: 'ახალი ბლოკი',           ru: 'Новый блок',          en: 'New block' },
+
+  // ─────────── Toasts / notifications ───────────
+  'Login failed':            { ka: 'შესვლა ვერ მოხერხდა',     ru: 'Не удалось войти',           en: 'Login failed' },
+  'Error checking permissions': { ka: 'უფლებების შემოწმება ვერ მოხერხდა', ru: 'Ошибка проверки прав', en: 'Error checking permissions' },
+  'You do not have admin access': { ka: 'არ გაქვთ ადმინისტრატორის წვდომა', ru: 'Нет прав администратора', en: 'You do not have admin access' },
+  'Welcome to Admin Panel':  { ka: 'მოგესალმებით ადმინ პანელში', ru: 'Добро пожаловать в админ-панель', en: 'Welcome to Admin Panel' },
+  'An error occurred':       { ka: 'მოხდა შეცდომა',           ru: 'Произошла ошибка',           en: 'An error occurred' },
+  'Settings saved':          { ka: 'პარამეტრები შენახულია',    ru: 'Настройки сохранены',        en: 'Settings saved' },
+  'Failed to save settings': { ka: 'პარამეტრების შენახვა ვერ მოხერხდა', ru: 'Не удалось сохранить настройки', en: 'Failed to save settings' },
+  'Category created':        { ka: 'კატეგორია შექმნილია',      ru: 'Категория создана',          en: 'Category created' },
+  'Category updated':        { ka: 'კატეგორია განახლებულია',   ru: 'Категория обновлена',        en: 'Category updated' },
+  'Category deleted':        { ka: 'კატეგორია წაშლილია',       ru: 'Категория удалена',          en: 'Category deleted' },
+  'Product created':         { ka: 'პროდუქტი შექმნილია',       ru: 'Товар создан',               en: 'Product created' },
+  'Product updated':         { ka: 'პროდუქტი განახლებულია',    ru: 'Товар обновлён',             en: 'Product updated' },
+  'Product deleted':         { ka: 'პროდუქტი წაშლილია',        ru: 'Товар удалён',               en: 'Product deleted' },
+  'Save failed':             { ka: 'შენახვა ვერ მოხერხდა',     ru: 'Не удалось сохранить',       en: 'Save failed' },
+  'Banner created':          { ka: 'ბანერი შექმნილია',         ru: 'Баннер создан',              en: 'Banner created' },
+  'Banner updated':          { ka: 'ბანერი განახლებულია',      ru: 'Баннер обновлён',            en: 'Banner updated' },
+  'Banner deleted':          { ka: 'ბანერი წაშლილია',          ru: 'Баннер удалён',              en: 'Banner deleted' },
+  'Order status updated':    { ka: 'შეკვეთის სტატუსი განახლდა', ru: 'Статус заказа обновлён',     en: 'Order status updated' },
+  'Consultation updated':    { ka: 'კონსულტაცია განახლებულია', ru: 'Консультация обновлена',     en: 'Consultation updated' },
+  'Consultation deleted':    { ka: 'კონსულტაცია წაშლილია',     ru: 'Консультация удалена',       en: 'Consultation deleted' },
+  'Post created':            { ka: 'სტატია შექმნილია',         ru: 'Статья создана',             en: 'Post created' },
+  'Post updated':            { ka: 'სტატია განახლებულია',      ru: 'Статья обновлена',           en: 'Post updated' },
+  'Post deleted':            { ka: 'სტატია წაშლილია',          ru: 'Статья удалена',             en: 'Post deleted' },
+  'Showroom created':        { ka: 'შოურუმი შექმნილია',        ru: 'Шоурум создан',              en: 'Showroom created' },
+  'Showroom updated':        { ka: 'შოურუმი განახლებულია',     ru: 'Шоурум обновлён',            en: 'Showroom updated' },
+  'Showroom deleted':        { ka: 'შოურუმი წაშლილია',         ru: 'Шоурум удалён',              en: 'Showroom deleted' },
+  'Testimonial created':     { ka: 'მიმოხილვა შექმნილია',      ru: 'Отзыв создан',               en: 'Testimonial created' },
+  'Testimonial updated':     { ka: 'მიმოხილვა განახლებულია',   ru: 'Отзыв обновлён',             en: 'Testimonial updated' },
+  'Testimonial deleted':     { ka: 'მიმოხილვა წაშლილია',       ru: 'Отзыв удалён',               en: 'Testimonial deleted' },
+  'Page created':            { ka: 'გვერდი შექმნილია',         ru: 'Страница создана',           en: 'Page created' },
+  'Page updated':            { ka: 'გვერდი განახლებულია',      ru: 'Страница обновлена',         en: 'Page updated' },
+  'Page deleted':            { ka: 'გვერდი წაშლილია',          ru: 'Страница удалена',           en: 'Page deleted' },
+
+  // ─────────── Pages: descriptions / titles ───────────
+  'Global contact info, socials, and branding.': {
+    ka: 'გლობალური საკონტაქტო ინფო, სოციალები და ბრენდინგი.',
+    ru: 'Общие контакты, соцсети и брендинг.',
+    en: 'Global contact info, socials, and branding.',
+  },
+  'Branding':                { ka: 'ბრენდინგი',               ru: 'Брендинг',                   en: 'Branding' },
+  'Contact':                 { ka: 'კონტაქტი',                ru: 'Контакты',                   en: 'Contact' },
+  'Manage customer orders':  { ka: 'მართე მომხმარებელთა შეკვეთები', ru: 'Управление заказами клиентов', en: 'Manage customer orders' },
+  'Order Details':           { ka: 'შეკვეთის დეტალები',       ru: 'Детали заказа',              en: 'Order Details' },
+  'Manage consultation requests': { ka: 'მართე კონსულტაციის მოთხოვნები', ru: 'Управление заявками на консультацию', en: 'Manage consultation requests' },
+  'Consultation Details':    { ka: 'კონსულტაციის დეტალები',    ru: 'Детали консультации',        en: 'Consultation Details' },
+  'Manage store locations':  { ka: 'მართე შოურუმების მისამართები', ru: 'Управление шоурумами',    en: 'Manage store locations' },
+  'Manage blog content':     { ka: 'მართე ბლოგის შინაარსი',    ru: 'Управление контентом блога', en: 'Manage blog content' },
+
+  // ─────────── Order / consultation / blog statuses ───────────
+  'pending':                 { ka: 'მოლოდინში',                ru: 'В ожидании',                 en: 'Pending' },
+  'confirmed':               { ka: 'დადასტურებული',            ru: 'Подтверждён',                en: 'Confirmed' },
+  'shipped':                 { ka: 'გაგზავნილი',               ru: 'Отправлен',                  en: 'Shipped' },
+  'delivered':               { ka: 'მიწოდებული',               ru: 'Доставлен',                  en: 'Delivered' },
+  'cancelled':               { ka: 'გაუქმებული',               ru: 'Отменён',                    en: 'Cancelled' },
+  'new':                     { ka: 'ახალი',                   ru: 'Новая',                      en: 'New' },
+  'contacted':               { ka: 'დაკონტაქტდა',              ru: 'Связались',                  en: 'Contacted' },
+  'completed':               { ka: 'დასრულებული',              ru: 'Завершено',                  en: 'Completed' },
+
+  // ─────────── Form labels ───────────
+  'WhatsApp':                { ka: 'WhatsApp',                ru: 'WhatsApp',                   en: 'WhatsApp' },
+  'Address (Georgian)':      { ka: 'მისამართი (ქართული)',      ru: 'Адрес (грузинский)',         en: 'Address (Georgian)' },
+  'Address (English)':       { ka: 'მისამართი (ინგლისური)',    ru: 'Адрес (английский)',         en: 'Address (English)' },
+  'Hours (Georgian)':        { ka: 'საათები (ქართული)',        ru: 'Часы (грузинский)',          en: 'Hours (Georgian)' },
+  'Hours (English)':         { ka: 'საათები (ინგლისური)',      ru: 'Часы (английский)',          en: 'Hours (English)' },
+  'Google Map embed URL':    { ka: 'Google Map embed URL',    ru: 'URL встраивания Google Map', en: 'Google Map embed URL' },
+  'Facebook':                { ka: 'Facebook',                ru: 'Facebook',                   en: 'Facebook' },
+  'Instagram':               { ka: 'Instagram',               ru: 'Instagram',                  en: 'Instagram' },
+  'YouTube':                 { ka: 'YouTube',                 ru: 'YouTube',                    en: 'YouTube' },
+  'Pinterest':               { ka: 'Pinterest',               ru: 'Pinterest',                  en: 'Pinterest' },
+  'TikTok':                  { ka: 'TikTok',                  ru: 'TikTok',                     en: 'TikTok' },
+  'Saving...':               { ka: 'შენახვა...',              ru: 'Сохранение...',              en: 'Saving...' },
+  'Save settings':           { ka: 'პარამეტრების შენახვა',     ru: 'Сохранить настройки',        en: 'Save settings' },
+
+  'Name (Georgian) *':       { ka: 'სახელი (ქართული) *',       ru: 'Название (грузинский) *',    en: 'Name (Georgian) *' },
+  'Name (Russian)':          { ka: 'სახელი (რუსული)',          ru: 'Название (русский)',         en: 'Name (Russian)' },
+  'Name (English)':          { ka: 'სახელი (ინგლისური)',       ru: 'Название (английский)',      en: 'Name (English)' },
+  'Description (Georgian)':  { ka: 'აღწერა (ქართული)',         ru: 'Описание (грузинский)',      en: 'Description (Georgian)' },
+  'Description (Russian)':   { ka: 'აღწერა (რუსული)',          ru: 'Описание (русский)',         en: 'Description (Russian)' },
+  'Description (English)':   { ka: 'აღწერა (ინგლისური)',       ru: 'Описание (английский)',      en: 'Description (English)' },
+  'Title (Georgian) *':      { ka: 'სათაური (ქართული) *',      ru: 'Заголовок (грузинский) *',   en: 'Title (Georgian) *' },
+  'Title (Russian)':         { ka: 'სათაური (რუსული)',         ru: 'Заголовок (русский)',        en: 'Title (Russian)' },
+  'Title (KA) *':            { ka: 'სათაური (KA) *',           ru: 'Заголовок (KA) *',           en: 'Title (KA) *' },
+  'Title (RU)':              { ka: 'სათაური (RU)',             ru: 'Заголовок (RU)',             en: 'Title (RU)' },
+  'Title (EN)':              { ka: 'სათაური (EN)',             ru: 'Заголовок (EN)',             en: 'Title (EN)' },
+  'Excerpt (Georgian)':      { ka: 'ანონსი (ქართული)',         ru: 'Анонс (грузинский)',         en: 'Excerpt (Georgian)' },
+  'Excerpt (Russian)':       { ka: 'ანონსი (რუსული)',          ru: 'Анонс (русский)',            en: 'Excerpt (Russian)' },
+  'Address (Georgian) *':    { ka: 'მისამართი (ქართული) *',    ru: 'Адрес (грузинский) *',       en: 'Address (Georgian) *' },
+  'Address (Russian)':       { ka: 'მისამართი (რუსული)',       ru: 'Адрес (русский)',            en: 'Address (Russian)' },
+  'Working Hours (Georgian)': { ka: 'სამუშაო საათები (ქართული)', ru: 'Часы работы (грузинский)', en: 'Working Hours (Georgian)' },
+  'Working Hours (Russian)': { ka: 'სამუშაო საათები (რუსული)',  ru: 'Часы работы (русский)',      en: 'Working Hours (Russian)' },
+  'Button Text (Georgian)':  { ka: 'ღილაკის ტექსტი (ქართული)',  ru: 'Текст кнопки (грузинский)',  en: 'Button Text (Georgian)' },
+  'Button Text (Russian)':   { ka: 'ღილაკის ტექსტი (რუსული)',   ru: 'Текст кнопки (русский)',     en: 'Button Text (Russian)' },
+  'Image URL *':             { ka: 'სურათის URL *',            ru: 'URL изображения *',          en: 'Image URL *' },
+  'Slug *':                  { ka: 'სლაგი *',                  ru: 'Слаг *',                     en: 'Slug *' },
+  'Price *':                 { ka: 'ფასი *',                   ru: 'Цена *',                     en: 'Price *' },
+  'Body KA (HTML allowed: <h2>, <p>, <ul>, <a>, etc.)': {
+    ka: 'ტექსტი KA (HTML დაშვებულია: <h2>, <p>, <ul>, <a> და სხვ.)',
+    ru: 'Текст KA (разрешён HTML: <h2>, <p>, <ul>, <a> и т.д.)',
+    en: 'Body KA (HTML allowed: <h2>, <p>, <ul>, <a>, etc.)',
+  },
+
+  // ─────────── Buttons & dialogs ───────────
+  'Order ID':                { ka: 'შეკვეთის ID',              ru: 'ID заказа',                  en: 'Order ID' },
+  'Save Notes':              { ka: 'შენიშვნების შენახვა',      ru: 'Сохранить заметки',          en: 'Save Notes' },
+  'Add Post':                { ka: 'სტატიის დამატება',         ru: 'Добавить статью',            en: 'Add Post' },
+  'Edit Post':               { ka: 'სტატიის რედაქტირება',      ru: 'Редактировать статью',       en: 'Edit Post' },
+  'Add internal notes...':   { ka: 'შიდა შენიშვნების დამატება...', ru: 'Внутренние заметки...',  en: 'Add internal notes...' },
+
+  // ─────────── Banner sections (select) ───────────
+  'Union — hero carousel':   { ka: 'Union — მთავარი კარუსელი', ru: 'Union — главный слайдер',    en: 'Union — hero carousel' },
+  'HMspace — hero':          { ka: 'HMspace — მთავარი',        ru: 'HMspace — главный',          en: 'HMspace — hero' },
+  'Main accents':            { ka: 'მთავარი აქცენტები',        ru: 'Главные акценты',            en: 'Main accents' },
+  'Projects':                { ka: 'პროექტები',                ru: 'Проекты',                    en: 'Projects' },
+  'Trending':                { ka: 'ტრენდული',                ru: 'В тренде',                   en: 'Trending' },
+
+  // ─────────── Confirm / delete prompts ───────────
+  'Delete banner "{name}"?': { ka: 'წავშალოთ ბანერი "{name}"?', ru: 'Удалить баннер "{name}"?',  en: 'Delete banner "{name}"?' },
+  'Delete category "{name}"? Products in this category will be unassigned.': {
+    ka: 'წავშალოთ კატეგორია "{name}"? ამ კატეგორიის პროდუქტებს კატეგორია მოეხსნება.',
+    ru: 'Удалить категорию "{name}"? У товаров в этой категории категория будет снята.',
+    en: 'Delete category "{name}"? Products in this category will be unassigned.',
+  },
+  'Delete this item?':       { ka: 'წავშალოთ ეს ელემენტი?',    ru: 'Удалить этот элемент?',      en: 'Delete this item?' },
+  'Delete this post?':       { ka: 'წავშალოთ ეს სტატია?',      ru: 'Удалить эту статью?',        en: 'Delete this post?' },
+  'Delete this showroom?':   { ka: 'წავშალოთ ეს შოურუმი?',     ru: 'Удалить этот шоурум?',       en: 'Delete this showroom?' },
+  'Delete this testimonial?': { ka: 'წავშალოთ ეს მიმოხილვა?',  ru: 'Удалить этот отзыв?',        en: 'Delete this testimonial?' },
+  'Delete this page?':       { ka: 'წავშალოთ ეს გვერდი?',      ru: 'Удалить эту страницу?',      en: 'Delete this page?' },
+  'Delete this consultation?': { ka: 'წავშალოთ ეს კონსულტაცია?', ru: 'Удалить эту консультацию?', en: 'Delete this consultation?' },
+
+  // ─────────── ProductsImport ───────────
+  'Create missing categories automatically': {
+    ka: 'არარსებული კატეგორიების ავტომატურად შექმნა',
+    ru: 'Автоматически создавать недостающие категории',
+    en: 'Create missing categories automatically',
+  },
+
+  // ─────────── Misc product editor ───────────
+  'Save the product first, then re-open to manage modules.': {
+    ka: 'ჯერ შეინახე პროდუქტი, შემდეგ ხელახლა გახსენი მოდულების სამართავად.',
+    ru: 'Сначала сохраните товар, затем откройте заново для управления модулями.',
+    en: 'Save the product first, then re-open to manage modules.',
+  },
+
+  // ─────────── Order details ───────────
+  'Customer Name':           { ka: 'მომხმარებლის სახელი',     ru: 'Имя клиента',                en: 'Customer Name' },
+  'Total Amount':            { ka: 'ჯამური თანხა',            ru: 'Сумма',                      en: 'Total Amount' },
+  'Shipping Address':        { ka: 'მიწოდების მისამართი',     ru: 'Адрес доставки',             en: 'Shipping Address' },
+  'Order Items':             { ka: 'შეკვეთის ელემენტები',     ru: 'Товары заказа',              en: 'Order Items' },
+  'Qty':                     { ka: 'რაოდ.',                   ru: 'Кол-во',                     en: 'Qty' },
+
+  // ─────────── Testimonial / Showroom / Blog form ───────────
+  'Author Name *':           { ka: 'ავტორის სახელი *',         ru: 'Имя автора *',               en: 'Author Name *' },
+  'Author Title':            { ka: 'ავტორის თანამდებობა',      ru: 'Должность автора',           en: 'Author Title' },
+  'Content (Georgian) *':    { ka: 'ტექსტი (ქართული) *',       ru: 'Текст (грузинский) *',       en: 'Content (Georgian) *' },
+  'Content (Russian)':       { ka: 'ტექსტი (რუსული)',          ru: 'Текст (русский)',            en: 'Content (Russian)' },
+  'Avatar URL':              { ka: 'ავატარის URL',             ru: 'URL аватара',                en: 'Avatar URL' },
+  'Rating (1-5)':            { ka: 'რეიტინგი (1-5)',           ru: 'Рейтинг (1-5)',              en: 'Rating (1-5)' },
+  'e.g. CEO, Designer':      { ka: 'მაგ. CEO, დიზაინერი',      ru: 'напр. CEO, Дизайнер',        en: 'e.g. CEO, Designer' },
+
+  // ─────────── Blog form ───────────
+  'Cover Image URL':         { ka: 'ყდის სურათის URL',         ru: 'URL обложки',                en: 'Cover Image URL' },
+  'Featured Image':          { ka: 'რჩეული სურათი',            ru: 'Главное изображение',        en: 'Featured Image' },
+  'Body (Georgian)':         { ka: 'ტექსტი (ქართული)',         ru: 'Текст (грузинский)',         en: 'Body (Georgian)' },
+  'Body (Russian)':          { ka: 'ტექსტი (რუსული)',          ru: 'Текст (русский)',            en: 'Body (Russian)' },
 };
 
 /**
  * Translate an English source string. Falls back to the source if no entry exists,
  * so partial translations never break the UI.
+ *
+ * Optional second arg interpolates `{name}`-style placeholders:
+ *   t('Delete banner "{name}"?', { name: banner.title })
  */
 export function useAdminT() {
   const { language } = useLanguage();
-  return (source: string): string => {
+  return (source: string, vars?: Record<string, string | number>): string => {
     const entry = adminDict[source];
-    if (!entry) return source;
-    if (language === 'ka') return entry.ka || source;
-    if (language === 'ru') return entry.ru || source;
-    return entry.en || source;
+    let result: string;
+    if (!entry) {
+      result = source;
+    } else if (language === 'ka') {
+      result = entry.ka || source;
+    } else if (language === 'ru') {
+      result = entry.ru || source;
+    } else {
+      result = entry.en || source;
+    }
+    if (vars) {
+      for (const [k, v] of Object.entries(vars)) {
+        result = result.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v));
+      }
+    }
+    return result;
   };
 }

@@ -15,10 +15,12 @@ import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { format } from 'date-fns';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type BlogPost = Tables<'blog_posts'>;
 
 export default function AdminBlog() {
+  const t = useAdminT();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [formData, setFormData] = useState({
@@ -53,7 +55,7 @@ export default function AdminBlog() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
-      toast.success('Post created');
+      toast.success(t('Post created'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -66,7 +68,7 @@ export default function AdminBlog() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
-      toast.success('Post updated');
+      toast.success(t('Post updated'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -76,7 +78,7 @@ export default function AdminBlog() {
     mutationFn: (id: string) => deleteRow('blog_posts', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
-      toast.success('Post deleted');
+      toast.success(t('Post deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -140,24 +142,24 @@ export default function AdminBlog() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Blog Posts</h1>
-            <p className="text-gray-500 mt-1">Manage blog content</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Blog Posts')}</h1>
+            <p className="text-gray-500 mt-1">{t('Manage blog content')}</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => resetForm()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Post
+                {t('Add Post')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>{editingPost ? 'Edit Post' : 'Add Post'}</DialogTitle>
+                <DialogTitle>{editingPost ? t('Edit Post') : t('Add Post')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Title (Georgian) *</Label>
+                    <Label>{t('Title (Georgian) *')}</Label>
                     <Input
                       value={formData.title_ka}
                       onChange={(e) => setFormData({ ...formData, title_ka: e.target.value })}
@@ -165,7 +167,7 @@ export default function AdminBlog() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Title (Russian)</Label>
+                    <Label>{t('Title (Russian)')}</Label>
                     <Input
                       value={formData.title_en}
                       onChange={(e) => setFormData({ ...formData, title_en: e.target.value })}
@@ -174,7 +176,7 @@ export default function AdminBlog() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Slug</Label>
+                    <Label>{t('Slug')}</Label>
                     <Input
                       value={formData.slug}
                       onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
@@ -182,7 +184,7 @@ export default function AdminBlog() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Featured Image URL</Label>
+                    <Label>{t('Cover Image URL')}</Label>
                     <Input
                       value={formData.featured_image}
                       onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
@@ -192,7 +194,7 @@ export default function AdminBlog() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Excerpt (Georgian)</Label>
+                    <Label>{t('Excerpt (Georgian)')}</Label>
                     <Textarea
                       value={formData.excerpt_ka}
                       onChange={(e) => setFormData({ ...formData, excerpt_ka: e.target.value })}
@@ -200,7 +202,7 @@ export default function AdminBlog() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Excerpt (Russian)</Label>
+                    <Label>{t('Excerpt (Russian)')}</Label>
                     <Textarea
                       value={formData.excerpt_en}
                       onChange={(e) => setFormData({ ...formData, excerpt_en: e.target.value })}
@@ -210,7 +212,7 @@ export default function AdminBlog() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Content (Georgian) *</Label>
+                    <Label>{t('Content (Georgian) *')}</Label>
                     <Textarea
                       value={formData.content_ka}
                       onChange={(e) => setFormData({ ...formData, content_ka: e.target.value })}
@@ -219,7 +221,7 @@ export default function AdminBlog() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Content (Russian)</Label>
+                    <Label>{t('Content (Russian)')}</Label>
                     <Textarea
                       value={formData.content_en}
                       onChange={(e) => setFormData({ ...formData, content_en: e.target.value })}
@@ -229,13 +231,13 @@ export default function AdminBlog() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Switch checked={formData.is_published} onCheckedChange={(checked) => setFormData({ ...formData, is_published: checked })} />
-                  <Label>Published</Label>
+                  <Label>{t('Published')}</Label>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editingPost ? 'Update' : 'Create'}
+                    {editingPost ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -253,11 +255,11 @@ export default function AdminBlog() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Slug</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Title')}</TableHead>
+                    <TableHead>{t('Slug')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead>{t('Date')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -267,7 +269,7 @@ export default function AdminBlog() {
                       <TableCell className="text-gray-500">{post.slug}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs ${post.is_published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                          {post.is_published ? 'Published' : 'Draft'}
+                          {post.is_published ? t('Published') : t('Draft')}
                         </span>
                       </TableCell>
                       <TableCell className="text-gray-500">
@@ -293,7 +295,7 @@ export default function AdminBlog() {
                   {posts?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                        No posts yet
+                        {t('No blog posts yet')}
                       </TableCell>
                     </TableRow>
                   )}
