@@ -5,6 +5,7 @@ import { UnionLayout } from '@/components/union/UnionLayout';
 import { Breadcrumb } from '@/components/catalog/Breadcrumb';
 import { CategorySidebar } from '@/components/catalog/CategorySidebar';
 import { ProductGrid } from '@/components/products/ProductGrid';
+import { ProductCard } from '@/components/products/ProductCard';
 import { ProductFilters, FacetCounts } from '@/components/products/ProductFilters';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -436,32 +437,53 @@ function SubcategorySectionedFeed({
 
   const seeAllLabel = language === 'ru' ? 'Смотреть все' : language === 'en' ? 'See all' : 'ყველას ნახვა';
 
+  // Hybrid layout (mirrors union.ru):
+  //   • Subcategories with EXACTLY 1 product → tiled into a 3-col grid where each
+  //     cell shows the subcategory title + that one lead product.
+  //   • Subcategories with 2+ products → rendered as a full-width section: title
+  //     spans the row, products live in a 3-col grid below.
+  const singletons = children
+    .map((sub) => ({ sub, products: byCat.get(sub.id) || [] }))
+    .filter(({ products }) => products.length === 1);
+  const multis = children
+    .map((sub) => ({ sub, products: byCat.get(sub.id) || [] }))
+    .filter(({ products }) => products.length >= 2);
+
   return (
-    <div className="space-y-12 py-2">
-      {children.map((sub) => {
-        const subProducts = byCat.get(sub.id) || [];
-        if (subProducts.length === 0) return null;
-        return (
-          <section key={sub.id}>
-            <div className="flex items-end justify-between mb-5 gap-4">
-              {/* Subcategory title — mirrors union.ru's `title_sec` (light, simple paragraph) */}
-              <p className="text-base md:text-lg font-medium tracking-tight uppercase text-foreground/85 leading-tight m-0">
+    <div className="space-y-14 py-2">
+      {/* ─── Lead grid: each cell = subcategory title + 1 product ─── */}
+      {singletons.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+          {singletons.map(({ sub, products }) => (
+            <div key={sub.id}>
+              <p className="font-semibold text-[15px] md:text-base text-foreground mb-4 leading-tight">
                 {t(sub)}
               </p>
+              <ProductCard product={products[0] as any} basePath="/union/product" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ─── Multi-product sections: full-width heading + 3-col product grid ─── */}
+      {multis.map(({ sub, products }) => (
+        <section key={sub.id}>
+          <div className="flex items-end justify-between mb-6 gap-4">
+            <p className="font-semibold text-[15px] md:text-base text-foreground leading-tight m-0">
+              {t(sub)}
+            </p>
+            {products.length > 6 && (
               <Link
                 to={`/union/catalog/${parent.slug}/${sub.slug}`}
                 className="text-sm text-muted-foreground hover:text-foreground whitespace-nowrap shrink-0"
               >
-                {seeAllLabel} ({subProducts.length}) →
+                {seeAllLabel} ({products.length}) →
               </Link>
-            </div>
-            <ProductGrid
-              products={subProducts.slice(0, 6)}
-              basePath="/union/product"
-            />
-          </section>
-        );
-      })}
+            )}
+          </div>
+          <ProductGrid products={products.slice(0, 6)} basePath="/union/product" />
+        </section>
+      ))}
     </div>
   );
 }
