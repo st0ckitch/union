@@ -7,6 +7,50 @@ em, i, cite, dfn, var, address, blockquote, .italic {
   font-style: normal !important;
 }
 
+/* AvenirNextCyr — UNION's actual display sans (extracted from union.ru). */
+@font-face {
+  font-family: 'AvenirNextCyr';
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/avenir/AvenirNextCyr-Thin.ff514bc9.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'AvenirNextCyr';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/avenir/AvenirNextCyr-Light.20a8a02d.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'AvenirNextCyr';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/avenir/AvenirNextCyr-Regular.e4c3688a.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'AvenirNextCyr';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/avenir/AvenirNextCyr-Medium.ffcf7d26.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'AvenirNextCyr';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/avenir/AvenirNextCyr-Demi.f033b66b.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'AvenirNextCyr';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/avenir/AvenirNextCyr-Demi.f033b66b.woff2') format('woff2');
+}
+
 /* PsGlaho — primary Georgian typeface (local .otf files in /public/fonts) */
 @font-face {
   font-family: 'PsGlaho';
@@ -92,79 +136,76 @@ em, i, cite, dfn, var, address, blockquote, .italic {
 
 @layer base {
   :root {
-    /* === union.ru palette === */
-    /* Main background - clean white */
+    /* === Real union.ru palette (extracted from production CSS) === */
     --background: 0 0% 100%;
-    --foreground: 0 0% 13%;
+    --foreground: 0 0% 35%;        /* #5a5a5a body text */
 
-    /* Cards and surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    --card-foreground: 0 0% 35%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover-foreground: 0 0% 35%;
 
-    /* Beige surface — used by quick-link cards, info strips */
-    --surface: 36 33% 96%;
-    --surface-muted: 36 18% 92%;
+    /* Surface tones */
+    --surface: 0 0% 96%;           /* #f4f4f4 utility row */
+    --surface-muted: 0 0% 94%;     /* #f0f0f0 gray-zone bg */
 
-    /* Primary - Forest green (logo / nav / footer) */
-    --primary: 155 42% 17%;
+    /* Primary = deep navy used for headings/dark actions */
+    --primary: 205 100% 14%;       /* #002b45 */
     --primary-foreground: 0 0% 100%;
-    --primary-deep: 155 50% 11%;
+    --primary-deep: 205 100% 8%;
 
-    /* Secondary - Light beige */
-    --secondary: 36 33% 96%;
+    /* Heading color (alias of primary) */
+    --heading: 205 100% 14%;
+
+    /* Brand accent — gold */
+    --accent: 39 75% 58%;          /* #e3ae46 */
+    --accent-foreground: 0 0% 100%;
+
+    /* Sale yellow */
+    --sale: 49 100% 50%;           /* #ffcf00 */
+    --sale-foreground: 0 0% 0%;
+
+    /* Dark CTA buttons (used in product slider btns) */
+    --cta-dark: 0 0% 28%;          /* #484848 */
+
+    /* Secondary — light gray */
+    --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 13%;
 
-    /* Muted - Subtle gray */
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 42%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 46%;  /* #767676 mid-gray */
 
-    /* Accent - Sale red/maroon */
-    --accent: 0 64% 38%;
-    --accent-foreground: 0 0% 100%;
-    --accent-sale: 0 64% 38%;
-    --accent-sale-hover: 0 64% 30%;
-
-    /* Sale/Promo */
-    --sale: 0 64% 38%;
-    --sale-foreground: 0 0% 100%;
-
-    /* NEW badge - Orange */
     --new-badge: 20 100% 60%;
     --new-badge-foreground: 0 0% 100%;
 
-    /* Success - Green */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
-    /* Destructive - Red (admin error states) */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders and inputs */
-    --border: 30 12% 86%;
-    --input: 30 12% 86%;
-    --ring: 155 42% 17%;
+    --border: 230 22% 92%;         /* #e3e5ef */
+    --input: 230 22% 92%;
+    --ring: 39 75% 58%;            /* gold focus ring */
 
-    /* union.ru uses square corners by default. Admin shadcn primitives
-       still want a small radius via the lg/md/sm tokens, so we keep --radius
-       at 0 here and override admin chrome inline where needed. */
     --radius: 0px;
 
-    /* Header */
+    /* Header (white bg, gray text, gold hover) */
     --header-bg: 0 0% 100%;
-    --header-foreground: 155 42% 17%;
-
-    /* Header top utility row */
-    --header-top: 36 33% 96%;
-    --header-top-foreground: 0 0% 25%;
+    --header-foreground: 0 0% 35%;
+    --header-top: 0 0% 96%;        /* #f4f4f4 */
+    --header-top-foreground: 0 0% 35%;
 
     /* Mega menu */
     --mega-menu-bg: 0 0% 100%;
-    --mega-menu-foreground: 0 0% 13%;
-    --mega-menu-sidebar: 36 33% 96%;
+    --mega-menu-foreground: 0 0% 35%;
+    --mega-menu-sidebar: 0 0% 96%;
+
+    /* Footer — black */
+    --footer-bg: 0 0% 0%;
+    --footer-foreground: 0 0% 80%;        /* #cbcbcb */
+    --footer-divider: 0 0% 46%;           /* #767676 */
 
     /* Sidebar - Dark theme for admin */
     --sidebar-background: 0 0% 8%;
@@ -234,21 +275,25 @@ em, i, cite, dfn, var, address, blockquote, .italic {
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "liga" 1, "calt" 1;
+    font-size: 15px;
+    line-height: 1.5;
   }
 
-  /* Mersad is the union.ru-style sans for non-KA locales; PsGlaho stays
-     for Georgian. We default to Mersad and override per <html lang>. */
+  /* AvenirNextCyr is union.ru's actual face. Georgian visitors fall through
+     to PsGlaho since Avenir lacks the script. */
   html,
   body {
-    font-family: 'Mersad', 'PsGlaho', 'Montserrat', system-ui, sans-serif;
+    font-family: 'AvenirNextCyr', 'PsGlaho', system-ui, sans-serif;
   }
   html[lang="ka"] body,
   html[lang="ka"] {
-    font-family: 'PsGlaho', 'Mersad', 'BPG Nino Mtavruli', system-ui, sans-serif;
+    font-family: 'PsGlaho', 'AvenirNextCyr', 'BPG Nino Mtavruli', system-ui, sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: inherit;
-    letter-spacing: -0.01em;
+    color: hsl(var(--heading));
+    letter-spacing: 0.02em;
+    font-weight: 400;
   }
 }
 
@@ -372,27 +417,86 @@ em, i, cite, dfn, var, address, blockquote, .italic {
 }
 
 @layer components {
-  /* === union.ru layout primitives === */
+  /* === union.ru layout primitives (1700px wide content) === */
   .union-container {
-    @apply mx-auto w-full px-4 md:px-6 lg:px-10;
-    max-width: 1280px;
+    @apply mx-auto w-full;
+    max-width: 1700px;
+    padding-left: max(15px, calc((100% - 1700px) / 2));
+    padding-right: max(15px, calc((100% - 1700px) / 2));
+  }
+
+  /* edge-to-edge slider container that aligns left edge to .union-container */
+  .union-edge-left {
+    padding-left: max(15px, calc((100% - 1700px) / 2));
   }
 
   .union-section {
-    @apply py-12 md:py-16;
+    @apply py-16 md:py-24;
+  }
+
+  /* matches union.ru's `.title-left` — 36px / 400 / line-height 48 / +0.05em */
+  .union-section-title {
+    font-size: clamp(24px, 2.4vw, 36px);
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: 0.05em;
+    color: hsl(var(--heading));
+  }
+
+  /* matches `.slider-item__title` — light weight, generous line-height */
+  .union-card-title {
+    font-size: clamp(18px, 1.5vw, 26px);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+    color: #000;
   }
 
   .union-eyebrow {
-    @apply text-[12px] font-semibold uppercase tracking-[0.08em] text-muted-foreground;
-  }
-
-  .union-section-title {
-    @apply text-[28px] md:text-[36px] leading-tight font-medium text-foreground;
+    @apply text-[12px] font-medium uppercase tracking-[0.06em] text-muted-foreground;
   }
 
   .union-link-arrow {
-    @apply inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.04em] text-primary hover:text-[hsl(var(--primary-deep))] transition-colors;
+    @apply inline-flex items-center gap-2 text-[14px] text-foreground hover:text-[hsl(var(--accent))] transition-colors;
   }
+
+  /* Outline button (matches `.general__btn` and `.slider-zone-gray__btn`) */
+  .union-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    height: 60px;
+    min-width: 220px;
+    padding: 0 32px;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background-color .25s ease, color .25s ease;
+  }
+  .union-btn-outline:hover {
+    background-color: currentColor;
+  }
+  .union-btn-outline:hover > * { color: #fff; }
+
+  /* Solid dark CTA (matches `.products__btn` background #484848) */
+  .union-btn-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--cta-dark));
+    color: #fff;
+    height: 60px;
+    min-width: 265px;
+    padding: 0 32px;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background-color .25s ease;
+  }
+  .union-btn-dark:hover { background: #000; color: #fff; }
 
   /* Header styles */
   .union-header {

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, Instagram, Youtube, Send, Facebook, Music2, Bookmark } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { Instagram, Youtube, Send, Bookmark, Music2 } from 'lucide-react';
 
-const footerSections = [
+const sections = [
   {
     titleKey: 'catalogFooter',
     links: [
@@ -40,6 +40,16 @@ const footerSections = [
     ],
   },
   {
+    titleKey: 'services',
+    links: [
+      { ka: 'უფასო გაზომვა',                 ru: 'Обмер бесплатно',           en: 'Free measurement',          href: '#' },
+      { ka: 'მიწოდება და მონტაჟი',           ru: 'Доставка и монтаж',         en: 'Delivery & installation',   href: '/union/delivery' },
+      { ka: 'კონსულტანტის გამოძახება',       ru: 'Вызов консультанта на дом', en: 'On-site consultation',      href: '/union/contact' },
+      { ka: 'კარების რესტავრაცია',           ru: 'Реставрация дверей',        en: 'Door restoration',          href: '#' },
+      { ka: 'გარანტია',                      ru: 'Гарантия',                  en: 'Warranty',                  href: '/union/warranty' },
+    ],
+  },
+  {
     titleKey: 'usefulFooter',
     links: [
       { ka: 'ბლოგი',                          ru: 'Блог',                      en: 'Blog',                      href: '/union/blog' },
@@ -49,18 +59,24 @@ const footerSections = [
       { ka: 'მოვლის რჩევები',                ru: 'Советы по уходу',           en: 'Care tips',                 href: '/union/blog' },
     ],
   },
+  {
+    titleKey: 'pressCenter',
+    links: [
+      { ka: 'ჩვენი პროექტები',                ru: 'Наши проекты',              en: 'Our projects',              href: '/union/about' },
+      { ka: 'სიახლეები',                      ru: 'Новости компании',          en: 'Company news',              href: '/union/blog' },
+      { ka: 'ვიდეომასალები',                  ru: 'Видеоматериалы',            en: 'Videos',                    href: '/union/about' },
+    ],
+  },
 ];
 
 export function UnionFooter() {
   const { language, t } = useLanguage();
   const { data: settings } = useSiteSettings();
-
-  const phone = settings?.phone || '+7 (495) 110 49 79';
+  const phone = settings?.phone || '8 800 550 52 24';
   const email = settings?.email || 'info@union.ru';
 
   const socials = [
     { href: settings?.instagram_url ?? '#', label: 'Instagram', Icon: Instagram },
-    { href: settings?.facebook_url ?? '#', label: 'Facebook', Icon: Facebook },
     { href: '#', label: 'Telegram', Icon: Send },
     { href: settings?.youtube_url ?? '#', label: 'YouTube', Icon: Youtube },
     { href: settings?.pinterest_url ?? '#', label: 'Pinterest', Icon: Bookmark },
@@ -68,89 +84,91 @@ export function UnionFooter() {
   ];
 
   return (
-    <footer className="bg-primary text-white/90 mt-12">
-      <div className="union-container py-12 md:py-16">
-        {/* Top: contact + columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_3fr] gap-10 mb-12">
-          <div>
-            <a
-              href={`tel:${phone.replace(/\s|\(|\)|-/g, '')}`}
-              className="block text-[22px] md:text-[26px] font-bold leading-tight tracking-tight hover:text-white"
-            >
-              {phone}
-            </a>
-            <a
-              href={`mailto:${email}`}
-              className="block mt-2 text-[14px] uppercase tracking-[0.04em] hover:text-white"
-            >
-              {email}
-            </a>
-            <div className="mt-6 text-[13px] text-white/70 leading-relaxed">
-              {language === 'ka'
-                ? 'მეტი იდეა ოცნების ინტერიერისთვის — UNION-ის ოფიციალურ ტელეგრამ არხზე'
-                : language === 'en'
-                  ? 'More ideas for your dream interior — on the official UNION Telegram channel'
-                  : 'Больше идей для интерьера мечты — в официальном Telegram-канале UNION'}
-            </div>
-            <div className="mt-6 flex items-center gap-2">
-              {socials.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target={href !== '#' ? '_blank' : undefined}
-                  rel="noreferrer"
-                  className="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-primary transition-colors"
-                >
-                  <Icon className="h-4 w-4" strokeWidth={1.75} />
-                </a>
-              ))}
-            </div>
-          </div>
+    <footer id="footer-main-new" className="bg-black text-[#cbcbcb] mt-12">
+      {/* first-row: telegram banner */}
+      <div className="union-container py-5 md:py-6">
+        <p className="text-center md:text-left text-[15px] text-[#cbcbcb]">
+          {language === 'ka'
+            ? 'მეტი იდეა ოცნების ინტერიერისთვის — ოფიციალურ '
+            : language === 'en'
+              ? 'More ideas for your dream interior — on the official '
+              : 'Больше идей для интерьера мечты — в официальном '}
+          <a href="https://t.me/unionofficial" target="_blank" rel="noreferrer" className="text-white underline hover:text-[hsl(var(--sale))]">
+            {language === 'ka' ? 'UNION-ის ტელეგრამ არხზე' : language === 'en' ? 'UNION Telegram channel' : 'телеграм канале UNION'}
+          </a>
+        </p>
+      </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {footerSections.map((section) => (
-              <div key={section.titleKey}>
-                <h4 className="text-[12px] font-bold uppercase tracking-[0.08em] mb-4 text-white">
-                  {t(section.titleKey)}
-                </h4>
-                <ul className="space-y-2.5">
-                  {section.links.map((link) => (
-                    <li key={`${section.titleKey}-${link.href}-${link.ru}`}>
-                      <Link
-                        to={link.href}
-                        className="text-[13px] text-white/70 hover:text-white transition-colors"
-                      >
-                        {language === 'ka' ? link.ka : language === 'en' ? link.en : link.ru}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+      {/* second-row: phone + email */}
+      <div className="border-y border-[hsl(var(--footer-divider))]">
+        <div className="union-container py-4 text-center text-white">
+          <a href={`tel:${phone.replace(/\s|\(|\)|-/g, '')}`} className="text-[18px] font-normal tracking-[2px] hover:text-[hsl(var(--sale))] transition-colors">
+            {phone}
+          </a>
+          <a href={`mailto:${email}`} className="ml-4 text-[18px] font-normal tracking-[2px] uppercase hover:text-[hsl(var(--sale))] transition-colors">
+            {email}
+          </a>
+        </div>
+      </div>
+
+      {/* third-row: 6 columns */}
+      <div className="union-container py-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-8 gap-y-10 mx-auto" style={{ maxWidth: '85%' }}>
+          {sections.map((section) => (
+            <div key={section.titleKey}>
+              <p className="text-[15px] font-medium uppercase border-t border-[hsl(var(--footer-divider))] pt-3 mb-4 text-white">
+                {t(section.titleKey)}
+              </p>
+              <ul className="space-y-2.5">
+                {section.links.map((link, idx) => (
+                  <li key={`${section.titleKey}-${idx}`}>
+                    <Link
+                      to={link.href}
+                      className="text-[15px] font-light text-white hover:text-[hsl(var(--sale))] transition-colors"
+                    >
+                      {language === 'ka' ? link.ka : language === 'en' ? link.en : link.ru}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom row */}
-        <div className="border-t border-white/15 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <p className="text-[12px] text-white/50">
-            {t('allRightsReserved')}
-          </p>
-          <div className="flex items-center gap-5 text-[12px] text-white/60">
-            <Link to="/union/privacy" className="hover:text-white">{t('privacy')}</Link>
+        {/* soc-row */}
+        <div className="mx-auto mt-12 pt-6 border-t border-[hsl(var(--footer-divider))]" style={{ maxWidth: '85%' }}>
+          <div className="flex flex-wrap items-center justify-between gap-6">
+            <ul className="flex items-center gap-4">
+              {socials.map(({ href, label, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target={href !== '#' ? '_blank' : undefined}
+                    rel="noreferrer"
+                    className="text-white hover:text-[hsl(var(--sale))] transition-colors"
+                    aria-label={label}
+                  >
+                    <Icon className="h-5 w-5" strokeWidth={1.5} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="text-right text-[14px] text-[#c5c5c5]">
+              {t('allRightsReserved')}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Disclaimer */}
-      <div className="border-t border-white/10 bg-primary-deep">
-        <div className="union-container py-4">
-          <p className="text-[10px] text-white/40 leading-relaxed">
+      {/* last-row: disclaimer */}
+      <div className="border-t border-[hsl(var(--footer-divider))]">
+        <div className="union-container py-5 text-center">
+          <p className="text-[12px] text-[#c5c5c5] mx-auto" style={{ maxWidth: '1200px' }}>
             {language === 'ka'
-              ? 'საქონლის ფასები და აღწერილობა მხოლოდ ინფორმაციული ხასიათისაა და არ წარმოადგენს საჯარო შეთავაზებას.'
+              ? 'საქონლის ფასები და აღწერილობა მხოლოდ ინფორმაციული ხასიათისაა და არ წარმოადგენს საჯარო შეთავაზებას. საიტის გვერდების და მათი ეკრანის ასლების გამრავლება ნებართვის გარეშე იკრძალება.'
               : language === 'en'
-                ? 'Prices and product descriptions are for informational purposes only and do not constitute a public offer. Reproduction of any pages of the site without permission is PROHIBITED.'
-                : 'Цены и описание товаров носят исключительно ознакомительный характер и не являются публичной офертой. Перепечатка без разрешения страниц сайта ЗАПРЕЩЕНА.'}
+                ? 'Prices and product descriptions are for informational purposes only and do not constitute a public offer. Reproduction of any pages of the site or screenshots without permission is PROHIBITED.'
+                : 'Цены и описание товаров носят исключительно ознакомительный характер и не являются публичной офертой! Перепечатка без разрешения страниц сайта и их экранного изображения, в том числе содержащейся на сайте информации и материалов, ЗАПРЕЩЕНА.'}
           </p>
         </div>
       </div>

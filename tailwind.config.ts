@@ -23,9 +23,15 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        heading: "hsl(var(--heading))",
         surface: {
           DEFAULT: "hsl(var(--surface))",
           muted: "hsl(var(--surface-muted))",
+        },
+        footer: {
+          DEFAULT: "hsl(var(--footer-bg))",
+          foreground: "hsl(var(--footer-foreground))",
+          divider: "hsl(var(--footer-divider))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -47,12 +53,13 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-          sale: "hsl(var(--accent-sale))",
-          "sale-hover": "hsl(var(--accent-sale-hover))",
         },
         sale: {
           DEFAULT: "hsl(var(--sale))",
           foreground: "hsl(var(--sale-foreground))",
+        },
+        cta: {
+          dark: "hsl(var(--cta-dark))",
         },
         success: {
           DEFAULT: "hsl(var(--success))",
@@ -78,16 +85,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Mersad', 'PsGlaho', 'Montserrat', 'system-ui', 'sans-serif'],
-        display: ['Mersad', 'PsGlaho', 'Georgia', 'serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
-        psglaho: ['PsGlaho', 'Montserrat', 'sans-serif'],
-        mersad: ['Mersad', 'PsGlaho', 'sans-serif'],
-        georgian: ['PsGlaho', 'Mersad', 'BPG Nino Mtavruli', 'sans-serif'],
-        serif: ['Mersad', 'PsGlaho', 'Georgia', 'serif'],
+        sans: ['AvenirNextCyr', 'PsGlaho', 'system-ui', 'sans-serif'],
+        avenir: ['AvenirNextCyr', 'PsGlaho', 'system-ui', 'sans-serif'],
+        georgian: ['PsGlaho', 'AvenirNextCyr', 'BPG Nino Mtavruli', 'sans-serif'],
       },
       maxWidth: {
-        union: '1280px',
+        union: '1700px',
       },
       borderRadius: {
         lg: "0.5rem",

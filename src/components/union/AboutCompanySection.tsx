@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-export function AboutCompanySection() {
-  const { t } = useLanguage();
+const UNION_CDN = 'https://www.union.ru';
 
-  const quickLinks = [
+export function AboutCompanySection() {
+  const { language, t } = useLanguage();
+
+  const links = [
     { key: 'ourProjects', href: '/union/about#projects' },
     { key: 'news',         href: '/union/blog' },
     { key: 'tvAboutUs',    href: '/union/about#tv' },
@@ -16,48 +17,54 @@ export function AboutCompanySection() {
   return (
     <section className="union-section bg-white">
       <div className="union-container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-0 bg-white">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="relative overflow-hidden"
           >
-            <div className="aspect-[4/3] overflow-hidden bg-surface">
-              <img
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
-                alt="UNION factory"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <img
+              src={`${UNION_CDN}/upload/iblock/f61/5j7s2ttljhknilk6dcz23mnbceelzabz/_-_-_._._01.jpg`}
+              alt="UNION"
+              className="w-full h-full object-cover"
+              style={{ aspectRatio: '715/680' }}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:pl-2"
+            className="bg-white p-8 md:p-12 flex flex-col justify-center"
           >
-            <h2 className="union-section-title mb-5">
-              {t('aboutCompanyTitle')}
-            </h2>
+            <h2 className="union-section-title mb-6">{t('aboutCompanyTitle')}</h2>
 
-            <p className="text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            <p className="text-[18px] font-light leading-[1.45] text-[#000] mb-6">
               {t('companyDesc')}
             </p>
 
-            <div className="border-t border-border">
-              {quickLinks.map((link) => (
-                <Link
-                  key={link.key}
-                  to={link.href}
-                  className="flex items-center justify-between border-b border-border py-4 text-[15px] text-foreground hover:text-primary transition-colors"
-                >
-                  <span>{t(link.key)}</span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
-                </Link>
+            <Link
+              to="/union/about"
+              className="inline-block self-start text-[16px] font-medium text-[#002b45] hover:text-[hsl(var(--accent))] transition-colors mb-8"
+            >
+              {language === 'ka' ? 'დაწვრილებით' : language === 'ru' ? 'Подробнее' : 'Read more'}
+            </Link>
+
+            <ul className="border-t border-[#e3e5ef]">
+              {links.map((link) => (
+                <li key={link.key} className="border-b border-[#e3e5ef]">
+                  <Link
+                    to={link.href}
+                    className="block py-4 text-[16px] font-normal text-[#002b45] hover:text-[hsl(var(--accent))] transition-colors"
+                  >
+                    {t(link.key)}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
         </div>
       </div>
