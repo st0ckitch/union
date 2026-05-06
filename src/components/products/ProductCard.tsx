@@ -29,13 +29,24 @@ interface ProductCardProps {
   basePath?: string;
 }
 
+const ALWAYS_AVAILABLE_BADGE = 'https://www.union.ru/img/always-available.svg';
+const DAYS_30_BADGE = 'https://www.union.ru/img/30_days.svg';
+const NEW_BADGE = 'https://www.union.ru/img/marks/New.svg';
+
 /**
- * Catalog tile — matches union.ru's `.product-item-card`:
- *   image (1.48:1) with optional badge in top-right
- *   product name 26px / 500 / +0.78px
- *   short description 1-line, light grey
- *   price "от X ₽" (with struck-through old price on sale)
- * No border, no shadow. Hover scales the image.
+ * Catalog tile — mirrors union.ru's `.link_sec` markup exactly:
+ *
+ *   <a class="link_sec">
+ *     <div class="divimg">
+ *       <img class="elImgFirst">      // 25% opacity backdrop
+ *       <img class="elImgSecond">     // foreground, object-contain
+ *       <div class="all_avalible_img"><img></div>  // optional badge
+ *     </div>
+ *     <div class="price_el">от X ₽</div>
+ *     <div class="name_el">Name<br>Description</div>
+ *   </a>
+ *
+ * Sale prices wrap in `.two-price > .old-price + .new-price`.
  */
 export function ProductCard({ product, basePath = '/product' }: ProductCardProps) {
   const { language } = useLanguage();
@@ -65,84 +76,71 @@ export function ProductCard({ product, basePath = '/product' }: ProductCardProps
 
   const imageUrl = resolveProductImage(product.images?.[0], categorySlug, product.slug);
   const hasDiscount = product.sale_price && product.sale_price < product.price;
-  const displayPrice = hasDiscount ? product.sale_price! : product.price;
   const inStock =
     product.stock_status === 'in_stock' ||
     (product.stock_status == null && (product as any).stock_quantity > 0);
-  const fastDelivery = product.delivery_days != null && product.delivery_days <= 30 && product.delivery_days > 0;
+  const fastDelivery =
+    product.delivery_days != null && product.delivery_days > 0 && product.delivery_days <= 30;
 
   const fromLabel =
     language === 'ru' ? 'от' : language === 'en' ? 'from' : 'დან';
   const currency = language === 'ru' ? '₽' : '₾';
 
+  // Pick the most relevant single badge (max one shown like union.ru):
+  // priority: "Всегда в наличии" > "За N дней" > "NEW"
+  const badge = (() => {
+    if (inStock) return { src: ALWAYS_AVAILABLE_BADGE, alt: language === 'ru' ? 'Всегда в наличии' : language === 'en' ? 'Always available' : 'მუდმივად მარაგშია' };
+    if (fastDelivery) return { src: DAYS_30_BADGE, alt: language === 'ru' ? `За ${product.delivery_days} дней` : language === 'en' ? `In ${product.delivery_days} days` : `${product.delivery_days} დღე` };
+    if (product.is_new) return { src: NEW_BADGE, alt: language === 'ru' ? 'Новый' : language === 'en' ? 'New' : 'ახალი' };
+    return null;
+  })();
+
+  const fmt = (n: number) => n.toLocaleString('ru-RU');
+
   return (
-    <Link to={`${basePath}/${product.slug}`} className="group block text-left">
-      {/* Image with optional badge */}
-      <div className="relative overflow-hidden bg-[#fafafa]" style={{ aspectRatio: '490/330' }}>
-        {/* faded backdrop layer (mirrors union.ru's elImgFirst trick) */}
+    <Link to={`${basePath}/${product.slug}`} className="link_sec">
+      <div className="divimg">
         <img
           src={imageUrl}
           alt=""
+          className="elImgFirst"
           aria-hidden="true"
           referrerPolicy="no-referrer"
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
         />
         <img
           src={imageUrl}
           alt={name}
+          className="elImgSecond"
           referrerPolicy="no-referrer"
           loading="lazy"
-          className="relative w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110"
         />
-
-        {/* Badges in top-right */}
-        <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
-          {product.is_new && (
-            <span className="bg-[hsl(var(--accent))] text-white text-[10px] font-semibold uppercase tracking-[0.08em] px-2.5 py-1">
-              {language === 'ru' ? 'Новый' : language === 'en' ? 'New' : 'ახალი'}
-            </span>
-          )}
-          {hasDiscount && (
-            <span className="bg-[hsl(var(--sale))] text-black text-[10px] font-semibold uppercase tracking-[0.08em] px-2.5 py-1">
-              SALE
-            </span>
-          )}
-          {inStock && (
-            <span className="bg-white border border-[#e3e5ef] text-[10px] uppercase tracking-[0.06em] text-[#5a5a5a] px-2.5 py-1">
-              {language === 'ru' ? 'В наличии' : language === 'en' ? 'In stock' : 'მარაგშია'}
-            </span>
-          )}
-          {fastDelivery && !inStock && (
-            <span className="bg-white border border-[#e3e5ef] text-[10px] uppercase tracking-[0.06em] text-[#5a5a5a] px-2.5 py-1">
-              {language === 'ru' ? `За ${product.delivery_days} дней` : language === 'en' ? `In ${product.delivery_days} days` : `${product.delivery_days} დღე`}
-            </span>
-          )}
-        </div>
+        {badge && (
+          <div className="all_avalible_img">
+            <img src={badge.src} alt={badge.alt} title={badge.alt} width={85} />
+          </div>
+        )}
       </div>
 
-      {/* Text block */}
-      <div className="mt-5">
-        <h3 className="text-[#002b45] text-[20px] md:text-[24px] lg:text-[26px] font-medium leading-[1.15] tracking-[0.03em] m-0 group-hover:text-[hsl(var(--accent))] transition-colors">
-          {name}
-        </h3>
-
-        {description && (
-          <p className="mt-2 text-[14px] md:text-[15px] font-light leading-[1.4] text-[#5a5a5a] line-clamp-2 m-0">
-            {description}
-          </p>
+      <div className="price_el">
+        {hasDiscount ? (
+          <div className="two-price">
+            <div className="old-price">{fromLabel} {fmt(product.price)} {currency}</div>
+            <div className="new-price">{fromLabel} {fmt(product.sale_price!)} {currency}</div>
+          </div>
+        ) : (
+          <>{fromLabel} {fmt(product.price)} {currency}</>
         )}
+      </div>
 
-        <div className="mt-3 flex items-baseline gap-3">
-          {hasDiscount && (
-            <span className="text-[14px] text-[#999] line-through">
-              {fromLabel} {product.price.toLocaleString('ru-RU')} {currency}
-            </span>
-          )}
-          <span className="text-[16px] md:text-[17px] font-medium text-[#002b45]">
-            {fromLabel} {displayPrice.toLocaleString('ru-RU')} {currency}
-          </span>
-        </div>
+      <div className="name_el">
+        <strong>{name}</strong>
+        {description && (
+          <>
+            <br />
+            <span>{description}</span>
+          </>
+        )}
       </div>
     </Link>
   );

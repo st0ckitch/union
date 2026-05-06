@@ -498,6 +498,196 @@ em, i, cite, dfn, var, address, blockquote, .italic {
   }
   .union-btn-dark:hover { background: #000; color: #fff; }
 
+  /* === Catalog page primitives — copied from union.ru's
+        templates/union_2024/components/all-doors_3el/style.css === */
+
+  /* Section title above each filter group of cards */
+  .title_sec {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    color: #2c2d2e;
+    text-align: center;
+  }
+  @media (max-width: 767px) {
+    .title_sec {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+  }
+
+  /* Card link wrapper */
+  .link_sec {
+    display: block;
+    color: #222;
+    text-decoration: none;
+    transition: opacity .25s ease;
+  }
+  .link_sec:hover { color: #222; opacity: 0.85; }
+
+  /* Image container — mirrors `.divimg` */
+  .divimg {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 490/330;
+    background: #fafafa;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .divimg .elImgFirst {
+    opacity: 0.25;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .divimg .elImgSecond {
+    object-fit: contain !important;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform .8s ease;
+  }
+  .link_sec:hover .divimg .elImgSecond {
+    transform: scale(1.05);
+  }
+
+  /* Top-right badge overlay */
+  .all_avalible_img {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    z-index: 1;
+  }
+  .all_avalible_img img {
+    object-fit: contain;
+    width: 85px;
+    height: auto;
+  }
+
+  /* Card price ("от X ₽") */
+  .price_el {
+    font-size: 16px;
+    font-weight: 500;
+    color: #002b45;
+    text-align: center;
+    margin: 4px 0 6px;
+  }
+  .price_el .two-price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .price_el .old-price {
+    color: #aaa;
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+  .price_el .new-price {
+    color: #be0000;
+    font-weight: 600;
+  }
+
+  /* Card name+description (bold name, plain description on second line) */
+  .name_el {
+    height: 65px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #222;
+    padding: 0 8px;
+  }
+  .name_el strong { font-weight: 700; }
+  @media (max-width: 767px) {
+    .name_el { line-height: 16px; height: 90px; }
+  }
+
+  /* Pipe-separated filter row */
+  .top_submenu {
+    margin: 25px 0;
+    text-align: center;
+    line-height: 2;
+  }
+  .top_submenu span {
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 14px;
+    color: #222;
+    transition: color .2s ease;
+  }
+  .top_submenu span:hover { color: hsl(var(--accent)); }
+  .top_submenu span.active {
+    font-weight: 700;
+    color: #002b45;
+  }
+  .top_submenu span.delimiter_sec {
+    margin: 0 10px;
+    color: #d9d9d9;
+    cursor: default;
+    text-transform: none;
+  }
+  .top_submenu a {
+    color: inherit;
+    text-decoration: none;
+  }
+  @media (max-width: 768px) {
+    .top_submenu {
+      padding: 0 15px;
+      text-align: left;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+
+  /* Page header — h1 with adjacent subtitle span */
+  .wrapper-h1 h1 {
+    font-size: 36px;
+    font-weight: 400;
+    color: #002b45;
+    letter-spacing: 0.03em;
+    margin: 0;
+    display: inline;
+  }
+  .wrapper-h1 span {
+    font-size: 18px;
+    color: #5a5a5a;
+    margin-left: 12px;
+    font-weight: 300;
+  }
+  @media (max-width: 767px) {
+    .wrapper-h1 h1 { font-size: 28px; }
+  }
+
+  /* SEO text block (collapsible intro) */
+  .seotext_top {
+    margin: 16px 0 8px;
+  }
+  .seotext_top .part-toggle--text {
+    overflow: hidden;
+    transition: height .35s ease;
+    color: #2c2d2e;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .seotext_top .part-toggle--text p { margin: 0 0 10px; }
+  .seotext_top .part-toggle--text ul { margin: 8px 0 12px; padding-left: 1.2em; }
+  .seotext_top .part-toggle--text li { margin-bottom: 8px; }
+  .seotext_top .btn-show-more-ext {
+    background: transparent;
+    border: 0;
+    padding: 4px 0;
+    color: hsl(var(--accent));
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .seotext_top .btn-show-more-ext:hover { color: #c9943a; }
+
   /* Header styles */
   .union-header {
     background: hsl(var(--header-bg));
