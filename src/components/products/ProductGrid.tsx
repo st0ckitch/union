@@ -27,12 +27,13 @@ interface ProductGridProps {
 export function ProductGrid({ products, isLoading, basePath = '/product' }: ProductGridProps) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="space-y-3">
-            <Skeleton className="aspect-[3/4] w-full" />
-            <Skeleton className="h-4 w-3/4" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px]">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="space-y-4">
+            <Skeleton className="w-full" style={{ aspectRatio: '490/330' }} />
+            <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-5 w-1/3" />
           </div>
         ))}
       </div>
@@ -41,14 +42,16 @@ export function ProductGrid({ products, isLoading, basePath = '/product' }: Prod
 
   if (products.length === 0) {
     return (
-      <div className="text-center py-16 border border-border bg-surface">
-        <p className="text-[14px] text-muted-foreground">პროდუქტები ვერ მოიძებნა</p>
+      <div className="text-center py-20 border-t border-[#e3e5ef]">
+        <p className="text-[15px] font-light text-[#5a5a5a]">
+          ჯერ პროდუქტები არაა
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-[30px] gap-y-[60px]">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} basePath={basePath} />
       ))}
