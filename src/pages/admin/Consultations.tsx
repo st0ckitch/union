@@ -14,12 +14,14 @@ import { Eye, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { format } from 'date-fns';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Consultation = Tables<'consultations'>;
 
 const statusOptions = ['new', 'contacted', 'completed', 'cancelled'] as const;
 
 export default function AdminConsultations() {
+  const t = useAdminT();
   const [selectedConsultation, setSelectedConsultation] = useState<Consultation | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [notes, setNotes] = useState('');
@@ -44,7 +46,7 @@ export default function AdminConsultations() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-consultations'] });
-      toast.success('Consultation updated');
+      toast.success(t('Consultation updated'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -53,7 +55,7 @@ export default function AdminConsultations() {
     mutationFn: (id: string) => deleteRow('consultations', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-consultations'] });
-      toast.success('Consultation deleted');
+      toast.success(t('Consultation deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -87,8 +89,8 @@ export default function AdminConsultations() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Consultations</h1>
-          <p className="text-gray-500 mt-1">Manage consultation requests</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('Consultations')}</h1>
+          <p className="text-gray-500 mt-1">{t('Manage consultation requests')}</p>
         </div>
 
         <Card>
@@ -101,12 +103,12 @@ export default function AdminConsultations() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Name')}</TableHead>
+                    <TableHead>{t('Phone')}</TableHead>
+                    <TableHead>{t('Email')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead>{t('Date')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -158,7 +160,7 @@ export default function AdminConsultations() {
                   {consultations?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                        No consultations yet
+                        {t('No consultations yet')}
                       </TableCell>
                     </TableRow>
                   )}
@@ -171,45 +173,45 @@ export default function AdminConsultations() {
         <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
           <DialogContent className="max-w-lg">
             <DialogHeader>
-              <DialogTitle>Consultation Details</DialogTitle>
+              <DialogTitle>{t('Consultation Details')}</DialogTitle>
             </DialogHeader>
             {selectedConsultation && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-gray-500">Name</Label>
+                    <Label className="text-gray-500">{t('Name')}</Label>
                     <p className="font-medium">{selectedConsultation.name}</p>
                   </div>
                   <div>
-                    <Label className="text-gray-500">Phone</Label>
+                    <Label className="text-gray-500">{t('Phone')}</Label>
                     <p className="font-medium">{selectedConsultation.phone}</p>
                   </div>
                   <div>
-                    <Label className="text-gray-500">Email</Label>
+                    <Label className="text-gray-500">{t('Email')}</Label>
                     <p className="font-medium">{selectedConsultation.email || '-'}</p>
                   </div>
                   <div>
-                    <Label className="text-gray-500">Date</Label>
+                    <Label className="text-gray-500">{t('Date')}</Label>
                     <p className="font-medium">{format(new Date(selectedConsultation.created_at), 'dd/MM/yyyy HH:mm')}</p>
                   </div>
                 </div>
                 {selectedConsultation.message && (
                   <div>
-                    <Label className="text-gray-500">Message</Label>
+                    <Label className="text-gray-500">{t('Message')}</Label>
                     <p className="mt-1">{selectedConsultation.message}</p>
                   </div>
                 )}
                 <div className="space-y-2">
-                  <Label>Notes</Label>
+                  <Label>{t('Notes')}</Label>
                   <Textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    placeholder="Add internal notes..."
+                    placeholder={t('Add internal notes...')}
                   />
                   <Button onClick={handleSaveNotes} size="sm" disabled={updateMutation.isPending}>
                     {updateMutation.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    Save Notes
+                    {t('Save Notes')}
                   </Button>
                 </div>
               </div>

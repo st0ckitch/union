@@ -277,6 +277,258 @@ export const adminDict: Record<string, { ka: string; ru?: string; en?: string }>
   'New Block':               { ka: 'ახალი ბლოკი',           ru: 'Новый блок',          en: 'New Block' },
   'Edit block':              { ka: 'ბლოკის რედაქტირება',    ru: 'Редактировать блок',  en: 'Edit block' },
   'New block':               { ka: 'ახალი ბლოკი',           ru: 'Новый блок',          en: 'New block' },
+
+  // ─────────── Login ───────────
+  'admin@example.com':       { ka: 'admin@example.com',     ru: 'admin@example.com',   en: 'admin@example.com' },
+  'Login failed':            { ka: 'შესვლა ვერ მოხერხდა',   ru: 'Ошибка входа',        en: 'Login failed' },
+  'Error checking permissions': { ka: 'უფლებების შემოწმების შეცდომა', ru: 'Ошибка проверки прав', en: 'Error checking permissions' },
+  'You do not have admin access': { ka: 'არ გაქვს ადმინ წვდომა', ru: 'У вас нет прав администратора', en: 'You do not have admin access' },
+  'Welcome to Admin Panel':  { ka: 'მოგესალმებით ადმინ პანელში', ru: 'Добро пожаловать в админ-панель', en: 'Welcome to Admin Panel' },
+  'An error occurred':       { ka: 'მოხდა შეცდომა',         ru: 'Произошла ошибка',    en: 'An error occurred' },
+  'Failed to save settings': { ka: 'პარამეტრების შენახვა ვერ მოხერხდა', ru: 'Не удалось сохранить настройки', en: 'Failed to save settings' },
+  'Saving...':               { ka: 'შენახვა...',           ru: 'Сохранение...',       en: 'Saving...' },
+  'Loading...':              { ka: 'იტვირთება...',         ru: 'Загрузка...',         en: 'Loading...' },
+
+  // ─────────── Multilingual field labels ───────────
+  'Title (Georgian)':        { ka: 'სათაური (ქართული)',    ru: 'Заголовок (грузинский)', en: 'Title (Georgian)' },
+  'Title (Russian)':         { ka: 'სათაური (რუსული)',     ru: 'Заголовок (русский)', en: 'Title (Russian)' },
+  'Title (English)':         { ka: 'სათაური (ინგლისური)',   ru: 'Заголовок (английский)', en: 'Title (English)' },
+  'Title (Georgian) *':      { ka: 'სათაური (ქართული) *',   ru: 'Заголовок (грузинский) *', en: 'Title (Georgian) *' },
+  'Title (KA)':              { ka: 'სათაური (KA)',         ru: 'Заголовок (KA)',      en: 'Title (KA)' },
+  'Title (RU)':              { ka: 'სათაური (RU)',         ru: 'Заголовок (RU)',      en: 'Title (RU)' },
+  'Title (EN)':              { ka: 'სათაური (EN)',         ru: 'Заголовок (EN)',      en: 'Title (EN)' },
+  'Title (KA) *':            { ka: 'სათაური (KA) *',       ru: 'Заголовок (KA) *',    en: 'Title (KA) *' },
+  'Subtitle (Georgian)':     { ka: 'ქვესათაური (ქართული)',  ru: 'Подзаголовок (грузинский)', en: 'Subtitle (Georgian)' },
+  'Subtitle (Russian)':      { ka: 'ქვესათაური (რუსული)',   ru: 'Подзаголовок (русский)', en: 'Subtitle (Russian)' },
+  'Subtitle (English)':      { ka: 'ქვესათაური (ინგლისური)', ru: 'Подзаголовок (английский)', en: 'Subtitle (English)' },
+  'Subtitle (KA)':           { ka: 'ქვესათაური (KA)',      ru: 'Подзаголовок (KA)',   en: 'Subtitle (KA)' },
+  'Subtitle (RU)':           { ka: 'ქვესათაური (RU)',      ru: 'Подзаголовок (RU)',   en: 'Subtitle (RU)' },
+  'Subtitle (EN)':           { ka: 'ქვესათაური (EN)',      ru: 'Подзаголовок (EN)',   en: 'Subtitle (EN)' },
+  'Description (Georgian)':  { ka: 'აღწერა (ქართული)',     ru: 'Описание (грузинский)', en: 'Description (Georgian)' },
+  'Description (Russian)':   { ka: 'აღწერა (რუსული)',      ru: 'Описание (русский)',  en: 'Description (Russian)' },
+  'Description (English)':   { ka: 'აღწერა (ინგლისური)',    ru: 'Описание (английский)', en: 'Description (English)' },
+  'Description (KA)':        { ka: 'აღწერა (KA)',          ru: 'Описание (KA)',       en: 'Description (KA)' },
+  'Description (RU)':        { ka: 'აღწერა (RU)',          ru: 'Описание (RU)',       en: 'Description (RU)' },
+  'Description (EN)':        { ka: 'აღწერა (EN)',          ru: 'Описание (EN)',       en: 'Description (EN)' },
+  'Name (Georgian)':         { ka: 'სახელი (ქართული)',     ru: 'Название (грузинский)', en: 'Name (Georgian)' },
+  'Name (Russian)':          { ka: 'სახელი (რუსული)',      ru: 'Название (русский)',  en: 'Name (Russian)' },
+  'Name (English)':          { ka: 'სახელი (ინგლისური)',    ru: 'Название (английский)', en: 'Name (English)' },
+  'Name (Georgian) *':       { ka: 'სახელი (ქართული) *',    ru: 'Название (грузинский) *', en: 'Name (Georgian) *' },
+  'Address (Georgian)':      { ka: 'მისამართი (ქართული)',   ru: 'Адрес (грузинский)',  en: 'Address (Georgian)' },
+  'Address (English)':       { ka: 'მისამართი (ინგლისური)', ru: 'Адрес (английский)',  en: 'Address (English)' },
+  'Hours (Georgian)':        { ka: 'საათები (ქართული)',    ru: 'Часы (грузинский)',   en: 'Hours (Georgian)' },
+  'Hours (English)':         { ka: 'საათები (ინგლისური)',   ru: 'Часы (английский)',   en: 'Hours (English)' },
+  'Working Hours (Georgian)':{ ka: 'სამუშაო საათები (ქართული)', ru: 'Часы работы (грузинский)', en: 'Working Hours (Georgian)' },
+  'Working Hours (English)': { ka: 'სამუშაო საათები (ინგლისური)', ru: 'Часы работы (английский)', en: 'Working Hours (English)' },
+  'Eyebrow (KA)':            { ka: 'მცირე ტექსტი (KA)',    ru: 'Надзаголовок (KA)',   en: 'Eyebrow (KA)' },
+  'Eyebrow (RU)':            { ka: 'მცირე ტექსტი (RU)',    ru: 'Надзаголовок (RU)',   en: 'Eyebrow (RU)' },
+  'Eyebrow (EN)':            { ka: 'მცირე ტექსტი (EN)',    ru: 'Надзаголовок (EN)',   en: 'Eyebrow (EN)' },
+  'Body KA':                 { ka: 'ტექსტი KA',            ru: 'Текст KA',            en: 'Body KA' },
+  'Body RU':                 { ka: 'ტექსტი RU',            ru: 'Текст RU',            en: 'Body RU' },
+  'Body EN':                 { ka: 'ტექსტი EN',            ru: 'Текст EN',            en: 'Body EN' },
+  'Excerpt (Georgian)':      { ka: 'მოკლე აღწერა (ქართული)', ru: 'Краткое описание (грузинский)', en: 'Excerpt (Georgian)' },
+  'Excerpt (Russian)':       { ka: 'მოკლე აღწერა (რუსული)',  ru: 'Краткое описание (русский)', en: 'Excerpt (Russian)' },
+  'Content (Georgian) *':    { ka: 'შინაარსი (ქართული) *', ru: 'Содержимое (грузинский) *', en: 'Content (Georgian) *' },
+  'Content (Russian)':       { ka: 'შინაარსი (რუსული)',    ru: 'Содержимое (русский)', en: 'Content (Russian)' },
+  'Button Text (Georgian)':  { ka: 'ღილაკის ტექსტი (ქართული)', ru: 'Текст кнопки (грузинский)', en: 'Button Text (Georgian)' },
+  'Button Text (Russian)':   { ka: 'ღილაკის ტექსტი (რუსული)',  ru: 'Текст кнопки (русский)', en: 'Button Text (Russian)' },
+
+  // ─────────── Common form labels ───────────
+  'Image URL *':             { ka: 'სურათის URL *',         ru: 'URL изображения *',   en: 'Image URL *' },
+  'Slug *':                  { ka: 'სლაგი *',              ru: 'Слаг *',              en: 'Slug *' },
+  'Section Key *':           { ka: 'სექციის გასაღები *',   ru: 'Ключ секции *',       en: 'Section Key *' },
+  'Featured Image URL':      { ka: 'რჩეული სურათი URL',    ru: 'URL главного изображения', en: 'Featured Image URL' },
+  'Banner image URL':        { ka: 'ბანერის სურათის URL',   ru: 'URL изображения баннера', en: 'Banner image URL' },
+  'Banner click-through URL':{ ka: 'ბანერის ბმული',         ru: 'URL перехода с баннера', en: 'Banner click-through URL' },
+  'Map Embed URL':           { ka: 'რუკის ჩასმის URL',      ru: 'URL карты',           en: 'Map Embed URL' },
+  'Google Map embed URL':    { ka: 'Google Maps ჩასმის URL', ru: 'URL встраивания Google Maps', en: 'Google Map embed URL' },
+  'Logo URL':                { ka: 'ლოგოს URL',            ru: 'URL логотипа',        en: 'Logo URL' },
+  'Home image URL':          { ka: 'მთავარი სურათის URL',   ru: 'URL изображения главной', en: 'Home image URL' },
+  'auto-generated':          { ka: 'ავტომატური',           ru: 'авто',                en: 'auto-generated' },
+  'auto-generated-from-name': { ka: 'ავტომატური სახელიდან', ru: 'авто-из-названия',   en: 'auto-generated-from-name' },
+  'Parent Category':         { ka: 'მშობელი კატეგორია',    ru: 'Родительская категория', en: 'Parent Category' },
+  'None (Top level)':        { ka: 'არცერთი (მთავარი)',    ru: 'Нет (верхний уровень)', en: 'None (Top level)' },
+  'Select category':         { ka: 'აირჩიე კატეგორია',    ru: 'Выберите категорию',  en: 'Select category' },
+  'Show on home page':       { ka: 'ნაჩვენები მთავარზე',   ru: 'Показывать на главной', en: 'Show on home page' },
+  'Home sort':               { ka: 'მთავარის რიგი',        ru: 'Порядок главной',     en: 'Home sort' },
+  'Home visibility':         { ka: 'მთავარის ხილვადობა',   ru: 'Видимость на главной', en: 'Home visibility' },
+  'Category page banner':    { ka: 'კატეგორიის გვერდის ბანერი', ru: 'Баннер страницы категории', en: 'Category page banner' },
+  'Optional hero shown above the product grid on /catalog/<slug>.': {
+    ka: 'არასავალდებულო ბანერი, რომელიც ნაჩვენებია პროდუქტების ბადის ზემოთ /catalog/<slug>-ზე.',
+    ru: 'Необязательный баннер над сеткой товаров на /catalog/<slug>.',
+    en: 'Optional hero shown above the product grid on /catalog/<slug>.',
+  },
+
+  // ─────────── Page headings & subtitles ───────────
+  'Manage blog content':     { ka: 'ბლოგის შინაარსის მართვა', ru: 'Управление блогом', en: 'Manage blog content' },
+  'Manage customer orders':  { ka: 'კლიენტის შეკვეთების მართვა', ru: 'Управление заказами клиентов', en: 'Manage customer orders' },
+  'Manage consultation requests': { ka: 'კონსულტაციის მოთხოვნების მართვა', ru: 'Управление заявками на консультацию', en: 'Manage consultation requests' },
+  'Global contact info, socials, and branding.': {
+    ka: 'ზოგადი კონტაქტი, სოც. ქსელები და ბრენდინგი.',
+    ru: 'Контакты, соцсети и брендинг.',
+    en: 'Global contact info, socials, and branding.',
+  },
+  "Per-product modules (M01–M15) for furniture configurators (FORMINA-style).": {
+    ka: 'პროდუქტისთვის სპეციფიკური მოდულები (M01–M15) ავეჯის კონფიგურატორებისთვის (FORMINA სტილში).',
+    ru: 'Модули товара (M01–M15) для конфигуратора мебели (в стиле FORMINA).',
+    en: 'Per-product modules (M01–M15) for furniture configurators (FORMINA-style).',
+  },
+
+  // ─────────── Cards / sections ───────────
+  'Branding':                { ka: 'ბრენდინგი',            ru: 'Брендинг',            en: 'Branding' },
+  'Contact':                 { ka: 'კონტაქტი',             ru: 'Контакт',             en: 'Contact' },
+  'WhatsApp':                { ka: 'WhatsApp',             ru: 'WhatsApp',            en: 'WhatsApp' },
+  'Save settings':           { ka: 'პარამეტრების შენახვა',  ru: 'Сохранить настройки', en: 'Save settings' },
+  'Save Notes':              { ka: 'შენიშვნების შენახვა',   ru: 'Сохранить заметки',   en: 'Save Notes' },
+  'Add internal notes...':   { ka: 'შიდა შენიშვნები...',   ru: 'Внутренние заметки...', en: 'Add internal notes...' },
+  'Order Details':           { ka: 'შეკვეთის დეტალები',    ru: 'Детали заказа',       en: 'Order Details' },
+  'Order Items':             { ka: 'შეკვეთის ელემენტები',  ru: 'Позиции заказа',      en: 'Order Items' },
+  'Order ID':                { ka: 'შეკვეთის ID',          ru: 'ID заказа',           en: 'Order ID' },
+  'Customer Name':           { ka: 'კლიენტის სახელი',      ru: 'Имя клиента',         en: 'Customer Name' },
+  'Total Amount':            { ka: 'საერთო თანხა',         ru: 'Общая сумма',         en: 'Total Amount' },
+  'Shipping Address':        { ka: 'მიწოდების მისამართი',   ru: 'Адрес доставки',      en: 'Shipping Address' },
+  'Qty':                     { ka: 'რაოდ.',               ru: 'Кол-во',              en: 'Qty' },
+  'Order status updated':    { ka: 'შეკვეთის სტატუსი განახლდა', ru: 'Статус заказа обновлён', en: 'Order status updated' },
+  'Consultation Details':    { ka: 'კონსულტაციის დეტალები', ru: 'Детали консультации', en: 'Consultation Details' },
+  'Consultation updated':    { ka: 'კონსულტაცია განახლდა',  ru: 'Консультация обновлена', en: 'Consultation updated' },
+  'Consultation deleted':    { ka: 'კონსულტაცია წაიშალა',   ru: 'Консультация удалена', en: 'Consultation deleted' },
+
+  // ─────────── Toast messages ───────────
+  'Settings saved':          { ka: 'პარამეტრები შენახულია', ru: 'Настройки сохранены', en: 'Settings saved' },
+  'Banner created':          { ka: 'ბანერი შექმნილია',     ru: 'Баннер создан',       en: 'Banner created' },
+  'Banner updated':          { ka: 'ბანერი განახლდა',      ru: 'Баннер обновлён',     en: 'Banner updated' },
+  'Banner deleted':          { ka: 'ბანერი წაიშალა',       ru: 'Баннер удалён',       en: 'Banner deleted' },
+  'Category created':        { ka: 'კატეგორია შექმნილია',  ru: 'Категория создана',   en: 'Category created' },
+  'Category updated':        { ka: 'კატეგორია განახლდა',    ru: 'Категория обновлена', en: 'Category updated' },
+  'Category deleted':        { ka: 'კატეგორია წაიშალა',     ru: 'Категория удалена',   en: 'Category deleted' },
+  'Post created':            { ka: 'პოსტი შექმნილია',      ru: 'Пост создан',         en: 'Post created' },
+  'Post updated':            { ka: 'პოსტი განახლდა',       ru: 'Пост обновлён',       en: 'Post updated' },
+  'Post deleted':            { ka: 'პოსტი წაიშალა',        ru: 'Пост удалён',         en: 'Post deleted' },
+  'Page created':            { ka: 'გვერდი შექმნილია',     ru: 'Страница создана',    en: 'Page created' },
+  'Page updated':            { ka: 'გვერდი განახლდა',      ru: 'Страница обновлена',  en: 'Page updated' },
+  'Page deleted':            { ka: 'გვერდი წაიშალა',       ru: 'Страница удалена',    en: 'Page deleted' },
+  'Project created':         { ka: 'პროექტი შექმნილია',    ru: 'Проект создан',       en: 'Project created' },
+  'Project updated':         { ka: 'პროექტი განახლდა',     ru: 'Проект обновлён',     en: 'Project updated' },
+  'Project deleted':         { ka: 'პროექტი წაიშალა',      ru: 'Проект удалён',       en: 'Project deleted' },
+  'Section created':         { ka: 'სექცია შექმნილია',     ru: 'Секция создана',      en: 'Section created' },
+  'Section updated':         { ka: 'სექცია განახლდა',      ru: 'Секция обновлена',    en: 'Section updated' },
+  'Section deleted':         { ka: 'სექცია წაიშალა',       ru: 'Секция удалена',      en: 'Section deleted' },
+  'Feature created':         { ka: 'უპირატესობა შექმნილია', ru: 'Преимущество создано', en: 'Feature created' },
+  'Feature updated':         { ka: 'უპირატესობა განახლდა',  ru: 'Преимущество обновлено', en: 'Feature updated' },
+  'Feature deleted':         { ka: 'უპირატესობა წაიშალა',   ru: 'Преимущество удалено', en: 'Feature deleted' },
+  'Showroom created':        { ka: 'შოურუმი შექმნილია',    ru: 'Шоурум создан',       en: 'Showroom created' },
+  'Showroom updated':        { ka: 'შოურუმი განახლდა',     ru: 'Шоурум обновлён',     en: 'Showroom updated' },
+  'Showroom deleted':        { ka: 'შოურუმი წაიშალა',      ru: 'Шоурум удалён',       en: 'Showroom deleted' },
+  'Testimonial created':     { ka: 'მიმოხილვა შექმნილია',  ru: 'Отзыв создан',        en: 'Testimonial created' },
+  'Testimonial updated':     { ka: 'მიმოხილვა განახლდა',    ru: 'Отзыв обновлён',      en: 'Testimonial updated' },
+  'Testimonial deleted':     { ka: 'მიმოხილვა წაიშალა',     ru: 'Отзыв удалён',        en: 'Testimonial deleted' },
+  'Block saved':             { ka: 'ბლოკი შენახულია',      ru: 'Блок сохранён',       en: 'Block saved' },
+  'Block deleted':           { ka: 'ბლოკი წაიშალა',        ru: 'Блок удалён',         en: 'Block deleted' },
+  'Menu item saved':         { ka: 'მენიუს ელემენტი შენახულია', ru: 'Пункт меню сохранён', en: 'Menu item saved' },
+  'Menu item deleted':       { ka: 'მენიუს ელემენტი წაიშალა',   ru: 'Пункт меню удалён',  en: 'Menu item deleted' },
+
+  // ─────────── Confirms ───────────
+  'Products in this category will be unassigned.': {
+    ka: 'ამ კატეგორიის პროდუქტებს კატეგორია მოშორდება.',
+    ru: 'Товары этой категории останутся без категории.',
+    en: 'Products in this category will be unassigned.',
+  },
+  'Are you sure?':           { ka: 'დარწმუნებული ხარ?',    ru: 'Вы уверены?',         en: 'Are you sure?' },
+  'This action cannot be undone.': {
+    ka: 'ქმედების გაუქმება შეუძლებელია.',
+    ru: 'Это действие нельзя отменить.',
+    en: 'This action cannot be undone.',
+  },
+
+  // ─────────── Status badges / values ───────────
+  'Banners — hero carousel':   { ka: 'ბანერები — მთავარი კარუსელი', ru: 'Баннеры — карусель героя', en: 'Banners — hero carousel' },
+  'Union — hero carousel':     { ka: 'Union — მთავარი კარუსელი',    ru: 'Union — карусель героя',   en: 'Union — hero carousel' },
+  'HMspace — hero':            { ka: 'HMspace — ბანერი',           ru: 'HMspace — баннер',         en: 'HMspace — hero' },
+  'Main accents':              { ka: 'მთავარი აქცენტები',          ru: 'Главные акценты',          en: 'Main accents' },
+  'Trending':                  { ka: 'ტრენდები',                  ru: 'Тренды',                   en: 'Trending' },
+  'Projects':                  { ka: 'პროექტები',                 ru: 'Проекты',                  en: 'Projects' },
+  'Custom section':            { ka: 'სხვა სექცია',               ru: 'Произвольная секция',      en: 'Custom section' },
+  '(no title)':                { ka: '(უსათაურო)',               ru: '(без заголовка)',          en: '(no title)' },
+  '-- choose --':              { ka: '-- აირჩიე --',             ru: '-- выберите --',           en: '-- choose --' },
+  '— Select —':                { ka: '— აირჩიე —',                ru: '— Выберите —',             en: '— Select —' },
+  'none':                      { ka: 'არცერთი',                   ru: 'нет',                      en: 'none' },
+
+  // ─────────── Empty / placeholder messages ───────────
+  'No top-level categories yet. Create them in the Categories section first.': {
+    ka: 'ჯერ მთავარი კატეგორიები არაა. ჯერ Categories სექციაში შექმენი.',
+    ru: 'Категорий верхнего уровня пока нет. Сначала создайте их в разделе «Категории».',
+    en: 'No top-level categories yet. Create them in the Categories section first.',
+  },
+  "No products with category_type='furniture' yet. Create one in Products and set its Category type.": {
+    ka: "ჯერ category_type='furniture' პროდუქტები არაა. შექმენი Products-ში და დააყენე Category type.",
+    ru: "Товаров с category_type='furniture' пока нет. Создайте товар и укажите тип категории.",
+    en: "No products with category_type='furniture' yet. Create one in Products and set its Category type.",
+  },
+  'No global blocks.':         { ka: 'გლობალური ბლოკები არაა.',  ru: 'Глобальных блоков нет.',   en: 'No global blocks.' },
+  'No category blocks.':       { ka: 'კატეგორიული ბლოკები არაა.', ru: 'Блоков категорий нет.',    en: 'No category blocks.' },
+  'No posts yet':              { ka: 'ჯერ პოსტები არაა',         ru: 'Постов пока нет',          en: 'No posts yet' },
+  'Global blocks':             { ka: 'გლობალური ბლოკები',        ru: 'Глобальные блоки',         en: 'Global blocks' },
+  'Category blocks':           { ka: 'კატეგორიის ბლოკები',       ru: 'Блоки категорий',          en: 'Category blocks' },
+  'Shown on every product page.': {
+    ka: 'ნაჩვენებია ყველა პროდუქტის გვერდზე.',
+    ru: 'Показывается на каждой странице товара.',
+    en: 'Shown on every product page.',
+  },
+  'Shown on every product in a selected category.': {
+    ka: 'ნაჩვენებია არჩეული კატეგორიის ყველა პროდუქტზე.',
+    ru: 'Показывается на каждом товаре выбранной категории.',
+    en: 'Shown on every product in a selected category.',
+  },
+
+  // ─────────── Menu items / Mega menu ───────────
+  'Add Post':                  { ka: 'პოსტის დამატება',           ru: 'Добавить пост',            en: 'Add Post' },
+  'Edit Post':                 { ka: 'პოსტის რედაქტირება',        ru: 'Редактировать пост',       en: 'Edit Post' },
+  'Edit Section':              { ka: 'სექციის რედაქტირება',       ru: 'Редактировать секцию',     en: 'Edit Section' },
+
+  // ─────────── Misc ───────────
+  'Tbilisi':                   { ka: 'თბილისი',                   ru: 'Тбилиси',                  en: 'Tbilisi' },
+  'Year':                      { ka: 'წელი',                      ru: 'Год',                      en: 'Year' },
+  'Location':                  { ka: 'ლოკაცია',                   ru: 'Местоположение',           en: 'Location' },
+  'Location / Year':           { ka: 'ლოკაცია / წელი',            ru: 'Место / Год',              en: 'Location / Year' },
+  'Show':                      { ka: 'ჩვენება',                   ru: 'Показать',                 en: 'Show' },
+  'Hide':                      { ka: 'დამალვა',                   ru: 'Скрыть',                   en: 'Hide' },
+  'Yes':                       { ka: 'კი',                        ru: 'Да',                       en: 'Yes' },
+  'No':                        { ka: 'არა',                       ru: 'Нет',                      en: 'No' },
+
+  // ─────────── Error boundary ───────────
+  'Something broke in the admin UI': {
+    ka: 'ადმინ პანელში რაღაც გატყდა',
+    ru: 'Что-то сломалось в админ-панели',
+    en: 'Something broke in the admin UI',
+  },
+  'The page crashed while rendering. The error has been logged to the browser console. Try the buttons below — if it keeps happening, copy the error from DevTools and send it over.': {
+    ka: 'გვერდი ჩამოვარდა რენდერისას. შეცდომა დაფიქსირდა ბრაუზერის კონსოლში. სცადე ღილაკები ქვემოთ — თუ გრძელდება, გადააკოპირე შეცდომა DevTools-დან.',
+    ru: 'Страница упала при рендеринге. Ошибка записана в консоль браузера. Попробуйте кнопки ниже — если повторяется, скопируйте ошибку из DevTools и пришлите.',
+    en: 'The page crashed while rendering. The error has been logged to the browser console. Try the buttons below — if it keeps happening, copy the error from DevTools and send it over.',
+  },
+  'Try again':                 { ka: 'ხელახლა ცდა',               ru: 'Попробовать снова',        en: 'Try again' },
+  'Go to dashboard':            { ka: 'პანელზე დაბრუნება',         ru: 'На главную панели',        en: 'Go to dashboard' },
+  'Reload page':               { ka: 'გვერდის გადატვირთვა',       ru: 'Перезагрузить страницу',   en: 'Reload page' },
+
+  // ─────────── Configurator ───────────
+  'Door Configurator':         { ka: 'კარის კონფიგურატორი',       ru: 'Конфигуратор дверей',      en: 'Door Configurator' },
+  'Enable variant dimensions and pick which options from the global pool apply to this product. Leave a dimension disabled if this product has no variants on it.': {
+    ka: 'ჩართე ვარიანტის განზომილებები და აირჩიე რომელი ოფციები უნდა მოქმედებდეს ამ პროდუქტზე. დატოვე გათიშული, თუ ვარიანტები არ აქვს.',
+    ru: 'Включите измерения вариантов и выберите, какие опции из общего пула применимы к этому товару. Оставьте измерение выключенным, если у товара нет таких вариантов.',
+    en: 'Enable variant dimensions and pick which options from the global pool apply to this product. Leave a dimension disabled if this product has no variants on it.',
+  },
+
+  // ─────────── Module / Furniture ───────────
+  'Add Module':                { ka: 'მოდულის დამატება',          ru: 'Добавить модуль',          en: 'Add Module' },
+  'Parent product':            { ka: 'მშობელი პროდუქტი',          ru: 'Родительский товар',       en: 'Parent product' },
+  'Pick a furniture-typed product': { ka: 'აირჩიე ავეჯის ტიპის პროდუქტი', ru: 'Выберите товар типа «мебель»', en: 'Pick a furniture-typed product' },
+
+  // ─────────── Testimonials extra ───────────
+  'Author Name *':             { ka: 'ავტორის სახელი *',          ru: 'Имя автора *',             en: 'Author Name *' },
+  'Author Title':              { ka: 'ავტორის თანამდებობა',       ru: 'Должность автора',         en: 'Author Title' },
+  'e.g. CEO, Designer':        { ka: 'მაგ.: CEO, დიზაინერი',      ru: 'напр.: CEO, дизайнер',     en: 'e.g. CEO, Designer' },
+  'Avatar URL':                { ka: 'ავატარის URL',              ru: 'URL аватара',              en: 'Avatar URL' },
+  'Rating (1-5)':              { ka: 'რეიტინგი (1–5)',            ru: 'Рейтинг (1–5)',            en: 'Rating (1-5)' },
 };
 
 /**
@@ -292,4 +544,26 @@ export function useAdminT() {
     if (language === 'ru') return entry.ru || source;
     return entry.en || source;
   };
+}
+
+/** Read the current admin language outside of React (for class components / error boundaries). */
+export function getStoredAdminLanguage(): 'ka' | 'ru' | 'en' {
+  if (typeof window === 'undefined') return 'ka';
+  try {
+    const stored = window.localStorage.getItem('union.language');
+    if (stored === 'ka' || stored === 'ru' || stored === 'en') return stored;
+  } catch {
+    // ignore
+  }
+  return 'ka';
+}
+
+/** Translate a source string outside of React; uses the stored language. */
+export function tAdmin(source: string, lang?: 'ka' | 'ru' | 'en'): string {
+  const language = lang ?? getStoredAdminLanguage();
+  const entry = adminDict[source];
+  if (!entry) return source;
+  if (language === 'ka') return entry.ka || source;
+  if (language === 'ru') return entry.ru || source;
+  return entry.en || source;
 }

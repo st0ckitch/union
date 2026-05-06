@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { Pencil, Loader2, Plus, Trash2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Section = Tables<'hmspace_sections'>;
 
@@ -41,6 +42,7 @@ interface Item {
 }
 
 export default function AdminHMSections() {
+  const t = useAdminT();
   const [isOpen, setIsOpen] = useState(false);
   const [editing, setEditing] = useState<Section | null>(null);
   const [form, setForm] = useState<any>({});
@@ -67,13 +69,13 @@ export default function AdminHMSections() {
         if (error) throw error;
       }
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-hm-sections'] }); toast.success('Section saved'); reset(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-hm-sections'] }); toast.success(t('Section updated')); reset(); },
     onError: (e: any) => toast.error(e.message),
   });
 
   const del = useMutation({
     mutationFn: (id: string) => deleteRow('hmspace_sections', id),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-hm-sections'] }); toast.success('Section deleted'); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-hm-sections'] }); toast.success(t('Section deleted')); },
     onError: (e: any) => toast.error(e.message),
   });
 
@@ -141,10 +143,10 @@ export default function AdminHMSections() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">HMspace Landing Sections</h1>
-            <p className="text-gray-500 mt-1">Edit text, images, and sub-items for every section on the HMspace homepage.</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('HMspace Landing Sections')}</h1>
+            <p className="text-gray-500 mt-1">{t('Edit text, images, and sub-items for every section on the HMspace homepage.')}</p>
           </div>
-          <Button onClick={onNew}><Plus className="h-4 w-4 mr-2" />New Section</Button>
+          <Button onClick={onNew}><Plus className="h-4 w-4 mr-2" />{t('New Section')}</Button>
         </div>
 
         <Card><CardContent className="p-0">
@@ -158,25 +160,25 @@ export default function AdminHMSections() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-700">{s.section_key}</span>
-                        <span className="text-gray-500 text-xs">{known?.label || 'Custom section'}</span>
-                        <span className={`px-2 py-0.5 rounded-full text-xs ${s.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>{s.is_active ? 'Active' : 'Inactive'}</span>
+                        <span className="text-gray-500 text-xs">{known?.label || t('Custom section')}</span>
+                        <span className={`px-2 py-0.5 rounded-full text-xs ${s.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>{s.is_active ? t('Active') : t('Inactive')}</span>
                       </div>
-                      <p className="font-medium mt-1 truncate">{s.title_ka || s.eyebrow_ka || '(no title)'}</p>
+                      <p className="font-medium mt-1 truncate">{s.title_ka || s.eyebrow_ka || t('(no title)')}</p>
                       <p className="text-xs text-gray-500 mt-0.5 truncate">{s.body_ka}</p>
                     </div>
                     <Button variant="ghost" size="icon" onClick={() => onEdit(s)}><Pencil className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => { if (confirm(`Delete section "${s.section_key}"?`)) del.mutate(s.id); }} className="text-red-600"><Trash2 className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => { if (confirm(`${t('Delete')} "${s.section_key}"?`)) del.mutate(s.id); }} className="text-red-600"><Trash2 className="h-4 w-4" /></Button>
                   </div>
                 );
               })}
-              {data?.length === 0 && <div className="text-center py-8 text-gray-500">No sections yet</div>}
+              {data?.length === 0 && <div className="text-center py-8 text-gray-500">{t('No sections yet')}</div>}
             </div>
           )}
         </CardContent></Card>
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>{editing ? `Edit section: ${editing.section_key}` : 'New section'}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{editing ? `${t('Edit Section')}: ${editing.section_key}` : t('New Section')}</DialogTitle></DialogHeader>
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">

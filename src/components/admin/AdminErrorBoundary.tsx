@@ -1,6 +1,7 @@
 import { Component, ReactNode } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { tAdmin } from '@/lib/adminI18n';
 
 interface Props { children: ReactNode }
 interface State { hasError: boolean; error: Error | null }
@@ -33,9 +34,9 @@ export class AdminErrorBoundary extends Component<Props, State> {
               <AlertTriangle className="h-5 w-5 text-red-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-gray-900">Something broke in the admin UI</h2>
+              <h2 className="font-semibold text-gray-900">{tAdmin('Something broke in the admin UI')}</h2>
               <p className="text-sm text-gray-600 mt-1">
-                The page crashed while rendering. The error has been logged to the browser console. Try the buttons below — if it keeps happening, copy the error from DevTools and send it over.
+                {tAdmin('The page crashed while rendering. The error has been logged to the browser console. Try the buttons below — if it keeps happening, copy the error from DevTools and send it over.')}
               </p>
               {this.state.error && (
                 <pre className="mt-3 text-[11px] bg-gray-50 border rounded p-2 overflow-x-auto text-red-700 font-mono">
@@ -43,9 +44,9 @@ export class AdminErrorBoundary extends Component<Props, State> {
                 </pre>
               )}
               <div className="flex gap-2 mt-4">
-                <Button onClick={this.reset} variant="outline" size="sm">Try again</Button>
-                <Button onClick={() => (window.location.href = '/admin')} size="sm">Go to dashboard</Button>
-                <Button onClick={() => window.location.reload()} variant="ghost" size="sm">Reload page</Button>
+                <Button onClick={this.reset} variant="outline" size="sm">{tAdmin('Try again')}</Button>
+                <Button onClick={() => (window.location.href = '/admin')} size="sm">{tAdmin('Go to dashboard')}</Button>
+                <Button onClick={() => window.location.reload()} variant="ghost" size="sm">{tAdmin('Reload page')}</Button>
               </div>
             </div>
           </div>

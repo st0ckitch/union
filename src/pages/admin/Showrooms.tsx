@@ -13,10 +13,12 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Showroom = Tables<'showrooms'>;
 
 export default function AdminShowrooms() {
+  const t = useAdminT();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingShowroom, setEditingShowroom] = useState<Showroom | null>(null);
   const [formData, setFormData] = useState({
@@ -54,7 +56,7 @@ export default function AdminShowrooms() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-showrooms'] });
-      toast.success('Showroom created');
+      toast.success(t('Showroom created'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -67,7 +69,7 @@ export default function AdminShowrooms() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-showrooms'] });
-      toast.success('Showroom updated');
+      toast.success(t('Showroom updated'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -77,7 +79,7 @@ export default function AdminShowrooms() {
     mutationFn: (id: string) => deleteRow('showrooms', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-showrooms'] });
-      toast.success('Showroom deleted');
+      toast.success(t('Showroom deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -149,24 +151,24 @@ export default function AdminShowrooms() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Showrooms</h1>
-            <p className="text-gray-500 mt-1">Manage store locations</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Showrooms')}</h1>
+            <p className="text-gray-500 mt-1">{t('Manage showroom locations')}</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => resetForm()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Showroom
+                {t('Add Showroom')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>{editingShowroom ? 'Edit Showroom' : 'Add Showroom'}</DialogTitle>
+                <DialogTitle>{editingShowroom ? t('Edit Showroom') : t('Add Showroom')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Name (Georgian) *</Label>
+                    <Label>{t('Name (Georgian) *')}</Label>
                     <Input
                       value={formData.name_ka}
                       onChange={(e) => setFormData({ ...formData, name_ka: e.target.value })}
@@ -174,7 +176,7 @@ export default function AdminShowrooms() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Name (Russian)</Label>
+                    <Label>{t('Name (Russian)')}</Label>
                     <Input
                       value={formData.name_en}
                       onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
@@ -183,7 +185,7 @@ export default function AdminShowrooms() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Address (Georgian) *</Label>
+                    <Label>{t('Address (Georgian)')} *</Label>
                     <Input
                       value={formData.address_ka}
                       onChange={(e) => setFormData({ ...formData, address_ka: e.target.value })}
@@ -191,7 +193,7 @@ export default function AdminShowrooms() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Address (Russian)</Label>
+                    <Label>{t('Address (English)')}</Label>
                     <Input
                       value={formData.address_en}
                       onChange={(e) => setFormData({ ...formData, address_en: e.target.value })}
@@ -200,14 +202,14 @@ export default function AdminShowrooms() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Phone</Label>
+                    <Label>{t('Phone')}</Label>
                     <Input
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Email</Label>
+                    <Label>{t('Email')}</Label>
                     <Input
                       type="email"
                       value={formData.email}
@@ -217,7 +219,7 @@ export default function AdminShowrooms() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Working Hours (Georgian)</Label>
+                    <Label>{t('Working Hours (Georgian)')}</Label>
                     <Input
                       value={formData.working_hours_ka}
                       onChange={(e) => setFormData({ ...formData, working_hours_ka: e.target.value })}
@@ -225,7 +227,7 @@ export default function AdminShowrooms() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Working Hours (Russian)</Label>
+                    <Label>{t('Working Hours (English)')}</Label>
                     <Input
                       value={formData.working_hours_en}
                       onChange={(e) => setFormData({ ...formData, working_hours_en: e.target.value })}
@@ -234,7 +236,7 @@ export default function AdminShowrooms() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Image URL</Label>
+                  <Label>{t('Image URL')}</Label>
                   <Input
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
@@ -242,7 +244,7 @@ export default function AdminShowrooms() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Google Maps Embed URL</Label>
+                  <Label>{t('Map Embed URL')}</Label>
                   <Input
                     value={formData.map_embed_url}
                     onChange={(e) => setFormData({ ...formData, map_embed_url: e.target.value })}
@@ -252,10 +254,10 @@ export default function AdminShowrooms() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
                     <Switch checked={formData.is_active} onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })} />
-                    <Label>Active</Label>
+                    <Label>{t('Active')}</Label>
                   </div>
                   <div className="space-y-2">
-                    <Label>Sort Order</Label>
+                    <Label>{t('Sort Order')}</Label>
                     <Input
                       type="number"
                       value={formData.sort_order}
@@ -264,10 +266,10 @@ export default function AdminShowrooms() {
                   </div>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editingShowroom ? 'Update' : 'Create'}
+                    {editingShowroom ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -285,11 +287,11 @@ export default function AdminShowrooms() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Address</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Name')}</TableHead>
+                    <TableHead>{t('Address')}</TableHead>
+                    <TableHead>{t('Phone')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -300,7 +302,7 @@ export default function AdminShowrooms() {
                       <TableCell>{showroom.phone || '-'}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs ${showroom.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                          {showroom.is_active ? 'Active' : 'Inactive'}
+                          {showroom.is_active ? t('Active') : t('Inactive')}
                         </span>
                       </TableCell>
                       <TableCell>
@@ -323,7 +325,7 @@ export default function AdminShowrooms() {
                   {showrooms?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                        No showrooms yet
+                        {t('No showrooms yet')}
                       </TableCell>
                     </TableRow>
                   )}

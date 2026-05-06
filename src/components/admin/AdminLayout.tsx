@@ -151,18 +151,23 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <Globe className="h-3 w-3" /> {t('Language')}
             </div>
             <div className="flex gap-1">
-              {(['ka', 'ru', 'en'] as const).map((lang) => (
+              {([
+                { code: 'ka' as const, label: 'ქართ' },
+                { code: 'ru' as const, label: 'Рус' },
+                { code: 'en' as const, label: 'Eng' },
+              ]).map(({ code, label }) => (
                 <button
-                  key={lang}
-                  onClick={() => setLanguage(lang)}
+                  key={code}
+                  onClick={() => setLanguage(code)}
                   className={cn(
                     'flex-1 py-1.5 text-xs font-medium rounded transition-colors',
-                    language === lang
+                    language === code
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   )}
+                  title={code === 'ka' ? 'ქართული' : code === 'ru' ? 'Русский' : 'English'}
                 >
-                  {lang.toUpperCase()}
+                  {label}
                 </button>
               ))}
             </div>

@@ -56,7 +56,7 @@ export default function AdminBanners() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-banners'] });
-      toast.success('Banner created');
+      toast.success(t('Banner created'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -69,7 +69,7 @@ export default function AdminBanners() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-banners'] });
-      toast.success('Banner updated');
+      toast.success(t('Banner updated'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -79,7 +79,7 @@ export default function AdminBanners() {
     mutationFn: (id: string) => deleteRow('banners', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-banners'] });
-      toast.success('Banner deleted');
+      toast.success(t('Banner deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -165,7 +165,7 @@ export default function AdminBanners() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Title (Georgian) *</Label>
+                    <Label>{t('Title (Georgian) *')}</Label>
                     <Input
                       value={formData.title_ka}
                       onChange={(e) => setFormData({ ...formData, title_ka: e.target.value })}
@@ -173,7 +173,7 @@ export default function AdminBanners() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Title (Russian)</Label>
+                    <Label>{t('Title (Russian)')}</Label>
                     <Input
                       value={formData.title_en}
                       onChange={(e) => setFormData({ ...formData, title_en: e.target.value })}
@@ -182,14 +182,14 @@ export default function AdminBanners() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Subtitle (Georgian)</Label>
+                    <Label>{t('Subtitle (Georgian)')}</Label>
                     <Input
                       value={formData.subtitle_ka}
                       onChange={(e) => setFormData({ ...formData, subtitle_ka: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Subtitle (Russian)</Label>
+                    <Label>{t('Subtitle (Russian)')}</Label>
                     <Input
                       value={formData.subtitle_en}
                       onChange={(e) => setFormData({ ...formData, subtitle_en: e.target.value })}
@@ -198,14 +198,14 @@ export default function AdminBanners() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Button Text (Georgian)</Label>
+                    <Label>{t('Button Text (Georgian)')}</Label>
                     <Input
                       value={formData.button_text_ka}
                       onChange={(e) => setFormData({ ...formData, button_text_ka: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Button Text (Russian)</Label>
+                    <Label>{t('Button Text (Russian)')}</Label>
                     <Input
                       value={formData.button_text_en}
                       onChange={(e) => setFormData({ ...formData, button_text_en: e.target.value })}
@@ -213,7 +213,7 @@ export default function AdminBanners() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Image URL *</Label>
+                  <Label>{t('Image URL *')}</Label>
                   <Input
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
@@ -223,7 +223,7 @@ export default function AdminBanners() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Link URL</Label>
+                    <Label>{t('Link URL')}</Label>
                     <Input
                       value={formData.link_url}
                       onChange={(e) => setFormData({ ...formData, link_url: e.target.value })}
@@ -231,7 +231,7 @@ export default function AdminBanners() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Sort Order</Label>
+                    <Label>{t('Sort Order')}</Label>
                     <Input
                       type="number"
                       value={formData.sort_order}
@@ -240,23 +240,23 @@ export default function AdminBanners() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Section</Label>
+                  <Label>{t('Section')}</Label>
                   <Select value={formData.section} onValueChange={(v) => setFormData({ ...formData, section: v })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="union_hero">Union — hero carousel</SelectItem>
-                      <SelectItem value="hm_hero">HMspace — hero</SelectItem>
-                      <SelectItem value="main_accents">Main accents</SelectItem>
-                      <SelectItem value="projects">Projects</SelectItem>
-                      <SelectItem value="trending">Trending</SelectItem>
+                      <SelectItem value="union_hero">{t('Union — hero carousel')}</SelectItem>
+                      <SelectItem value="hm_hero">{t('HMspace — hero')}</SelectItem>
+                      <SelectItem value="main_accents">{t('Main accents')}</SelectItem>
+                      <SelectItem value="projects">{t('Projects')}</SelectItem>
+                      <SelectItem value="trending">{t('Trending')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="flex items-center gap-2">
                   <Switch checked={formData.is_active} onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })} />
-                  <Label>Active</Label>
+                  <Label>{t('Active')}</Label>
                 </div>
                 <div className="flex justify-end gap-2">
                   <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>

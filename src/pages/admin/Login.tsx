@@ -7,8 +7,13 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Loader2, Lock } from 'lucide-react';
+import { useAdminT } from '@/lib/adminI18n';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { cn } from '@/lib/utils';
 
 export default function AdminLogin() {
+  const t = useAdminT();
+  const { language, setLanguage } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +55,7 @@ export default function AdminLogin() {
       }
 
       if (!data.user) {
-        toast.error('Login failed');
+        toast.error(t('Login failed'));
         setIsLoading(false);
         return;
       }
@@ -62,23 +67,23 @@ export default function AdminLogin() {
       });
 
       if (roleError) {
-        toast.error('Error checking permissions');
+        toast.error(t('Error checking permissions'));
         await supabase.auth.signOut();
         setIsLoading(false);
         return;
       }
 
       if (!hasRole) {
-        toast.error('You do not have admin access');
+        toast.error(t('You do not have admin access'));
         await supabase.auth.signOut();
         setIsLoading(false);
         return;
       }
 
-      toast.success('Welcome to Admin Panel');
+      toast.success(t('Welcome to Admin Panel'));
       navigate('/admin');
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error(t('An error occurred'));
       setIsLoading(false);
     }
   };
@@ -98,13 +103,30 @@ export default function AdminLogin() {
           <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
             <Lock className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Admin Panel</CardTitle>
-          <CardDescription>Enter your credentials to access the admin panel</CardDescription>
+          <CardTitle className="text-2xl">{t('Admin Panel')}</CardTitle>
+          <CardDescription>{t('Enter your credentials to access the admin panel')}</CardDescription>
+          <div className="flex justify-center gap-1 pt-3">
+            {(['ka', 'ru', 'en'] as const).map((lang) => (
+              <button
+                key={lang}
+                type="button"
+                onClick={() => setLanguage(lang)}
+                className={cn(
+                  'px-2.5 py-1 text-xs font-medium rounded transition-colors',
+                  language === lang
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                )}
+              >
+                {lang === 'ka' ? 'ქართული' : lang === 'ru' ? 'Русский' : 'English'}
+              </button>
+            ))}
+          </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('Email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -116,7 +138,7 @@ export default function AdminLogin() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('Password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -131,10 +153,10 @@ export default function AdminLogin() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
+                  {t('Signing in...')}
                 </>
               ) : (
-                'Sign In'
+                t('Sign In')
               )}
             </Button>
           </form>

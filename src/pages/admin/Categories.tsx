@@ -64,7 +64,7 @@ export default function AdminCategories() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-categories-list'] });
-      toast.success('Category created');
+      toast.success(t('Category created'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -77,7 +77,7 @@ export default function AdminCategories() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-categories-list'] });
-      toast.success('Category updated');
+      toast.success(t('Category updated'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -87,7 +87,7 @@ export default function AdminCategories() {
     mutationFn: (id: string) => deleteRow('categories', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-categories-list'] });
-      toast.success('Category deleted');
+      toast.success(t('Category deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -194,7 +194,7 @@ export default function AdminCategories() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Name (Georgian) *</Label>
+                    <Label>{t('Name (Georgian) *')}</Label>
                     <Input
                       value={formData.name_ka}
                       onChange={(e) => setFormData({ ...formData, name_ka: e.target.value })}
@@ -202,7 +202,7 @@ export default function AdminCategories() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Name (Russian)</Label>
+                    <Label>{t('Name (Russian)')}</Label>
                     <Input
                       value={formData.name_en}
                       onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
@@ -210,15 +210,15 @@ export default function AdminCategories() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Slug</Label>
+                  <Label>{t('Slug')}</Label>
                   <Input
                     value={formData.slug}
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    placeholder="auto-generated-from-name"
+                    placeholder={t('auto-generated-from-name')}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Description (Georgian)</Label>
+                  <Label>{t('Description (Georgian)')}</Label>
                   <Textarea
                     value={formData.description_ka}
                     onChange={(e) => setFormData({ ...formData, description_ka: e.target.value })}
@@ -226,7 +226,7 @@ export default function AdminCategories() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Image URL</Label>
+                  <Label>{t('Image URL')}</Label>
                   <Input
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
@@ -235,16 +235,16 @@ export default function AdminCategories() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Parent Category</Label>
+                    <Label>{t('Parent Category')}</Label>
                     <Select
                       value={formData.parent_id || '__none__'}
                       onValueChange={(value) => setFormData({ ...formData, parent_id: value === '__none__' ? '' : value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="None (Top level)" />
+                        <SelectValue placeholder={t('None (Top level)')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="__none__">None (Top level)</SelectItem>
+                        <SelectItem value="__none__">{t('None (Top level)')}</SelectItem>
                         {parentCategories?.filter(c => c.id !== editingCategory?.id).map((cat) => (
                           <SelectItem key={cat.id} value={cat.id}>{cat.name_ka}</SelectItem>
                         ))}
@@ -252,7 +252,7 @@ export default function AdminCategories() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Sort Order</Label>
+                    <Label>{t('Sort Order')}</Label>
                     <Input
                       type="number"
                       value={formData.sort_order}
@@ -262,17 +262,17 @@ export default function AdminCategories() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Switch checked={formData.is_active} onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })} />
-                  <Label>Active</Label>
+                  <Label>{t('Active')}</Label>
                 </div>
 
                 {/* === Phase A: per-category banner === */}
                 <div className="border rounded-lg p-4 bg-gray-50/50 space-y-3">
                   <div>
-                    <Label className="font-medium">Category page banner</Label>
-                    <p className="text-xs text-gray-500 mt-0.5">Optional hero shown above the product grid on /catalog/&lt;slug&gt;.</p>
+                    <Label className="font-medium">{t('Category page banner')}</Label>
+                    <p className="text-xs text-gray-500 mt-0.5">{t('Optional hero shown above the product grid on /catalog/<slug>.')}</p>
                   </div>
                   <div className="space-y-2">
-                    <Label>Banner image URL</Label>
+                    <Label>{t('Banner image URL')}</Label>
                     <Input
                       value={formData.banner_image_url}
                       onChange={(e) => setFormData({ ...formData, banner_image_url: e.target.value })}
@@ -283,7 +283,7 @@ export default function AdminCategories() {
                     <img src={formData.banner_image_url} alt="" className="h-32 w-full object-cover rounded border" />
                   )}
                   <div className="space-y-2">
-                    <Label>Banner click-through URL</Label>
+                    <Label>{t('Banner click-through URL')}</Label>
                     <Input
                       value={formData.banner_link_url}
                       onChange={(e) => setFormData({ ...formData, banner_link_url: e.target.value })}
@@ -292,29 +292,29 @@ export default function AdminCategories() {
                   </div>
                   <div className="grid grid-cols-3 gap-3">
                     <div className="space-y-2">
-                      <Label>Title (KA)</Label>
+                      <Label>{t('Title (KA)')}</Label>
                       <Input value={formData.banner_title_ka} onChange={(e) => setFormData({ ...formData, banner_title_ka: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Title (RU)</Label>
+                      <Label>{t('Title (RU)')}</Label>
                       <Input value={formData.banner_title_ru} onChange={(e) => setFormData({ ...formData, banner_title_ru: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Title (EN)</Label>
+                      <Label>{t('Title (EN)')}</Label>
                       <Input value={formData.banner_title_en} onChange={(e) => setFormData({ ...formData, banner_title_en: e.target.value })} />
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-3">
                     <div className="space-y-2">
-                      <Label>Subtitle (KA)</Label>
+                      <Label>{t('Subtitle (KA)')}</Label>
                       <Input value={formData.banner_subtitle_ka} onChange={(e) => setFormData({ ...formData, banner_subtitle_ka: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Subtitle (RU)</Label>
+                      <Label>{t('Subtitle (RU)')}</Label>
                       <Input value={formData.banner_subtitle_ru} onChange={(e) => setFormData({ ...formData, banner_subtitle_ru: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Subtitle (EN)</Label>
+                      <Label>{t('Subtitle (EN)')}</Label>
                       <Input value={formData.banner_subtitle_en} onChange={(e) => setFormData({ ...formData, banner_subtitle_en: e.target.value })} />
                     </div>
                   </div>
@@ -371,7 +371,7 @@ export default function AdminCategories() {
                             variant="ghost"
                             size="icon"
                             onClick={() => {
-                              if (window.confirm(`Delete category "${category.name_ka}"? Products in this category will be unassigned.`)) {
+                              if (window.confirm(`${t('Delete')} "${category.name_ka}"? ${t('Products in this category will be unassigned.')}`)) {
                                 deleteMutation.mutate(category.id);
                               }
                             }}

@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Truck, Shield, CreditCard, Headphones, Star, Award, Package, Users, Sparkles, Heart, Clock, MapPin } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Feature = Tables<'site_features'>;
 
@@ -20,6 +21,7 @@ const ICON_OPTIONS = ['Truck', 'Shield', 'CreditCard', 'Headphones', 'Star', 'Aw
 const iconMap: Record<string, any> = { Truck, Shield, CreditCard, Headphones, Star, Award, Package, Users, Sparkles, Heart, Clock, MapPin };
 
 export default function AdminSiteFeatures() {
+  const t = useAdminT();
   const [isOpen, setIsOpen] = useState(false);
   const [editing, setEditing] = useState<Feature | null>(null);
   const [form, setForm] = useState({
@@ -47,17 +49,17 @@ export default function AdminSiteFeatures() {
 
   const create = useMutation({
     mutationFn: async (d: any) => { const { error } = await supabase.from('site_features').insert([d]); if (error) throw error; },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success('Feature created'); reset(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success(t('Feature created')); reset(); },
     onError: (e: any) => toast.error(e.message),
   });
   const update = useMutation({
     mutationFn: async ({ id, d }: { id: string; d: any }) => { const { error } = await supabase.from('site_features').update(d).eq('id', id); if (error) throw error; },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success('Feature updated'); reset(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success(t('Feature updated')); reset(); },
     onError: (e: any) => toast.error(e.message),
   });
   const del = useMutation({
     mutationFn: (id: string) => deleteRow('site_features', id),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success('Feature deleted'); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-site-features'] }); toast.success(t('Feature deleted')); },
     onError: (e: any) => toast.error(e.message),
   });
 
@@ -105,18 +107,18 @@ export default function AdminSiteFeatures() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Home Features Bar</h1>
-            <p className="text-gray-500 mt-1">Items shown in the home page feature bar (delivery, warranty, etc.)</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Home Features Bar')}</h1>
+            <p className="text-gray-500 mt-1">{t('Items shown in the home page feature bar (delivery, warranty, etc.)')}</p>
           </div>
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-              <Button onClick={reset}><Plus className="h-4 w-4 mr-2" />Add Feature</Button>
+              <Button onClick={reset}><Plus className="h-4 w-4 mr-2" />{t('Add Feature')}</Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
-              <DialogHeader><DialogTitle>{editing ? 'Edit Feature' : 'Add Feature'}</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{editing ? t('Edit Feature') : t('Add Feature')}</DialogTitle></DialogHeader>
               <form onSubmit={onSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label>Icon</Label>
+                  <Label>{t('Icon')}</Label>
                   <select className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                           value={form.icon}
                           onChange={(e) => setForm({ ...form, icon: e.target.value })}>
@@ -124,24 +126,24 @@ export default function AdminSiteFeatures() {
                   </select>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="space-y-2"><Label>Title (KA) *</Label><Input value={form.title_ka} onChange={(e) => setForm({ ...form, title_ka: e.target.value })} required /></div>
-                  <div className="space-y-2"><Label>Title (RU)</Label><Input value={form.title_ru} onChange={(e) => setForm({ ...form, title_ru: e.target.value })} /></div>
-                  <div className="space-y-2"><Label>Title (EN)</Label><Input value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Title (KA) *')}</Label><Input value={form.title_ka} onChange={(e) => setForm({ ...form, title_ka: e.target.value })} required /></div>
+                  <div className="space-y-2"><Label>{t('Title (RU)')}</Label><Input value={form.title_ru} onChange={(e) => setForm({ ...form, title_ru: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Title (EN)')}</Label><Input value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })} /></div>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="space-y-2"><Label>Description (KA)</Label><Input value={form.description_ka} onChange={(e) => setForm({ ...form, description_ka: e.target.value })} /></div>
-                  <div className="space-y-2"><Label>Description (RU)</Label><Input value={form.description_ru} onChange={(e) => setForm({ ...form, description_ru: e.target.value })} /></div>
-                  <div className="space-y-2"><Label>Description (EN)</Label><Input value={form.description_en} onChange={(e) => setForm({ ...form, description_en: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Description (KA)')}</Label><Input value={form.description_ka} onChange={(e) => setForm({ ...form, description_ka: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Description (RU)')}</Label><Input value={form.description_ru} onChange={(e) => setForm({ ...form, description_ru: e.target.value })} /></div>
+                  <div className="space-y-2"><Label>{t('Description (EN)')}</Label><Input value={form.description_en} onChange={(e) => setForm({ ...form, description_en: e.target.value })} /></div>
                 </div>
                 <div className="flex gap-4 items-center">
-                  <div className="space-y-2 flex-1"><Label>Sort Order</Label><Input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} /></div>
-                  <div className="flex items-center gap-2 mt-6"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><Label>Active</Label></div>
+                  <div className="space-y-2 flex-1"><Label>{t('Sort Order')}</Label><Input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} /></div>
+                  <div className="flex items-center gap-2 mt-6"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><Label>{t('Active')}</Label></div>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={reset}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={reset}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={create.isPending || update.isPending}>
                     {(create.isPending || update.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editing ? 'Update' : 'Create'}
+                    {editing ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -153,8 +155,8 @@ export default function AdminSiteFeatures() {
           {isLoading ? <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin text-gray-400" /></div> : (
             <Table>
               <TableHeader><TableRow>
-                <TableHead>Icon</TableHead><TableHead>Title</TableHead><TableHead>Description</TableHead>
-                <TableHead>Order</TableHead><TableHead>Status</TableHead><TableHead className="w-[100px]">Actions</TableHead>
+                <TableHead>{t('Icon')}</TableHead><TableHead>{t('Title')}</TableHead><TableHead>{t('Description')}</TableHead>
+                <TableHead>{t('Order')}</TableHead><TableHead>{t('Status')}</TableHead><TableHead className="w-[100px]">{t('Actions')}</TableHead>
               </TableRow></TableHeader>
               <TableBody>
                 {data?.map((f) => {
@@ -165,15 +167,15 @@ export default function AdminSiteFeatures() {
                       <TableCell className="font-medium">{f.title_ka}</TableCell>
                       <TableCell className="text-gray-500">{f.description_ka}</TableCell>
                       <TableCell>{f.sort_order}</TableCell>
-                      <TableCell><span className={`px-2 py-1 rounded-full text-xs ${f.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>{f.is_active ? 'Active' : 'Inactive'}</span></TableCell>
+                      <TableCell><span className={`px-2 py-1 rounded-full text-xs ${f.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>{f.is_active ? t('Active') : t('Inactive')}</span></TableCell>
                       <TableCell><div className="flex gap-2">
                         <Button variant="ghost" size="icon" onClick={() => onEdit(f)}><Pencil className="h-4 w-4" /></Button>
-                        <Button variant="ghost" size="icon" onClick={() => { if (confirm(`Delete "${f.title_ka}"?`)) del.mutate(f.id); }} className="text-red-600"><Trash2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => { if (confirm(`${t('Delete')} "${f.title_ka}"?`)) del.mutate(f.id); }} className="text-red-600"><Trash2 className="h-4 w-4" /></Button>
                       </div></TableCell>
                     </TableRow>
                   );
                 })}
-                {data?.length === 0 && <TableRow><TableCell colSpan={6} className="text-center py-8 text-gray-500">No features yet</TableCell></TableRow>}
+                {data?.length === 0 && <TableRow><TableCell colSpan={6} className="text-center py-8 text-gray-500">{t('No features yet')}</TableCell></TableRow>}
               </TableBody>
             </Table>
           )}

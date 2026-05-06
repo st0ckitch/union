@@ -14,10 +14,12 @@ import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Star } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 import { deleteRow } from '@/lib/adminMutations';
+import { useAdminT } from '@/lib/adminI18n';
 
 type Testimonial = Tables<'testimonials'>;
 
 export default function AdminTestimonials() {
+  const t = useAdminT();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
   const [formData, setFormData] = useState({
@@ -51,7 +53,7 @@ export default function AdminTestimonials() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
-      toast.success('Testimonial created');
+      toast.success(t('Testimonial created'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -64,7 +66,7 @@ export default function AdminTestimonials() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
-      toast.success('Testimonial updated');
+      toast.success(t('Testimonial updated'));
       resetForm();
     },
     onError: (error: any) => toast.error(error.message)
@@ -74,7 +76,7 @@ export default function AdminTestimonials() {
     mutationFn: (id: string) => deleteRow('testimonials', id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
-      toast.success('Testimonial deleted');
+      toast.success(t('Testimonial deleted'));
     },
     onError: (error: any) => toast.error(error.message)
   });
@@ -134,24 +136,24 @@ export default function AdminTestimonials() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Testimonials</h1>
-            <p className="text-gray-500 mt-1">Manage customer testimonials</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('Testimonials')}</h1>
+            <p className="text-gray-500 mt-1">{t('Manage customer testimonials')}</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => resetForm()}>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Testimonial
+                {t('Add Testimonial')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
               <DialogHeader>
-                <DialogTitle>{editingTestimonial ? 'Edit Testimonial' : 'Add Testimonial'}</DialogTitle>
+                <DialogTitle>{editingTestimonial ? t('Edit Testimonial') : t('Add Testimonial')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Author Name *</Label>
+                    <Label>{t('Author Name *')}</Label>
                     <Input
                       value={formData.author_name}
                       onChange={(e) => setFormData({ ...formData, author_name: e.target.value })}
@@ -159,16 +161,16 @@ export default function AdminTestimonials() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Author Title</Label>
+                    <Label>{t('Author Title')}</Label>
                     <Input
                       value={formData.author_title}
                       onChange={(e) => setFormData({ ...formData, author_title: e.target.value })}
-                      placeholder="e.g. CEO, Designer"
+                      placeholder={t('e.g. CEO, Designer')}
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Content (Georgian) *</Label>
+                  <Label>{t('Content (Georgian) *')}</Label>
                   <Textarea
                     value={formData.content_ka}
                     onChange={(e) => setFormData({ ...formData, content_ka: e.target.value })}
@@ -177,7 +179,7 @@ export default function AdminTestimonials() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Content (Russian)</Label>
+                  <Label>{t('Content (Russian)')}</Label>
                   <Textarea
                     value={formData.content_en}
                     onChange={(e) => setFormData({ ...formData, content_en: e.target.value })}
@@ -186,7 +188,7 @@ export default function AdminTestimonials() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Avatar URL</Label>
+                    <Label>{t('Avatar URL')}</Label>
                     <Input
                       value={formData.avatar_url}
                       onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
@@ -194,7 +196,7 @@ export default function AdminTestimonials() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Rating (1-5)</Label>
+                    <Label>{t('Rating (1-5)')}</Label>
                     <Input
                       type="number"
                       min="1"
@@ -207,18 +209,18 @@ export default function AdminTestimonials() {
                 <div className="flex gap-6">
                   <div className="flex items-center gap-2">
                     <Switch checked={formData.is_active} onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })} />
-                    <Label>Active</Label>
+                    <Label>{t('Active')}</Label>
                   </div>
                   <div className="flex items-center gap-2">
                     <Switch checked={formData.is_featured} onCheckedChange={(checked) => setFormData({ ...formData, is_featured: checked })} />
-                    <Label>Featured</Label>
+                    <Label>{t('Featured')}</Label>
                   </div>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>{t('Cancel')}</Button>
                   <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
                     {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    {editingTestimonial ? 'Update' : 'Create'}
+                    {editingTestimonial ? t('Update') : t('Create')}
                   </Button>
                 </div>
               </form>
@@ -236,11 +238,11 @@ export default function AdminTestimonials() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Author</TableHead>
-                    <TableHead>Content</TableHead>
-                    <TableHead>Rating</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t('Author')}</TableHead>
+                    <TableHead>{t('Content')}</TableHead>
+                    <TableHead>{t('Rating')}</TableHead>
+                    <TableHead>{t('Status')}</TableHead>
+                    <TableHead className="w-[100px]">{t('Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -270,10 +272,10 @@ export default function AdminTestimonials() {
                       <TableCell>
                         <div className="flex gap-1">
                           <span className={`px-2 py-1 rounded-full text-xs ${testimonial.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                            {testimonial.is_active ? 'Active' : 'Inactive'}
+                            {testimonial.is_active ? t('Active') : t('Inactive')}
                           </span>
                           {testimonial.is_featured && (
-                            <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">Featured</span>
+                            <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">{t('Featured')}</span>
                           )}
                         </div>
                       </TableCell>
@@ -297,7 +299,7 @@ export default function AdminTestimonials() {
                   {testimonials?.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                        No testimonials yet
+                        {t('No testimonials yet')}
                       </TableCell>
                     </TableRow>
                   )}
