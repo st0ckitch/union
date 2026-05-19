@@ -1,0 +1,300 @@
+
+
+/* Start:/local/templates/union_2024/components/bitrix/catalog/all_page/style.css?17656128411527*/
+.grid{}
+.grid .bx_content_section{
+	margin-bottom: 15px;
+}
+.grid .bx_sidebar{
+	margin-bottom: 15px;
+}
+
+/* grid2x1 */
+.grid2x1{}
+.grid2x1 .bx_content_section{
+	float: left;
+	width: 66%;
+	margin-bottom: 15px;
+}
+.grid2x1 .bx_sidebar{
+	float: right;
+	width: 33%;
+	margin-bottom: 15px;
+	padding-left: 5%;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+@media (max-width:960px){
+	.grid2x1 .bx_sidebar{
+		padding-left: 4%;
+	}
+}
+@media (max-width:640px) {
+	.grid2x1 .bx_content_section,
+	.grid2x1 .bx_sidebar{
+		width: 100%;
+		float: none;
+	}
+	.grid2x1 .bx_sidebar{
+		padding-left: 3%;
+	}
+}
+@media (max-width:479px){
+	.grid2x1 .bx_sidebar{
+		padding-left: 1%;
+	}
+
+}
+
+.catalog-block-header{
+	font-size:14px;
+	font-weight: bold;
+	text-align: left;
+	margin:5px 0;
+	padding:5px 15px;
+	border-bottom: 2px solid #d9dee6;
+	color: #000;
+}
+
+body.bx-theme-blue .catalog-block-header{border-color:#006cc0;}
+body.bx-theme-green .catalog-block-header{border-color:#63aa28;}
+body.bx-theme-red .catalog-block-header{border-color:#da3737;}
+body.bx-theme-yellow .catalog-block-header{border-color:#f4b236;}
+.top_submenu {
+	margin-top: 25px;
+}
+.top_submenu span {
+	text-transform: uppercase;
+	margin-right: 20px;
+	cursor: pointer;
+}
+.top_submenu span.active {
+	font-weight: bold;
+}
+@media screen and (max-width:768px) {
+	.top_submenu {
+		padding: 0 15px;
+	}
+	.secH1 {
+		margin: 0 13px;
+	}
+}
+.predH1 {
+	font-size: 36px;
+    color: red;
+    padding-top: 20px;
+	margin-left: 15px;
+}
+.mrl15{
+	/*margin-left: 15px;*/
+}
+/* End */
+
+
+/* Start:/local/templates/union_2024/components/bitrix/breadcrumb/h1/style.min.css?1774966658399*/
+.bx-breadcrumb{margin:10px 0}.bx-breadcrumb i{color:#b5bdc2;line-height:13px;font-size:12px;vertical-align:middle;margin-right:5px}.bx-breadcrumb .bx-breadcrumb-item{float:left;margin-bottom:10px;white-space:nowrap;line-height:13px;vertical-align:middle;margin-right:10px}.bx-breadcrumb .bx-breadcrumb-item span{font-size:13px;white-space:normal}.bx-breadcrumb .bx-breadcrumb-item a{border-bottom:0}
+/* End */
+
+
+/* Start:/local/components/sukalovpro/super/templates/sectionMenu/style.css?1752845129590*/
+.top_submenu span.delimiter_sec {
+	margin: 0 10px;
+}
+.top_submenu span {
+    margin-right: 0px;
+}
+.top_submenu {
+    margin-top: 25px;
+}
+.top_submenu span {
+    text-transform: uppercase;
+    /*margin-right: 20px;*/
+    cursor: pointer;
+}
+.top_submenu span.active {
+    font-weight: bold;
+}
+@media screen and (max-width:768px) {
+    .top_submenu {
+        padding: 0 15px;
+    }
+    h1.secH1 {
+        margin: 0 15px;
+    }
+}
+.predH1 {
+    font-size: 36px;
+    color: red;
+    padding-top: 20px;
+    margin-left: 15px;
+}
+.mrl15{
+    /*margin-left: 15px;*/
+}
+/* End */
+
+
+/* Start:/local/components/sukalovpro/super/templates/all-doors_3el/style.css?17453248472719*/
+.sec1lvl li {
+	font-weight: bold;
+    font-size: 20px;
+    list-style-type: none;
+    text-transform: uppercase;
+    margin: 25px 0;
+}
+@media screen and (min-width: 768px) {
+	#blockSection .row {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+.sec2lvl {
+    padding-left: 0px;
+    margin: 10px 0;
+}
+.sec2lvl li {
+    margin-top: 20px;
+    font-weight: normal;
+    font-size: 20px;
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+ul.sec2lvl li a.nameSecAllDoors {
+    color: #222;
+    text-decoration: none;
+}
+ul.sec2lvl .link_sec {
+    color: #222;
+    font-size: 12px;
+    text-decoration: none;
+}
+ul.sec2lvl .link_sec:hover {
+	text-decoration: underline;
+}
+@media screen and (max-width:767px) {
+	.sec1lvl {
+		padding: 15px;
+	}
+	div.all_avalible_img {
+		position: absolute;
+		top: 5px;
+		right: 10px;
+		z-index: 1;
+	}
+	div.all_avalible_img img {
+		object-fit: contain;
+		width: 85px;
+		height: auto;
+	}
+	.divimg img {
+		/*width: 165px;*/
+		/*height: 165px;*/
+		object-fit: cover;
+	}
+	.name_el {
+		line-height: 16px;
+		height: 90px !important;
+	}
+	.title_sec {
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 15px;
+	}
+}
+@media screen and (min-width:768px) {
+	/*.divimg img {*/
+	/*	width: 395px;*/
+	/*	height: 265px;*/
+	/*	object-fit: cover;*/
+	/*}*/
+	div.all_avalible_img {
+		position: absolute;
+		top: 5px;
+		right: 0px;
+		z-index: 1;
+	}
+	div.all_avalible_img img {
+		object-fit: contain;
+		width: 85px;
+		height: auto;	
+	}
+	.title_sec {
+		font-size: 18px;
+		font-weight: bold;
+		/*margin-left: -15px;*/
+		margin-bottom: 15px;
+	}
+	.mrl15{
+		margin-left: 15px;
+	}
+}
+.name_el {
+    height: 65px;
+    text-align: center;
+    /*padding-top: 7px;*/
+}
+.sec1lvl li h2{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.elImgFirst {
+	opacity: 0.25;
+    position: absolute;
+}
+.elImgSecond {
+	object-fit: contain !important;
+    position: relative;
+}
+.products-catalog .product-item p:not(:last-child) {
+    margin-bottom: 5px;
+}
+.products-catalog .product-item .price {
+    margin: 0;
+    padding: 0;
+    font-size: 10.1pt;
+}
+.product-item span.price {
+    display: inline-block;
+    margin-top: 0px;
+    padding: 2px 7px 1px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.price-old {
+    color: #aaa !important;
+    text-decoration: line-through;
+}
+.price-new {
+    color: #be0000 !important;
+}
+.no_decorate,
+.no_decorate p,
+.no_decorate p span {
+    text-decoration: none !important;
+}
+a.no_decorate p {
+	margin-bottom: 0px;
+}
+.product-item .about {
+	padding-top: 10px;
+}
+
+.linc_sec_hover {
+    display: none;
+}
+a.link_sec:hover + .linc_sec_hover {
+    display: block;
+    position: absolute;
+    background: #fff;
+    z-index: 101;
+    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+    padding: 25px;
+	width: 95%;
+}
+/* End */
+/* /local/templates/union_2024/components/bitrix/catalog/all_page/style.css?17656128411527 */
+/* /local/templates/union_2024/components/bitrix/breadcrumb/h1/style.min.css?1774966658399 */
+/* /local/components/sukalovpro/super/templates/sectionMenu/style.css?1752845129590 */
+/* /local/components/sukalovpro/super/templates/all-doors_3el/style.css?17453248472719 */

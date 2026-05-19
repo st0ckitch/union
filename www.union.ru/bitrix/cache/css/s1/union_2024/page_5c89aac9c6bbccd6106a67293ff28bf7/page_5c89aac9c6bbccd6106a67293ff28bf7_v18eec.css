@@ -1,0 +1,487 @@
+
+
+/* Start:/local/templates/union_2024/components/bitrix/breadcrumb/h1/style.min.css?1774966658399*/
+.bx-breadcrumb{margin:10px 0}.bx-breadcrumb i{color:#b5bdc2;line-height:13px;font-size:12px;vertical-align:middle;margin-right:5px}.bx-breadcrumb .bx-breadcrumb-item{float:left;margin-bottom:10px;white-space:nowrap;line-height:13px;vertical-align:middle;margin-right:10px}.bx-breadcrumb .bx-breadcrumb-item span{font-size:13px;white-space:normal}.bx-breadcrumb .bx-breadcrumb-item a{border-bottom:0}
+/* End */
+
+
+/* Start:/local/templates/union_2024/components/bitrix/catalog.element/furniture-view/style.css?176052307789*/
+.flex-row {
+  display: flex;
+  flex-wrap: wrap; }
+
+/*# sourceMappingURL=style.css.map */
+
+/* End */
+
+
+/* Start:/local/templates/union_2024/components/bitrix/catalog.element/furniture-view/first-block.css?17749676575751*/
+@charset "UTF-8";
+#first-block {
+  margin-top: 15px;
+}
+#first-block .title {
+  margin: 0 0 30px;
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+@media screen and (max-width: 1200px) {
+  #first-block .title {
+    font-size: 25px;
+  }
+}
+
+#first-block {
+  /*** Стрелки на слайдере ***/
+  /*** Стрелки на слайдере ***/
+}
+#first-block .inner {
+  padding-right: 40px;
+  margin-top: 60px;
+}
+@media screen and (max-width: 1200px) {
+  #first-block .inner {
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+#first-block .top-slider .item {
+  text-align: center;
+}
+#first-block .top-slider .notice {
+  text-align: left;
+  margin-top: 10px;
+  font-size: 14px;
+}
+@media screen and (max-width: 1200px) {
+  #first-block .top-slider .notice {
+    margin-top: 10px;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  #first-block .button {
+    font-weight: normal;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+#first-block .wrapper-question {
+  text-align: center;
+}
+#first-block .question {
+  background: #3c3c3b;
+  font-weight: normal;
+  width: 256px;
+  color: #f1f1f1;
+  font-size: 12px;
+  max-width: 100%;
+  margin-top: 55px;
+  height: 45px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s linear, border-color 0.2s linear;
+}
+@media screen and (max-width: 1200px) {
+  #first-block .question {
+    margin-top: 25px;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+}
+#first-block .question:hover {
+  color: #333333;
+  background-color: #f5f5f5;
+}
+#first-block .wrapper {
+  padding: 20px 0;
+}
+#first-block .wrapper .description {
+  margin-top: 30px;
+  font-size: 17px;
+  font-weight: 300;
+}
+@media screen and (max-width: 1200px) {
+  #first-block .wrapper .description {
+    font-weight: normal;
+  }
+}
+@media screen and (max-width: 768px) {
+  #first-block .wrapper .description {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #first-block .wrapper .description {
+    font-size: 16px;
+  }
+}
+#first-block .top-slider {
+  position: relative;
+}
+#first-block .top-slider .slick-list {
+  overflow: hidden;
+}
+#first-block .top-slider .slick-track {
+  display: flex;
+}
+#first-block .top-slider .label {
+  padding-top: 10px;
+}
+#first-block .top-slider a:focus,
+#first-block .top-slider a:active {
+  outline: none;
+}
+@media screen and (min-width: 768px) {
+  #first-block .top-slider img {
+    cursor: url("https://www.union.ru/img/curs/zoom-in.png"), auto;
+  }
+}
+#first-block .slick-dots:not(.dots-mob) {
+  /*display: none !important;*/
+  position: absolute;
+  bottom: 20px;
+  z-index: 10005;
+  right: 30px;
+  display: block;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+#first-block .slick-dots:not(.dots-mob) li {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  padding: 0;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid transparent;
+  border-radius: 30px;
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  font-size: 0;
+  /* text-indent: -999em; */
+  box-shadow: inset 0 0 0 1px white;
+  z-index: 99;
+  transition: border 0.3s, background 0.3s;
+  overflow: hidden;
+}
+#first-block .slick-dots:not(.dots-mob) li.slick-active button:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  margin: auto;
+  border-radius: 50%;
+  background: white;
+  content: "";
+}
+#first-block .slick-dots:not(.dots-mob) li button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  cursor: pointer;
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+#first-block .slick-dots:not(.dots-mob) li button:before {
+  font-family: "slick";
+  font-size: 6px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content: "•";
+  text-align: center;
+  opacity: 0.25;
+  color: black;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#first-block .slick-dots.dots-mob {
+  position: relative;
+  width: 100%;
+  left: auto;
+  right: auto;
+  margin-top: 25px;
+  text-align: center;
+  padding: 0;
+}
+#first-block .slick-dots.dots-mob li {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  margin: 0 5px;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0;
+  z-index: 99;
+  overflow: hidden;
+}
+#first-block .slick-dots.dots-mob li.slick-active button {
+  background-color: #595959; /* цвет активной черточки */
+}
+#first-block .slick-dots.dots-mob li button {
+  width: 30px; /* длина черточки */
+  height: 2px; /* толщина черточки */
+  border: none; /* убираем border */
+  border-radius: 2px; /* скругление углов (можно убрать если нужны прямые) */
+  background-color: #ababab; /* цвет неактивной черточки */
+  padding: 0;
+}
+@media screen and (max-width: 1200px) {
+  #first-block .sliders {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+#first-block .cursor-none {
+  cursor: none;
+}
+#first-block .swiper.slider {
+  position: relative;
+}
+#first-block .nav-prev-cursor-none {
+  position: absolute;
+  left: 25%;
+  width: 25%;
+  z-index: 5000;
+  top: 0;
+  height: 100%;
+}
+#first-block .nav-next-cursor-none {
+  position: absolute;
+  right: 25%;
+  width: 25%;
+  z-index: 5000;
+  top: 0;
+  height: 100%;
+}
+#first-block .nav-prev-cursor-none {
+  left: 0;
+  width: 200px;
+  margin-left: max(15px, (100% - 1700px) / 2);
+}
+#first-block .nav-next-cursor-none {
+  right: 0;
+  width: 200px;
+}
+
+/*# sourceMappingURL=first-block.css.map */
+
+/* End */
+
+
+/* Start:/local/templates/union_2024/components/bitrix/catalog.element/furniture-view/second-block.css?1760619271265*/
+#second-block {
+  margin-top: 50px;
+}
+#second-block .notice {
+  margin-top: 5px;
+}
+#second-block .item {
+  margin-bottom: 35px;
+}
+#second-block .title {
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 40px;
+}
+
+/*# sourceMappingURL=second-block.css.map */
+
+/* End */
+
+
+/* Start:/local/templates/union_2024/components/bitrix/catalog.element/furniture-view/questions.css?17749676571397*/
+.row-questions .text {
+  font-size: 14px;
+  font-weight: 300; }
+
+.row-questions .title {
+  font-size: 30px; }
+
+.row-questions {
+  padding-bottom: 100px; }
+  @media screen and (max-width: 768px) {
+    .row-questions {
+      padding-bottom: 0; } }
+  .row-questions .question {
+    background: #3c3c3b;
+    font-weight: normal;
+    width: 100%;
+    color: #f1f1f1;
+    font-size: 14px;
+    max-width: 237px;
+    margin-top: 14px;
+    height: 45px; }
+    .row-questions .question:hover {
+      opacity: 0.8; }
+  .row-questions .text {
+    font-size: 20px;
+    line-height: 30px; }
+
+.row-questions {}
+  .row-questions .title {
+    font-size: 30px;
+    margin-bottom: 35px !important;
+    font-weight: 500;
+    line-height: 48px;
+    letter-spacing: 0.05em; }
+    @media screen and (max-width: 768px) {
+      .row-questions .title {
+        padding-bottom: 0;
+        font-size: 25px; } }
+
+#questions {
+  margin-top: 75px; }
+  #questions .title {
+    margin: 0 0 30px;
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: 1px; }
+    @media screen and (max-width: 1200px) {
+      #questions .title {
+        font-size: 25px; } }
+  #questions .row-questions {
+    padding-bottom: 0 !important;
+    font-family: inherit; }
+    #questions .row-questions .text {
+      font-size: 18px; }
+    #questions .row-questions .question {
+      font-size: 12px; }
+
+/*# sourceMappingURL=questions.css.map */
+
+/* End */
+
+
+/* Start:/local/templates/union_2024/components/bitrix/catalog.element/furniture-view/viewed.css?17749676572997*/
+@charset "UTF-8";
+#viewed {
+  margin-top: 75px;
+  /*** ╨б╤В╤А╨╡╨╗╨║╨╕ ╨╜╨░ ╤Б╨╗╨░╨╣╨┤╨╡╤А╨╡ ***/
+  /*** ╨б╤В╤А╨╡╨╗╨║╨╕ ╨╜╨░ ╤Б╨╗╨░╨╣╨┤╨╡╤А╨╡ ***/ }
+  #viewed .title {
+    margin: 0 0 30px;
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: 1px; }
+    @media screen and (max-width: 1200px) {
+      #viewed .title {
+        font-size: 25px; } }
+  #viewed .cursor-none {
+    cursor: none; }
+  #viewed .swiper.slider {
+    position: relative; }
+  #viewed .nav-prev-cursor-none {
+    position: absolute;
+    left: 25%;
+    width: 25%;
+    z-index: 5000;
+    top: 0;
+    height: 100%; }
+  #viewed .nav-next-cursor-none {
+    position: absolute;
+    right: 25%;
+    width: 25%;
+    z-index: 5000;
+    top: 0;
+    height: 100%; }
+  #viewed .nav-prev-cursor-none {
+    left: 0;
+    width: 200px;
+    margin-left: max(15px, calc((100% - 1700px) / 2)); }
+  #viewed .nav-next-cursor-none {
+    right: 0;
+    width: 200px; }
+  #viewed .viewed_row .swiper-slide a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center; }
+    #viewed .viewed_row .swiper-slide a .elImgFirst {
+      opacity: 0.25;
+      position: absolute;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0; }
+    #viewed .viewed_row .swiper-slide a .secondImg {
+      object-fit: contain !important;
+      position: relative; }
+  #viewed .viewed_row {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    display: none; }
+    @media screen and (max-width: 768px) {
+      #viewed .viewed_row .swiper {
+        padding-left: 30px; } }
+    #viewed .viewed_row .text {
+      text-align: right;
+      margin-top: 12px;
+      color: #333333c9; }
+    #viewed .viewed_row .slider {
+      max-width: 1920px;
+      margin: 45px auto; }
+    #viewed .viewed_row .nav {
+      display: flex;
+      position: relative;
+      margin-top: 30px; }
+      #viewed .viewed_row .nav .swiper-scrollbar {
+        height: 1px; }
+      #viewed .viewed_row .nav .left {
+        position: relative;
+        width: 100%;
+        transform: translate(0, -35%);
+        margin-left: 6px; }
+        @media screen and (max-width: 768px) {
+          #viewed .viewed_row .nav .left {
+            margin-left: 20px; } }
+      #viewed .viewed_row .nav .right {
+        display: flex;
+        position: relative;
+        margin-left: 20px; }
+        #viewed .viewed_row .nav .right .swiper-button-prev-custom {
+          margin-right: 40px; }
+        #viewed .viewed_row .nav .right .swiper-button-next-custom-viewed {
+          margin-right: 0; }
+      #viewed .viewed_row .nav img {
+        width: 22px;
+        height: 46px; }
+    #viewed .viewed_row .slider-default__buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 16px;
+      gap: 16px; }
+
+/*# sourceMappingURL=viewed.css.map */
+
+/* End */
+/* /local/templates/union_2024/components/bitrix/breadcrumb/h1/style.min.css?1774966658399 */
+/* /local/templates/union_2024/components/bitrix/catalog.element/furniture-view/style.css?176052307789 */
+/* /local/templates/union_2024/components/bitrix/catalog.element/furniture-view/first-block.css?17749676575751 */
+/* /local/templates/union_2024/components/bitrix/catalog.element/furniture-view/second-block.css?1760619271265 */
+/* /local/templates/union_2024/components/bitrix/catalog.element/furniture-view/questions.css?17749676571397 */
+/* /local/templates/union_2024/components/bitrix/catalog.element/furniture-view/viewed.css?17749676572997 */

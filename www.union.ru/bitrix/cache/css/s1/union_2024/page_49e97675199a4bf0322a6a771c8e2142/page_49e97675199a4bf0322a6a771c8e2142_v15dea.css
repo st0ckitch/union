@@ -1,0 +1,14 @@
+
+
+/* Start:/local/templates/union_2024/components/bitrix/news.list/catalog_pdf/style.css?1730993045152*/
+.catalog-pdf-item {
+	transition: .5s;
+}
+.catalog-pdf-item:hover {
+	-webkit-transform: scale(0.9);
+	-ms-transform: scale(0.9);
+	transform: scale(0.9);
+}
+
+/* End */
+/* /local/templates/union_2024/components/bitrix/news.list/catalog_pdf/style.css?1730993045152 */
